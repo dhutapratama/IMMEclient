@@ -62,15 +62,6 @@ public class MainActivity extends AppCompatActivity
         TextView text_main_last_transaction = (TextView) findViewById(R.id.main_last_transaction);
         text_main_last_transaction.setTypeface(hnLight);
 
-        TextView text_main_history_features1 = (TextView) findViewById(R.id.main_history_features1);
-        text_main_history_features1.setTypeface(hnLight);
-
-        TextView text_main_history_features2 = (TextView) findViewById(R.id.main_history_features2);
-        text_main_history_features2.setTypeface(hnLight);
-
-        TextView text_main_history_features3 = (TextView) findViewById(R.id.main_history_features3);
-        text_main_history_features3.setTypeface(hnLight);
-
         TextView text_main_history_name1 = (TextView) findViewById(R.id.main_history_name1);
         text_main_history_name1.setTypeface(hnLight);
 
