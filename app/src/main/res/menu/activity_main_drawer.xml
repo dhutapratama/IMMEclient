@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:tools="http://schemas.android.com/tools"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <group
+        android:checkableBehavior="single"
+        android:id="@+id/transaction">
+        <item
+            android:id="@+id/nav_account"
+            android:title="Account"
+            android:icon="@mipmap/main_nav_account_icon" />
+        <item
+            android:id="@+id/nav_transaction_history"
+            android:title="Transaction History"
+            android:icon="@mipmap/main_nav_transaction_history_icon" />
+        <item
+            android:id="@+id/nav_security_setting"
+            android:title="Security Settings"
+            android:icon="@mipmap/main_nav_security_icon" />
+        <item
+            android:id="@+id/nav_recipient_list"
+            android:title="Recipient List"
+            android:icon="@mipmap/main_nav_recipient_list_icon" />
+        <item
+            android:id="@+id/nav_share"
+            android:title="Invite &amp; Get Money"
+            android:icon="@mipmap/main_nav_share_and_get_money_icon" />
+        <item
+            android:id="@+id/nav_exit"
+            android:title="Exit"
+            android:icon="@mipmap/main_nav_exit_icon" />
+    </group>
+
+</menu>

@@ -1,0 +1,505 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingLeft="@dimen/zero"
+    android:paddingRight="@dimen/zero"
+    android:paddingTop="@dimen/zero"
+    android:paddingBottom="@dimen/zero"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    tools:showIn="@layout/activity_account"
+    tools:context="com.imme.immeclient.AccountActivity"
+    android:orientation="vertical">
+
+    <ScrollView
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="fill_parent"
+        android:scrollbarThumbVertical="@drawable/scrollbar"
+        android:scrollbarSize="5dp">
+
+
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:paddingRight="16dp"
+                android:paddingLeft="16dp"
+                android:paddingTop="16dp">
+
+                <LinearLayout
+                    android:id="@+id/bg_green"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:orientation="vertical"
+                    android:background="@drawable/account_balance_gift_bg">
+
+                    <TextView
+                        android:text="Balance"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:textColor="#ffffff"
+                        android:paddingTop="10dp"
+                        android:textSize="13sp"
+                        android:width="50dp" />
+
+                    <LinearLayout
+                        android:orientation="horizontal"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal">
+
+                        <TextView
+                            android:text="Rp"
+                            android:id="@+id/account_rp"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textColor="@color/textWhite"
+                            android:textSize="15sp"
+                            android:paddingTop="3dp"/>
+                        <TextView
+                            android:text="108.800"
+                            android:id="@+id/account_balance_value"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_horizontal"
+                            android:textColor="@color/textWhite"
+                            android:textSize="30sp"/>
+
+                    </LinearLayout>
+
+                    <TextView
+                        android:id="@+id/account_balance_value_list"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="2sp"
+                        android:paddingRight="250dp"
+                        android:background="@drawable/account_balance_gift_list"/>
+
+                    <TextView
+                        android:text="Balance Gift"
+                        android:id="@+id/account_balance_gift"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:textColor="#ffffff"
+                        android:paddingTop="5dp"
+                        android:textSize="13sp"
+                        android:width="70dp" />
+
+                    <LinearLayout
+                        android:orientation="horizontal"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:paddingBottom="5dp">
+
+                        <TextView
+                            android:text="Rp"
+                            android:id="@+id/account_rp_balance_gift"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textColor="@color/textWhite"
+                            android:textSize="15sp"
+                            android:paddingTop="3dp"/>
+                        <TextView
+                            android:text="50.800"
+                            android:id="@+id/account_balance_gift_value"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_horizontal"
+                            android:textColor="@color/textWhite"
+                            android:textSize="30sp"/>
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:orientation="vertical"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/bg_green"
+                    android:paddingTop="25dp">
+
+                    <TextView
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Account Number"
+                        android:paddingBottom="5dp"
+                        android:textSize="15sp"
+                        android:textColor="#000000"/>
+
+                    <TextView
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:paddingTop="10dp"
+                        android:paddingBottom="10dp"
+                        android:background="@drawable/account_account_number_bg"
+                        android:text="  1 2 3 4 5 6 7 8 9 0 9 8 7 6 5 4 3 2 1"
+                        android:textSize="15sp"
+                        android:textColor="#000000"/>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:orientation="vertical"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingTop="25dp">
+
+                    <TextView
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Account Setting"
+                        android:paddingBottom="5dp"
+                        android:textSize="15sp"
+                        android:textColor="#000000"/>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingBottom="10dp"
+                    android:background="@drawable/account_account_number_bg"
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:layout_width="fill_parent"
+                        android:layout_height="fill_parent"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:orientation="horizontal"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textSize="15sp"
+                            android:text="  Full Name"
+                            android:paddingRight="50dp"
+                            android:paddingTop="10dp"
+                            android:paddingBottom="10dp"
+                            android:textColor="#000000"/>
+
+                        <TextView
+                            android:orientation="horizontal"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textSize="15sp"
+                            android:text="Devi Chrisman"
+                            android:paddingRight="95dp"
+                            android:background="@drawable/account_account_setting_name_list"
+                            android:paddingTop="10dp"
+                            android:paddingBottom="3dp"
+                            android:textColor="#000000"/>
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="fill_parent"
+                        android:layout_height="fill_parent"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textSize="15sp"
+                            android:text="  Profil Image"
+                            android:paddingRight="37dp"
+                            android:paddingTop="0.5dp"
+                            android:paddingBottom="10dp"
+                            android:textColor="#000000"/>
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical"
+                            android:background="@drawable/account_account_setting_profile_bg"
+                            android:paddingTop="10dp"
+                            android:paddingBottom="10dp"
+                            android:paddingRight="53.5dp"
+                            android:paddingLeft="53.5dp">
+
+                            <ImageView
+                                android:layout_width="wrap_content"
+                                android:layout_height="fill_parent"
+                                android:layout_gravity="center"
+                                android:src="@mipmap/profile_picture"/>
+
+                                <LinearLayout
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:orientation="horizontal"
+                                    android:layout_gravity="center"
+                                    android:background="@drawable/account_account_setting_profile_list">
+
+                                    <ImageView
+                                        android:layout_width="fill_parent"
+                                        android:layout_height="wrap_content"
+                                        android:paddingRight="5dp"
+                                        android:paddingTop="8dp"
+                                        android:paddingBottom="5dp"
+                                        android:src="@mipmap/profile_camera"/>
+
+                                    <TextView
+                                        android:layout_width="fill_parent"
+                                        android:layout_height="wrap_content"
+                                        android:textSize="11sp"
+                                        android:text="Upload Photo"
+                                        android:paddingTop="5dp"
+                                        android:paddingBottom="5dp"
+                                        android:textColor="#000000"/>
+
+                                </LinearLayout>
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:textSize="10sp"
+                                android:gravity="center"
+                                android:layout_gravity="center"
+                                android:text="Max size 512 kb"
+                                android:paddingTop="5dp"
+                                android:textColor="#000000"/>
+
+                        </LinearLayout>
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:orientation="vertical"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingTop="25dp">
+
+                    <TextView
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Account Details"
+                        android:paddingBottom="5dp"
+                        android:textSize="15sp"
+                        android:textColor="#000000"/>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingBottom="10dp"
+                    android:background="@drawable/account_account_number_bg"
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:layout_width="fill_parent"
+                        android:layout_height="fill_parent"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:orientation="horizontal"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textSize="15sp"
+                            android:text="  ID Number"
+                            android:paddingRight="50dp"
+                            android:paddingTop="10dp"
+                            android:paddingBottom="10dp"
+                            android:textColor="#000000"/>
+
+                        <TextView
+                            android:orientation="horizontal"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textSize="15sp"
+                            android:paddingRight="45dp"
+                            android:text="325178 981256 7863"
+                            android:background="@drawable/account_account_setting_name_list"
+                            android:paddingTop="10dp"
+                            android:paddingBottom="3dp"
+                            android:textColor="#000000"/>
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="fill_parent"
+                        android:layout_height="fill_parent"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textSize="15sp"
+                            android:text="  KTP Image"
+                            android:paddingRight="44dp"
+                            android:paddingTop="0.5dp"
+                            android:paddingBottom="10dp"
+                            android:textColor="#000000"/>
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical"
+                            android:background="@drawable/account_account_setting_profile_bg"
+                            android:paddingTop="10dp"
+                            android:paddingBottom="10dp"
+                            android:paddingRight="27.5dp"
+                            android:paddingLeft="27.5dp">
+
+                            <ImageView
+                                android:layout_width="wrap_content"
+                                android:layout_height="fill_parent"
+                                android:layout_gravity="center"
+                                android:src="@mipmap/profile_picture_ktp"/>
+
+                            <LinearLayout
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:orientation="horizontal"
+                                android:layout_gravity="center"
+                                android:background="@drawable/account_account_setting_profile_list">
+
+                                <ImageView
+                                    android:layout_width="fill_parent"
+                                    android:layout_height="wrap_content"
+                                    android:paddingRight="5dp"
+                                    android:paddingTop="8dp"
+                                    android:paddingBottom="5dp"
+                                    android:src="@mipmap/profile_camera"/>
+
+                                <TextView
+                                    android:layout_width="fill_parent"
+                                    android:layout_height="wrap_content"
+                                    android:textSize="11sp"
+                                    android:text="Upload ID Photo"
+                                    android:paddingTop="5dp"
+                                    android:paddingBottom="5dp"
+                                    android:textColor="#000000"/>
+
+                            </LinearLayout>
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:textSize="10sp"
+                                android:gravity="center"
+                                android:layout_gravity="center"
+                                android:text="Max size 512 kb"
+                                android:paddingTop="5dp"
+                                android:textColor="#000000"/>
+
+                        </LinearLayout>
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="fill_parent"
+                        android:layout_height="fill_parent"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:orientation="horizontal"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textSize="15sp"
+                            android:text="  Email"
+                            android:paddingRight="80dp"
+                            android:paddingTop="10dp"
+                            android:paddingBottom="10dp"
+                            android:textColor="#000000"/>
+
+                        <TextView
+                            android:orientation="horizontal"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textSize="15sp"
+                            android:paddingRight="20dp"
+                            android:text="devichrisman@gmail.com"
+                            android:background="@drawable/account_account_setting_name_list"
+                            android:paddingTop="10dp"
+                            android:paddingBottom="3dp"
+                            android:textColor="#000000"/>
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="fill_parent"
+                        android:layout_height="fill_parent"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:orientation="horizontal"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textSize="15sp"
+                            android:text="  Phone Number"
+                            android:paddingRight="15dp"
+                            android:paddingTop="10dp"
+                            android:paddingBottom="10dp"
+                            android:textColor="#000000"/>
+
+                        <TextView
+                            android:orientation="horizontal"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textSize="15sp"
+                            android:paddingRight="77dp"
+                            android:text="+6281 2220 6292"
+                            android:background="@drawable/account_account_setting_name_list"
+                            android:paddingTop="10dp"
+                            android:paddingBottom="3dp"
+                            android:textColor="#000000"/>
+                    </LinearLayout>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:orientation="vertical"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingTop="25dp"
+                    android:paddingBottom="2dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/account_save_verify"
+                        android:gravity="center"
+                        android:layout_gravity="center"
+                        android:text="Save &amp; Verify"
+                        android:paddingBottom="10dp"
+                        android:paddingTop="10dp"
+                        android:paddingRight="40dp"
+                        android:paddingLeft="40dp"
+                        android:textSize="20sp"
+                        android:textColor="#ffffff"/>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:orientation="vertical"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingTop="3dp"
+                    android:paddingBottom="10dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="5dp"
+                        android:layout_marginRight="5dp"
+                        android:gravity="center"
+                        android:layout_gravity="center"
+                        android:text="We'll send a verification link to the email address you used to create the account"
+                        android:paddingBottom="5dp"
+                        android:textSize="8sp"
+                        android:textColor="#000000"/>
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+    </ScrollView>
+
+</RelativeLayout>

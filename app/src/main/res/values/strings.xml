@@ -1,4 +1,167 @@
 <resources>
-    <string name="app_name">IMMEclient</string>
+    <string name="app_name">imme</string>
+
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+
     <string name="action_settings">Settings</string>
+
+    <!-- Slide Splash -->
+    <string name="screen1_title">Send/Pay</string>
+    <string name="screen1_desc">You can send or pay.</string>
+
+    <string name="screen2_title">Receive</string>
+    <string name="screen2_desc">You can Receive from your friend.</string>
+
+    <string name="screen3_title">TopUp</string>
+    <string name="screen3_desc">You can TopUp your IMME in merchant.</string>
+
+    <!-- Main Balance -->
+    <string name="main_balance">Balance</string>
+    <string name="main_rupiah">Rp</string>
+    <string name="main_balance_value">300.000</string>
+
+    <string name="main_lastTransaction">Last Transaction</string>
+    <string name="main_lastTransaction_send">Send/Pay</string>
+    <string name="main_lastTransaction_receive">Receive</string>
+    <string name="main_lastTransaction_topup">TopUp</string>
+    <string name="title_activity_pin">PIN</string>
+    <string name="title_activity_splash_screen">SplashScreen</string>
+    <string name="title_activity_security_setting">Security Settings</string>
+
+    <!-- Strings related to Settings -->
+
+    <!-- Example General settings -->
+    <string name="pref_header_general">General</string>
+
+    <string name="pref_title_social_recommendations">Enable social recommendations</string>
+    <string name="pref_description_social_recommendations">Recommendations for people to contact
+        based on your message history
+    </string>
+
+    <string name="pref_title_display_name">Display name</string>
+    <string name="pref_default_display_name">John Smith</string>
+
+    <string name="pref_title_add_friends_to_messages">Add friends to messages</string>
+    <string-array name="pref_example_list_titles">
+        <item>Always</item>
+        <item>When possible</item>
+        <item>Never</item>
+    </string-array>
+    <string-array name="pref_example_list_values">
+        <item>1</item>
+        <item>0</item>
+        <item>-1</item>
+    </string-array>
+
+    <!-- Example settings for Data & Sync -->
+    <string name="pref_header_data_sync">Data &amp; sync</string>
+
+    <string name="pref_title_sync_frequency">Sync frequency</string>
+    <string-array name="pref_sync_frequency_titles">
+        <item>15 minutes</item>
+        <item>30 minutes</item>
+        <item>1 hour</item>
+        <item>3 hours</item>
+        <item>6 hours</item>
+        <item>Never</item>
+    </string-array>
+    <string-array name="pref_sync_frequency_values">
+        <item>15</item>
+        <item>30</item>
+        <item>60</item>
+        <item>180</item>
+        <item>360</item>
+        <item>-1</item>
+    </string-array>
+
+    <string name="pref_title_system_sync_settings">System sync settings</string>
+
+    <!-- Example settings for Notifications -->
+    <string name="pref_header_notifications">Notifications</string>
+
+    <string name="pref_title_new_message_notifications">New message notifications</string>
+
+    <string name="pref_title_ringtone">Ringtone</string>
+    <string name="pref_ringtone_silent">Silent</string>
+
+    <string name="pref_title_vibrate">Vibrate</string>
+    <string name="title_activity_send_pay">Send/Pay</string>
+    <string name="title_activity_login">Sign in</string>
+
+    <!-- Strings related to login -->
+    <string name="prompt_email">Email</string>
+    <string name="prompt_password">Password (optional)</string>
+    <string name="action_sign_in">Sign in or register</string>
+    <string name="action_sign_in_short">Sign in</string>
+    <string name="error_invalid_email">This email address is invalid</string>
+    <string name="error_invalid_password">This password is too short</string>
+    <string name="error_incorrect_password">This password is incorrect</string>
+    <string name="error_field_required">This field is required</string>
+    <string name="permission_rationale">"Contacts permissions are needed for providing email
+        completions."
+    </string>
+    <string name="title_activity_user_agreement">User Agreement</string>
+    <string name="title_activity_privacy_policy">PrivacyPolicyActivity</string>
+    <string name="title_activity_help_and_support">Help &amp;nbsp; Support</string>
+    <string name="title_activity_feedback">Feedback</string>
+    <string name="title_activity_transaction_history">Transaction History</string>
+    <string name="title_activity_recipient_list">Recipient Lists</string>
+    <string name="dummy_button">Dummy Button</string>
+    <string name="dummy_content">DUMMY\nCONTENT</string>
+    <string name="title_activity_account">Account</string>
+    <string name="title_activity_about">About imme</string>
+    <string name="title_activity_receive">Receive</string>
+    <string name="title_activity_send_pay_details">Payment Details</string>
+    <string name="title_activity_gift">GiftActivity</string>
+    <string name="user_agreement">
+\nCopyright 2013 IMME. All Rights Reserved.
+
+\n\nThis software may not, in whole or in any part, be copied, reproduced, transmitted, translated (into any
+language, natural or computer), stored in a retrieval system, reduced to any electronic medium or machine readable
+format, or by any other form or means without prior consent, in writing, from IMME.
+
+\n\nYou are granted a limited license to use this software. The software may be used or copied only in accordance
+with the terms of that license, which is described in the following paragraphs.
+
+\n\nTRADEMARKS:
+\n\n[Software logos, icons, etc that are Trademarked]
+
+\n\nLICENSE:
+\n\n\"THE SOFTWARE\" shall be taken to mean the software contained in this app and any subsequent versions
+or upgrades received as a result of having purchased this app. \"BUYER\" shall be taken as the original
+purchaser of the software.
+
+\n\nBuyer has the non-exclusive right to the use of software only on a single device. Buyer may not electronically
+transfer the program from one device to another over any type of network. Buyer may not distribute copies
+of the software or the accompanying documentation to others either for a fee or without charge. Buyer may not modify
+or translate the program or documentation. User may not disassemble the program or allow it to be disassembled
+into its constituent source code. Buyer\'s use of the software indicates his/her acceptance of these terms
+and conditions. If buyer does not agree to these conditions, return the distribution media, documentation, and
+associated materials to the vendor from whom the software was purchased, and/or uninstall the software from the device,
+and erase the software from any and all storage devices upon which it may have been installed.
+
+\n\nThis license agreement shall be governed by the laws of The United States of America, Massachusetts and
+shall inure to the benefit of IMME or its assigns.
+
+\n\nDISCLAIMER / LIMITATION OF LIABILITY:
+\n\nBuyer acknowledges that the software may not be free from defects and may not satisfy all of buyer\'s
+needs. IMME warrants all media on which the software is distributed for 60 days to be free from defects
+in normal use. The software and any accompanying written materials are licensed \"AS IS\". Buyer\'s exclusive
+remedy during the warranty period (if any) shall consist of replacement of distribution media if determined to be
+faulty. In no event will IMME be liable for direct, indirect, incidental or consequential damage or
+damages resulting from loss of use, or loss of anticipated profits resulting from any defect in the software,
+even if it has been advised of the possibility of such damage. Some laws do not allow exclusion or limitation
+of implied warranties or liabilities for incidental or consequential damages, so the above limitations or
+exclusion may not apply.
+
+\n\nSPECIFIC RESTRICTIONS:
+\n\nIn accordance with the COMPUTER SOFTWARE RENTAL ACT OF 1990, this software may not be rented, lent or leased.
+\n\nThe software and accompanying documentation may not be provided by a \"Backup Service\" or any other vendor
+which does not provide an original package as composed of IMME, including but not limited to all original
+distribution media, documentation, registration cards, and insertions.</string>
+    <string name="user_agreement_title">User Agreement</string>
+    <string name="logo_description">imme logo</string>
+    <string name="title_activity_receive_qrcode">ReceiveQRCodeActivity</string>
+    <string name="default_receive_balance">0</string>
 </resources>

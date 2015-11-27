@@ -1,0 +1,31 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+      xmlns:app="http://schemas.android.com/apk/res-auto"
+      xmlns:tools="http://schemas.android.com/tools"
+      tools:context=".MainActivity">
+
+    <item android:id="@+id/nav_user_agreement"
+          android:title="User Agreement"
+          android:orderInCategory="100"
+          app:showAsAction="never"/>
+    <item android:id="@+id/nav_privacy_policy"
+          android:title="Privacy Policy"
+          android:orderInCategory="100"
+          app:showAsAction="never" />
+    <item android:id="@+id/nav_help_support"
+          android:title="Help &amp; Support"
+          android:orderInCategory="100"
+          app:showAsAction="never" />
+    <item android:id="@+id/nav_feedback"
+          android:title="Feedback"
+          android:orderInCategory="100"
+          app:showAsAction="never" />
+    <item android:id="@+id/nav_about"
+        android:title="About Imme"
+        android:orderInCategory="100"
+        app:showAsAction="never" />
+    <item android:id="@+id/nav_gift"
+        android:title="Gift"
+        android:icon="@mipmap/main_button_gift_icon"
+        android:orderInCategory="200"
+        app:showAsAction="ifRoom" />
+</menu>
