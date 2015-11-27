@@ -19,7 +19,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ImageButton;
-import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.google.zxing.integration.android.IntentIntegrator;
@@ -157,7 +157,7 @@ public class MainActivity extends AppCompatActivity
             }
         });
 
-        LinearLayout last_transaction_1 = (LinearLayout) findViewById(R.id.last_transaction_1);
+        RelativeLayout last_transaction_1 = (RelativeLayout) findViewById(R.id.last_transaction_1);
         last_transaction_1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -166,7 +166,7 @@ public class MainActivity extends AppCompatActivity
             }
         });
 
-        LinearLayout last_transaction_2 = (LinearLayout) findViewById(R.id.last_transaction_2);
+        RelativeLayout last_transaction_2 = (RelativeLayout) findViewById(R.id.last_transaction_2);
         last_transaction_2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -175,7 +175,7 @@ public class MainActivity extends AppCompatActivity
             }
         });
 
-        LinearLayout last_transaction_3 = (LinearLayout) findViewById(R.id.last_transaction_3);
+        RelativeLayout last_transaction_3 = (RelativeLayout) findViewById(R.id.last_transaction_3);
         last_transaction_3.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
