@@ -87,7 +87,7 @@
 
     <style name="AppThemeGreen.NoActionBar">
         <!-- Customize your theme here. -->
-        <item name="windowActionBar">true</item>
+        <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
         <item name="android:textColorPrimary">@color/textWhite</item>
         <item name="android:textColorSecondary">@color/textWhite</item>
