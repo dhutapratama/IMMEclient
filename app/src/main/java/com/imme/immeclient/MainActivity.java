@@ -161,8 +161,12 @@ public class MainActivity extends AppCompatActivity
         last_transaction_1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                /*
                 Snackbar.make(view, "PT. Lazada E-Commerce (-Rp300.000)", Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();
+                       */
+                Intent intent = new Intent("com.imme.immeclient.PaymentDetails");
+                startActivity(intent);
             }
         });
 
@@ -170,8 +174,8 @@ public class MainActivity extends AppCompatActivity
         last_transaction_2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Dhuta Pratama (Rp240.000)", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+                Intent intent = new Intent("com.imme.immeclient.PaymentDetails");
+                startActivity(intent);
             }
         });
 
@@ -179,8 +183,8 @@ public class MainActivity extends AppCompatActivity
         last_transaction_3.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Indomaret (+Rp27.400)", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+                Intent intent = new Intent("com.imme.immeclient.PaymentDetails");
+                startActivity(intent);
             }
         });
 

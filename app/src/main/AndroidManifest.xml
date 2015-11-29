@@ -128,10 +128,10 @@
         </activity>
         <activity
             android:name=".RecipientListActivity"
-            android:label="@string/title_activity_recipient_list"
+            android:label="Recipient Accounts"
             android:parentActivityName=".MainActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/AppThemeGGreen.NoActionBar">
+            android:theme="@style/AppThemeGreen.NoActionBar" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.imme.immeclient.MainActivity" />
@@ -159,13 +159,16 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".SplashScreenActivity"
-            android:configChanges="orientation|keyboardHidden|screenSize"
-            android:label="@string/title_activity_splash_screen"
-            android:screenOrientation="portrait"
-            android:theme="@style/FullscreenTheme">
+            android:name=".SecuritySettingsActivity"
+            android:label="@string/title_activity_security_setting"
+            android:parentActivityName=".MainActivity"
+            android:screenOrientation="portrait" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.imme.immeclient.MainActivity" />
+
             <intent-filter>
-                <action android:name="com.imme.immeclient.SplashScreenActivity" />
+                <action android:name="com.imme.immeclient.SecuritySettingActivity" />
 
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
@@ -206,7 +209,7 @@
             android:name=".AccountActivity"
             android:label="@string/title_activity_account"
             android:parentActivityName=".MainActivity"
-            android:theme="@style/AppThemeGGreen.NoActionBar">
+            android:theme="@style/AppThemeGreen.NoActionBar" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.imme.immeclient.MainActivity" />
@@ -240,7 +243,7 @@
             android:theme="@style/AppThemeBlue.NoActionBar">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.imme.immeclient.SendPayActivity" />
+                android:value="com.imme.immeclient.MainActivity" />
 
             <intent-filter>
                 <action android:name="com.imme.immeclient.Send_pay_details" />
@@ -293,7 +296,7 @@
             android:label="@string/title_activity_about"
             android:parentActivityName=".MainActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/AppThemeGGreen.NoActionBar">
+            android:theme="@style/AppThemeGreen.NoActionBar">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.imme.immeclient.MainActivity" />
@@ -305,23 +308,23 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".SecuritySettingsActivity"
-            android:label="@string/title_activity_security_settings"
-            android:theme="@style/AppThemeGGreen.NoActionBar">
+            android:name=".PaymentDetails"
+            android:label="@string/title_activity_payment_details"
+            android:parentActivityName=".MainActivity"
+            android:theme="@style/AppThemeGreen.NoActionBar" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.imme.immeclient.MainActivity" />
 
             <intent-filter>
-                <action android:name="com.imme.immeclient.SecuritySettingsActivity" />
-
+                <action android:name="com.imme.immeclient.PaymentDetails" />
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
         <activity
             android:name=".InviteGetMoneyActivity"
             android:label="@string/title_activity_invite_get_money"
-            android:theme="@style/AppThemeGGreen.NoActionBar">
+            android:theme="@style/AppThemeGreen.NoActionBar">
 
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
