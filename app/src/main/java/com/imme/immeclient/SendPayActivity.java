@@ -50,7 +50,6 @@ public class SendPayActivity extends AppCompatActivity {
             }
         });
 
-
         IntentIntegrator integrator = new IntentIntegrator(this);
         integrator.setDesiredBarcodeFormats(IntentIntegrator.QR_CODE_TYPES);
         integrator.setPrompt("Press back to open Receiver List");
@@ -74,7 +73,7 @@ public class SendPayActivity extends AppCompatActivity {
 
     public void onActivityResult(int requestCode, int resultCode, Intent intent) {
         IntentResult scanResult = IntentIntegrator.parseActivityResult(requestCode, resultCode, intent);
-        if (scanResult != null) {
+        if (scanResult.getContents().equals("null")) {
             //Toast.makeText(this, "Scan Result = " + scanResult.getContents(), Toast.LENGTH_SHORT).show();
 
             Intent intentView = new Intent("com.imme.immeclient.Send_pay_details");

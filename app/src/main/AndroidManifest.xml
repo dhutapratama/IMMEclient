@@ -128,10 +128,10 @@
         </activity>
         <activity
             android:name=".RecipientListActivity"
-            android:label="@null"
+            android:label="Recipient Accounts"
             android:parentActivityName=".MainActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/AppThemeGGreen.NoActionBar" >
+            android:theme="@style/AppThemeGreen.NoActionBar" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.imme.immeclient.MainActivity" />
@@ -174,18 +174,6 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".SplashScreenActivity"
-            android:configChanges="orientation|keyboardHidden|screenSize"
-            android:label="@string/title_activity_splash_screen"
-            android:screenOrientation="portrait"
-            android:theme="@style/FullscreenTheme" >
-            <intent-filter>
-                <action android:name="com.imme.immeclient.SplashScreenActivity" />
-
-                <category android:name="android.intent.category.DEFAULT" />
-            </intent-filter>
-        </activity>
-        <activity
             android:name=".TransactionHistoryActivity"
             android:label="@string/title_activity_transaction_history"
             android:parentActivityName=".MainActivity"
@@ -221,7 +209,7 @@
             android:name=".AccountActivity"
             android:label="@string/title_activity_account"
             android:parentActivityName=".MainActivity"
-            android:theme="@style/AppThemeGGreen.NoActionBar" >
+            android:theme="@style/AppThemeGreen.NoActionBar" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.imme.immeclient.MainActivity" />
@@ -255,7 +243,7 @@
             android:theme="@style/AppThemeBlue.NoActionBar" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.imme.immeclient.SendPayActivity" />
+                android:value="com.imme.immeclient.MainActivity" />
 
             <intent-filter>
                 <action android:name="com.imme.immeclient.Send_pay_details" />
