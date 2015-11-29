@@ -263,16 +263,16 @@ public class MainActivity extends AppCompatActivity
             Intent intent = new Intent("com.imme.immeclient.TransactionHistoryActivity");
             startActivity(intent);
         }
-        else if (id == R.id.nav_security_setting) {
-            Intent intent = new Intent("com.imme.immeclient.SecuritySettingActivity");
+        else if (id == R.id.nav_security_settings) {
+            Intent intent = new Intent("com.imme.immeclient.SecuritySettingsActivity");
             startActivity(intent);
         }
         else if (id == R.id.nav_recipient_list) {
             Intent intent = new Intent("com.imme.immeclient.RecipientListActivity");
             startActivity(intent);
         }
-        else if (id == R.id.nav_share) {
-            Intent intent = new Intent("com.imme.immeclient.RecipientListActivity");
+        else if (id == R.id.nav_invite_get_money) {
+            Intent intent = new Intent("com.imme.immeclient.InviteGetMoneyActivity");
             startActivity(intent);
         }
         else if (id == R.id.nav_exit) {

@@ -14,7 +14,7 @@
             android:title="Transaction History"
             android:icon="@mipmap/main_nav_transaction_history_icon" />
         <item
-            android:id="@+id/nav_security_setting"
+            android:id="@+id/nav_security_settings"
             android:title="Security Settings"
             android:icon="@mipmap/main_nav_security_icon" />
         <item
@@ -22,7 +22,7 @@
             android:title="Recipient List"
             android:icon="@mipmap/main_nav_recipient_list_icon" />
         <item
-            android:id="@+id/nav_share"
+            android:id="@+id/nav_invite_get_money"
             android:title="Invite &amp; Get Money"
             android:icon="@mipmap/main_nav_share_and_get_money_icon" />
         <item
