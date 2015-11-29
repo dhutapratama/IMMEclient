@@ -91,7 +91,4 @@ public class SendPayActivity extends AppCompatActivity {
             super.onActivityResult(requestCode, resultCode, data);
         }
     }
-
-
-
 }
