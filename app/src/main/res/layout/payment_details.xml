@@ -523,14 +523,6 @@
         android:layout_alignParentBottom="true"
         android:id="@+id/bottomxxx">
 
-        <Button
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:text="Pay"
-            android:gravity="center"
-            android:padding="15dp"
-            android:textColor="@color/textWhite"
-            android:background="#03B0FF"/>
 
     </LinearLayout>
 

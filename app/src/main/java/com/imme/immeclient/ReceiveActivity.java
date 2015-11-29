@@ -6,17 +6,23 @@ import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
+import android.view.Gravity;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.TableRow;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.readystatesoftware.systembartint.SystemBarTintManager;
 
 import org.w3c.dom.Text;
+
+import java.text.DecimalFormat;
+import java.text.DecimalFormatSymbols;
+import java.text.NumberFormat;
+import java.util.Locale;
 
 
 public class ReceiveActivity extends AppCompatActivity {
@@ -89,124 +95,89 @@ public class ReceiveActivity extends AppCompatActivity {
         button_0.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                money = money + "0";
-                if (money.equals("00")) {
-                    money = "0";
-                } else {
-                    balance.setText(money);
-                }
+                text("0");
             }
         });
 
         button_1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                money = money + "1";
-                if (money.equals("01")) {
-                    money = "1";
-                }
-                balance.setText(money);
+                text("1");
             }
         });
 
         button_2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                money = money + "2";
-                if (money.equals("02")) {
-                    money = "2";
-                }
-                balance.setText(money);
+                text("2");
             }
         });
 
         button_3.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                money = money + "3";
-                if (money.equals("03")) {
-                    money = "3";
-                }
-                balance.setText(money);
+                text("3");
             }
         });
 
         button_4.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                money = money + "4";
-                if (money.equals("04")) {
-                    money = "4";
-                }
-                balance.setText(money);
+                text("4");
             }
         });
 
         button_5.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                money = money + "5";
-                if (money.equals("05")) {
-                    money = "5";
-                }
-                balance.setText(money);
+                text("5");
             }
         });
 
         button_6.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                money = money + "6";
-                if (money.equals("06")) {
-                    money = "6";
-                }
-                balance.setText(money);
+                text("6");
             }
         });
 
         button_7.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                money = money + "7";
-                if (money.equals("07")) {
-                    money = "7";
-                }
-                balance.setText(money);
+                text("7");
             }
         });
 
         button_8.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                money = money + "8";
-                if (money.equals("08")) {
-                    money = "8";
-                }
-                balance.setText(money);
+                text("8");
             }
         });
 
         button_9.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                money = money + "9";
-                if (money.equals("09")) {
-                    money = "9";
-                }
-                balance.setText(money);
+                text("9");
             }
         });
 
         button_backspace.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                money = money + "0";
-                if (money.length() <= 2) {
+                if (money.length() <= 1) {
                     money = "0";
                 }else {
-                    money = money.substring(0, money.length()-2);
+                    money = money.substring(0, money.length()-1);
                 }
-                balance.setText(money);
+
+                String formated_money = NumberFormat.getNumberInstance(Locale.GERMANY).format(Integer.parseInt(money));
+                balance.setText(formated_money);
+
+                balance.setText(formated_money);
+                balance.setLayoutParams(new TableRow.LayoutParams(
+                        TableRow.LayoutParams.WRAP_CONTENT,
+                        TableRow.LayoutParams.WRAP_CONTENT));
             }
         });
     }
@@ -221,5 +192,18 @@ public class ReceiveActivity extends AppCompatActivity {
             default:
                 return super.onOptionsItemSelected(item);
         }
+    }
+
+
+    private void text(String string) {
+        money = money + string;
+        if (money.equals("0" + string)) {
+            money = string;
+        } else if (money.length() > 8) {
+            money = money.substring(0, money.length()-1);
+        }
+
+        String formated_money = NumberFormat.getNumberInstance(Locale.GERMANY).format(Integer.parseInt(money));
+        balance.setText(formated_money);
     }
 }

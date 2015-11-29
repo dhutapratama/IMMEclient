@@ -44,17 +44,18 @@ public class SendPayActivity extends AppCompatActivity {
                 integrator.setDesiredBarcodeFormats(IntentIntegrator.QR_CODE_TYPES);
                 integrator.setPrompt("Press back to open Receiver List");
                 integrator.setCameraId(0);  // Use a specific camera of the device
+                integrator.setOrientationLocked(false);
                 integrator.setBeepEnabled(false);
                 integrator.setBarcodeImageEnabled(true);
                 integrator.initiateScan();
             }
         });
 
-
         IntentIntegrator integrator = new IntentIntegrator(this);
         integrator.setDesiredBarcodeFormats(IntentIntegrator.QR_CODE_TYPES);
         integrator.setPrompt("Press back to open Receiver List");
         integrator.setCameraId(0);  // Use a specific camera of the device
+        integrator.setOrientationLocked(true);
         integrator.setBeepEnabled(false);
         integrator.setBarcodeImageEnabled(true);
         integrator.initiateScan();
@@ -72,14 +73,25 @@ public class SendPayActivity extends AppCompatActivity {
         }
     }
 
-    public void onActivityResult(int requestCode, int resultCode, Intent intent) {
-        IntentResult scanResult = IntentIntegrator.parseActivityResult(requestCode, resultCode, intent);
-        if (scanResult != null) {
-            //Toast.makeText(this, "Scan Result = " + scanResult.getContents(), Toast.LENGTH_SHORT).show();
-
-            Intent intentView = new Intent("com.imme.immeclient.Send_pay_details");
-            startActivity(intentView);
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        IntentResult result = IntentIntegrator.parseActivityResult(requestCode, resultCode, data);
+        if(result != null) {
+            if(result.getContents() == null) {
+                //Toast.makeText(this, "Cancelled", Toast.LENGTH_LONG).show();
+                //Intent intentView = new Intent("com.imme.immeclient.Send_pay_details");
+               // startActivity(intentView);
+            } else {
+                //Toast.makeText(this, "Scanned: " + result.getContents(), Toast.LENGTH_LONG).show();
+                Intent intentView = new Intent("com.imme.immeclient.Send_pay_details");
+                startActivity(intentView);
+            }
+        } else {
+            // This is important, otherwise the result will not be passed to the fragment
+            super.onActivityResult(requestCode, resultCode, data);
         }
     }
+
+
 
 }
