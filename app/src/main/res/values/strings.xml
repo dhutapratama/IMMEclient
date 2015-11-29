@@ -101,20 +101,26 @@
     <string name="permission_rationale">"Contacts permissions are needed for providing email
         completions."
     </string>
+
+
     <string name="title_activity_user_agreement">User Agreement</string>
     <string name="title_activity_privacy_policy">PrivacyPolicyActivity</string>
     <string name="title_activity_help_and_support">Help &amp;nbsp; Support</string>
     <string name="title_activity_feedback">Feedback</string>
     <string name="title_activity_transaction_history">Transaction History</string>
-    <string name="title_activity_recipient_list">Recipient Lists</string>
+    <string name="title_activity_recipient_list">Recipient List</string>
     <string name="dummy_button">Dummy Button</string>
     <string name="dummy_content">DUMMY\nCONTENT</string>
     <string name="title_activity_account">Account</string>
     <string name="title_activity_about">About imme</string>
     <string name="title_activity_receive">Receive</string>
     <string name="title_activity_send_pay_details">Payment Details</string>
-    <string name="title_activity_gift">GiftActivity</string>
+    <string name="title_activity_gift">Gift</string>
+    <string name="title_activity_security_settings">Security Settings</string>
+    <string name="title_activity_invite_get_money">Invite &amp; Get Money</string>
+
     <string name="user_agreement">
+
 \nCopyright 2013 IMME. All Rights Reserved.
 
 \n\nThis software may not, in whole or in any part, be copied, reproduced, transmitted, translated (into any
@@ -164,4 +170,5 @@ distribution media, documentation, registration cards, and insertions.</string>
     <string name="logo_description">imme logo</string>
     <string name="title_activity_receive_qrcode">ReceiveQRCodeActivity</string>
     <string name="default_receive_balance">0</string>
+
 </resources>

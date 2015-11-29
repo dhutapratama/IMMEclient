@@ -35,8 +35,8 @@
     </style>
 
     <!-- The Custom Style -->
-    <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Light">
-        </style>
+    <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Light"></style>
+
     <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 
     <style name="FullscreenTheme" parent="AppTheme">
@@ -70,8 +70,8 @@
         <item name="android:textColorSecondary">@color/textWhite</item>
     </style>
 
-    <style name="AppThemeRed.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar">
-    </style>
+    <style name="AppThemeRed.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar"></style>
+
     <style name="AppThemeRed.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 
     <!-- Theme for Red Colour -->
@@ -93,8 +93,8 @@
         <item name="android:textColorSecondary">@color/textWhite</item>
     </style>
 
-    <style name="AppThemeGGreen.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar">
-    </style>
+    <style name="AppThemeGGreen.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar"></style>
+
     <style name="AppThemeGGreen.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 
     <!-- Theme for Blue Colour -->
@@ -113,8 +113,8 @@
         <item name="android:textColorSecondary">@color/textWhite</item>
     </style>
 
-    <style name="AppThemeBlue.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar">
-    </style>
+    <style name="AppThemeBlue.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar"></style>
+
     <style name="AppThemeBlue.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 
 </resources>
