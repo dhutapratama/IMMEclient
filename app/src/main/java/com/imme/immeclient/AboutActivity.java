@@ -27,6 +27,8 @@ public class AboutActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayUseLogoEnabled(true);
         getSupportActionBar().setLogo(R.mipmap.imme_logo);
 
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
         SystemBarTintManager tintManager = new SystemBarTintManager(this);
         // enable status bar tint
         tintManager.setStatusBarTintEnabled(true);
