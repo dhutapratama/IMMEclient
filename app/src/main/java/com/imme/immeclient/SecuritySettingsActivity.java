@@ -31,6 +31,7 @@ public class SecuritySettingsActivity extends AppCompatActivity {
         // enable navigation bar tint
         tintManager.setNavigationBarTintEnabled(true);
         // set a custom tint color for all system bars
+<<<<<<< HEAD
         tintManager.setTintColor(Color.parseColor("#FF03B0FF"));
 
         //Get widgets reference from XML layout
@@ -53,6 +54,9 @@ public class SecuritySettingsActivity extends AppCompatActivity {
             }
         });
 
+=======
+        tintManager.setTintColor(Color.parseColor("#FF0d8967"));
+>>>>>>> origin/security-settings
     }
 
     @Override
@@ -65,5 +69,4 @@ public class SecuritySettingsActivity extends AppCompatActivity {
                 return super.onOptionsItemSelected(item);
         }
     }
-
 }
