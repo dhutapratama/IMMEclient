@@ -162,13 +162,14 @@
             android:name=".SecuritySettingsActivity"
             android:label="@string/title_activity_security_setting"
             android:parentActivityName=".MainActivity"
-            android:screenOrientation="portrait" >
+            android:screenOrientation="portrait"
+            android:theme="@style/AppThemeGreen.NoActionBar">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.imme.immeclient.MainActivity" />
 
             <intent-filter>
-                <action android:name="com.imme.immeclient.SecuritySettingActivity" />
+                <action android:name="com.imme.immeclient.SecuritySettingsActivity" />
 
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
