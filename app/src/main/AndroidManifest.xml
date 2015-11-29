@@ -284,8 +284,10 @@
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.imme.immeclient.MainActivity" />
+
             <intent-filter>
                 <action android:name="com.imme.immeclient.ReceiveQRCodeActivity" />
+
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
@@ -301,6 +303,21 @@
 
             <intent-filter>
                 <action android:name="com.imme.immeclient.AboutActivity" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".PaymentDetails"
+            android:label="@string/title_activity_payment_details"
+            android:parentActivityName=".MainActivity"
+            android:theme="@style/AppThemeGreen.NoActionBar" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.imme.immeclient.MainActivity" />
+
+            <intent-filter>
+                <action android:name="com.imme.immeclient.PaymentDetails" />
 
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>

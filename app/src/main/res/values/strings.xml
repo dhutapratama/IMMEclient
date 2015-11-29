@@ -164,4 +164,5 @@ distribution media, documentation, registration cards, and insertions.</string>
     <string name="logo_description">imme logo</string>
     <string name="title_activity_receive_qrcode">Receive Money</string>
     <string name="default_receive_balance">0</string>
+    <string name="title_activity_payment_details">Payment Details</string>
 </resources>
