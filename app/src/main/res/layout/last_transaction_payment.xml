@@ -530,7 +530,8 @@
             android:gravity="center"
             android:padding="15dp"
             android:textColor="@color/textWhite"
-            android:background="#03B0FF"/>
+            android:background="#03B0FF"
+            android:id="@+id/pay_button"/>
 
     </LinearLayout>
 

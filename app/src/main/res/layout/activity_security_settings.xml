@@ -22,6 +22,6 @@
 
     </android.support.design.widget.AppBarLayout>
 
-    z<include layout="@layout/content_security_settings" />
+    <include layout="@layout/content_security_settings" />
 
 </android.support.design.widget.CoordinatorLayout>

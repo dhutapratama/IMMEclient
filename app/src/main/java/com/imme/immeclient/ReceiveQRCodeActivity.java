@@ -3,18 +3,15 @@ package com.imme.immeclient;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.view.View;
 import android.widget.ImageView;
 
 import com.google.zxing.BarcodeFormat;
 import com.google.zxing.WriterException;
 import com.google.zxing.common.BitMatrix;
 import com.google.zxing.qrcode.QRCodeWriter;
-
+import com.readystatesoftware.systembartint.SystemBarTintManager;
 
 public class ReceiveQRCodeActivity extends AppCompatActivity {
 
@@ -24,10 +21,16 @@ public class ReceiveQRCodeActivity extends AppCompatActivity {
         setContentView(R.layout.activity_receive_qrcode);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        SystemBarTintManager tintManager = new SystemBarTintManager(this);
+        // enable status bar tint
+        tintManager.setStatusBarTintEnabled(true);
+        // enable navigation bar tint
+        tintManager.setNavigationBarTintEnabled(true);
+        // set a custom tint color for all system bars
+        tintManager.setTintColor(Color.parseColor("#FF03B0FF"));
 
-        Bitmap encoded_qr = encodeToQrCode("50000000", 500, 500);
+        Bitmap encoded_qr = encodeToQrCode("REC:20000", 500, 500);
         ImageView myImage = (ImageView) findViewById(R.id.qr_code);
         myImage.setImageBitmap(encoded_qr);
 
