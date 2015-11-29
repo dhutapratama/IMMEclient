@@ -6,21 +6,15 @@ import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.view.Gravity;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TableRow;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.readystatesoftware.systembartint.SystemBarTintManager;
 
-import org.w3c.dom.Text;
-
-import java.text.DecimalFormat;
-import java.text.DecimalFormatSymbols;
 import java.text.NumberFormat;
 import java.util.Locale;
 
@@ -172,8 +166,6 @@ public class ReceiveActivity extends AppCompatActivity {
                 }
 
                 String formated_money = NumberFormat.getNumberInstance(Locale.GERMANY).format(Integer.parseInt(money));
-                balance.setText(formated_money);
-
                 balance.setText(formated_money);
                 balance.setLayoutParams(new TableRow.LayoutParams(
                         TableRow.LayoutParams.WRAP_CONTENT,

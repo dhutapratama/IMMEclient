@@ -240,7 +240,7 @@
         <activity
             android:name=".Send_pay_details"
             android:label="@string/title_activity_send_pay_details"
-            android:parentActivityName=".SendPayActivity"
+            android:parentActivityName=".MainActivity"
             android:theme="@style/AppThemeBlue.NoActionBar">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
