@@ -17,7 +17,7 @@
     <!-- Main Balance -->
     <string name="main_balance">Balance</string>
     <string name="main_rupiah">Rp</string>
-    <string name="main_balance_value">300.000</string>
+    <string name="main_balance_value">0</string>
 
     <string name="main_lastTransaction">Last Transaction</string>
     <string name="main_lastTransaction_send">Send/Pay</string>
@@ -178,4 +178,5 @@ distribution media, documentation, registration cards, and insertions.</string>
     <string name="title_activity_receive_qrcode">Receive Money</string>
     <string name="default_receive_balance">0</string>
     <string name="title_activity_payment_details">Payment Details</string>
+    <string name="title_activity_personal_send">Send Money</string>
 </resources>
