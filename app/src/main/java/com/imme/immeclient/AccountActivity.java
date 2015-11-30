@@ -26,6 +26,7 @@ public class AccountActivity extends AppCompatActivity {
         tintManager.setNavigationBarTintEnabled(true);
         // set a custom tint color for all system bars
         tintManager.setTintColor(Color.parseColor("#FF0d8967"));
+
     }
 
     @Override
