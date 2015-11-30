@@ -31,7 +31,7 @@ public class TransactionHistoryActivity extends AppCompatActivity {
         // enable navigation bar tint
         tintManager.setNavigationBarTintEnabled(true);
         // set a custom tint color for all system bars
-        tintManager.setTintColor(Color.parseColor("#FF03B0FF"));
+        tintManager.setTintColor(Color.parseColor("#FF249962"));
     }
 
     @Override
