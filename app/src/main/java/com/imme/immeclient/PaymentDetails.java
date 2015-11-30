@@ -20,6 +20,7 @@ public class PaymentDetails extends AppCompatActivity {
         setContentView(R.layout.activity_payment_details);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         SystemBarTintManager tintManager = new SystemBarTintManager(this);
@@ -28,7 +29,7 @@ public class PaymentDetails extends AppCompatActivity {
         // enable navigation bar tint
         tintManager.setNavigationBarTintEnabled(true);
         // set a custom tint color for all system bars
-        tintManager.setTintColor(Color.parseColor("#FF0d8967"));
+        tintManager.setTintColor(Color.parseColor("#FF0093d9"));
     }
 
     @Override

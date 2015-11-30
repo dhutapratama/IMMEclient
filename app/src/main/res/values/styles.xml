@@ -79,9 +79,9 @@
         <!-- Customize your theme here. -->
 
         <!-- Custom for Status Bar-->
-        <item name="colorPrimaryDark">#239961</item>
+        <item name="colorPrimaryDark">#249962</item>
         <!-- Custom for ToolBar-->
-        <item name="colorPrimary">#2cb674</item>
+        <item name="colorPrimary">#2bb673</item>
         <item name="colorAccent">@color/colorPrimaryDark</item>
     </style>
 
