@@ -35,7 +35,6 @@ public class SendPayActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_send_pay);
-
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
@@ -95,13 +94,12 @@ public class SendPayActivity extends AppCompatActivity {
             String selector = decoded_data[0];
             Integer value = Integer.parseInt(decoded_data[1]);
 
-            if(result.getContents() == null) {
+            if(result.getContents().equals("null")) {
                 //Toast.makeText(this, "Cancelled", Toast.LENGTH_LONG).show();
                 //Intent intentView = new Intent("com.imme.immeclient.Send_pay_details");
                // startActivity(intentView);
             } else {
                 //Toast.makeText(this, "Scanned: " + result.getContents(), Toast.LENGTH_LONG).show();
-
                 if (selector.equals("REC")) {
                     String balance = readFromFile("balance");
                     Integer balance_int = Integer.parseInt(balance);
