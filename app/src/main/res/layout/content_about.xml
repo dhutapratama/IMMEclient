@@ -9,32 +9,97 @@
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:showIn="@layout/activity_about"
     tools:context="com.imme.immeclient.AboutActivity"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:background="@mipmap/about_bg">
 
-    <TextView
+    <LinearLayout
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:gravity="center_horizontal"
-        android:text="About Integrated Mobile Money Exchange"
-        android:textSize="8pt"
-        android:textStyle="bold"
-        android:padding="4dp"/>
+        android:orientation="vertical">
 
-    <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/imageView5"
-        android:layout_gravity="center_horizontal"
-        android:src="@mipmap/imme_logo"
-        android:paddingTop="50dp"
-        android:paddingBottom="5dp"
-        android:contentDescription="@string/logo_description" />
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/integrated_mobile"
+            android:paddingTop="140dp">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="PT. Herantokamu Pte. Ldt."
-        android:id="@+id/copyright"
-        android:layout_gravity="center_horizontal" />
+            <TextView
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_horizontal"
+                android:text="Integrated Mobile Money Exchange"
+                android:textColor="#ffffff"
+                android:textSize="9pt"
+                android:textStyle="bold"
+                android:padding="4dp"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/version"
+            android:gravity="center"
+            android:paddingTop="10dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Version 1.0"
+                android:textSize="8pt"
+                android:textColor="#ffffff"
+                android:layout_gravity="center_horizontal" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/logo_imme"
+            android:gravity="center"
+            android:paddingTop="20dp">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@mipmap/about_logo_imme"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/inc"
+            android:gravity="center"
+            android:paddingTop="20dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="© 2013-2015 IMME Inc."
+                android:textSize="8pt"
+                android:textColor="#ffffff"
+                android:layout_gravity="center_horizontal" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/reserved"
+            android:gravity="center"
+            android:paddingTop="10dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="All right reserved."
+                android:textSize="8pt"
+                android:textColor="#ffffff"
+                android:layout_gravity="center_horizontal" />
+
+        </LinearLayout>
+
+    </LinearLayout>
 
 </LinearLayout>

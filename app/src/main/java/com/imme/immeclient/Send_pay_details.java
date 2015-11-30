@@ -37,7 +37,6 @@ public class Send_pay_details extends AppCompatActivity {
                 startActivity(intentView);
             }
         });
-
     }
 
     @Override
