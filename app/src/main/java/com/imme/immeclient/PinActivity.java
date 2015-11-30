@@ -181,23 +181,23 @@ public class PinActivity extends AppCompatActivity {
             // API Running
             Intent intent = new Intent("com.imme.immeclient.PaymentDetails");
             startActivity(intent);
-        } else {
-            switch (pin.length()) {
-                case 1:
-                    pin_1.setBackgroundColor(Color.GREEN);
-                    break;
-                case 2:
-                    pin_2.setBackgroundColor(Color.GREEN);
-                    break;
-                case 3:
-                    pin_3.setBackgroundColor(Color.GREEN);
-                    break;
-                case 4:
-                    pin_4.setBackgroundColor(Color.GREEN);
-                    break;
-                default:
-                    break;
-            }
+        }
+
+        switch (pin.length()) {
+            case 1:
+                pin_1.setBackgroundColor(Color.GREEN);
+                break;
+            case 2:
+                pin_2.setBackgroundColor(Color.GREEN);
+                break;
+            case 3:
+                pin_3.setBackgroundColor(Color.GREEN);
+                break;
+            case 4:
+                pin_4.setBackgroundColor(Color.GREEN);
+                break;
+            default:
+                break;
         }
         //balance.setText(money);
     }
