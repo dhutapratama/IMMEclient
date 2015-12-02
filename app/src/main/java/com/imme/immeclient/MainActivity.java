@@ -1,14 +1,13 @@
 package com.imme.immeclient;
 
-import android.app.AlertDialog;
-import android.content.DialogInterface;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.Build;
 import android.os.Bundle;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.ActionBar;
+import android.util.Log;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -24,6 +23,15 @@ import android.widget.TextView;
 
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.readystatesoftware.systembartint.SystemBarTintManager;
+
+import java.io.BufferedReader;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
+import java.text.NumberFormat;
+import java.util.Locale;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -42,7 +50,6 @@ public class MainActivity extends AppCompatActivity
             toolbar.setPadding(0, getStatusBarHeight(), 0, 0);
             toolbar.getLayoutParams().height = toolbar.getLayoutParams().height + getStatusBarHeight();
         }
-
         // Start Font
         Typeface hnLight = Typeface.createFromAsset(getAssets(),
                 "fonts/HelveticaNeue-Light.otf");
@@ -112,19 +119,18 @@ public class MainActivity extends AppCompatActivity
         overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
         */
 
-
+        // Status Bar Coloring
         SystemBarTintManager tintManager = new SystemBarTintManager(this);
-        // enable status bar tint
         tintManager.setStatusBarTintEnabled(true);
-        // enable navigation bar tint
         tintManager.setNavigationBarTintEnabled(true);
-        // set a custom tint color for all system bars
         tintManager.setTintColor(Color.parseColor("#FF03B0FF"));
-        // set a custom navigation bar resource
-        //tintManager.setNavigationBarTintResource(R.drawable.bg_item_selected_drawable);
-        // set a custom status bar drawable
-        //tintManager.setStatusBarTintDrawable();
 
+        // Balance
+        String balance_value = readFromFile("balance");
+        String formated_money = NumberFormat.getNumberInstance(Locale.GERMANY).format(Integer.parseInt(balance_value));
+        text_main_balance_value.setText(formated_money);
+
+        // Button Action
         ImageButton send_pay = (ImageButton) findViewById(R.id.send_pay);
         send_pay.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -293,6 +299,56 @@ public class MainActivity extends AppCompatActivity
         }
         return result;
     }
+
+    private void writeToFile(String varname, String data) {
+        try {
+            OutputStreamWriter outputStreamWriter = new OutputStreamWriter(openFileOutput(varname + ".txt", Context.MODE_PRIVATE));
+            outputStreamWriter.write(data);
+            outputStreamWriter.close();
+        }
+        catch (IOException e) {
+            Log.e("Exception", "File write failed: " + e.toString());
+        }
+    }
+
+    private String readFromFile(String varname) {
+
+        String ret = "";
+
+        try {
+            InputStream inputStream = openFileInput(varname + ".txt");
+
+            if ( inputStream != null ) {
+                InputStreamReader inputStreamReader = new InputStreamReader(inputStream);
+                BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
+                String receiveString = "";
+                StringBuilder stringBuilder = new StringBuilder();
+
+                while ( (receiveString = bufferedReader.readLine()) != null ) {
+                    stringBuilder.append(receiveString);
+                }
+
+                inputStream.close();
+                ret = stringBuilder.toString();
+            }
+        }
+        catch (FileNotFoundException e) {
+            Log.e("MainActivity", "File not found: " + e.toString());
+            if (varname.equals("balance")) {
+                writeToFile("balance", "0");
+                ret = readFromFile("balance");
+            } else {
+
+            }
+        } catch (IOException e) {
+            Log.e("MainActivity", "Can not read file: " + e.toString());
+        }
+
+        return ret;
+    }
+
+
+
 }
 
 /**

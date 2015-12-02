@@ -14,7 +14,9 @@ android:orientation="vertical">
 <ScrollView
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:id="@+id/scrollView2" >
+    android:id="@+id/scrollView2"
+    android:scrollbarThumbVertical="@drawable/scrollbar"
+    android:scrollbarSize="5dp" >
 
     <LinearLayout
         android:orientation="vertical"

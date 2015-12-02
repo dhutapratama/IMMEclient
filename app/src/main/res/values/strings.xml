@@ -9,17 +9,15 @@
     <!-- Slide Splash -->
     <string name="screen1_title">Send/Pay</string>
     <string name="screen1_desc">You can send or pay.</string>
-
     <string name="screen2_title">Receive</string>
     <string name="screen2_desc">You can Receive from your friend.</string>
-
     <string name="screen3_title">TopUp</string>
     <string name="screen3_desc">You can TopUp your IMME in merchant.</string>
 
     <!-- Main Balance -->
     <string name="main_balance">Balance</string>
     <string name="main_rupiah">Rp</string>
-    <string name="main_balance_value">300.000</string>
+    <string name="main_balance_value">0</string>
 
     <string name="main_lastTransaction">Last Transaction</string>
     <string name="main_lastTransaction_send">Send/Pay</string>
@@ -102,22 +100,31 @@
         completions."
     </string>
 
+    <!-- Main Page -->
+    <string name="title_activity_gift">Gift</string>
 
+    <!-- Nav Bar Right Main Page -->
     <string name="title_activity_user_agreement">User Agreement</string>
-    <string name="title_activity_privacy_policy">PrivacyPolicyActivity</string>
-    <string name="title_activity_help_and_support">Help &amp;nbsp; Support</string>
+    <string name="title_activity_privacy_policy">Privacy Policy</string>
+    <string name="title_activity_help_and_support">Help &amp; Support</string>
     <string name="title_activity_feedback">Feedback</string>
+    <string name="title_activity_about">About</string>
+
+    <!-- Nav Bar Left Main Page -->
+    <string name="title_activity_account">Account</string>
     <string name="title_activity_transaction_history">Transaction History</string>
+    <string name="title_activity_security_settings">Security Settings</string>
     <string name="title_activity_recipient_list">Recipient List</string>
+    <string name="title_activity_invite_get_money">Invite &amp; Get Money</string>
+
+
     <string name="dummy_button">Dummy Button</string>
     <string name="dummy_content">DUMMY\nCONTENT</string>
-    <string name="title_activity_account">Account</string>
-    <string name="title_activity_about">About</string>
     <string name="title_activity_receive">Receive</string>
     <string name="title_activity_send_pay_details">Payment Details</string>
-    <string name="title_activity_gift">Gift</string>
-    <string name="title_activity_security_settings">Security Settings</string>
-    <string name="title_activity_invite_get_money">Invite &amp; Get Money</string>
+
+
+
 
     <string name="user_agreement">
 
@@ -171,4 +178,5 @@ distribution media, documentation, registration cards, and insertions.</string>
     <string name="title_activity_receive_qrcode">Receive Money</string>
     <string name="default_receive_balance">0</string>
     <string name="title_activity_payment_details">Payment Details</string>
+    <string name="title_activity_personal_send">Send Money</string>
 </resources>

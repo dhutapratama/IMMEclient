@@ -1,26 +1,28 @@
 package com.imme.immeclient;
 
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.view.Gravity;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TableRow;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.readystatesoftware.systembartint.SystemBarTintManager;
 
-import org.w3c.dom.Text;
-
-import java.text.DecimalFormat;
-import java.text.DecimalFormatSymbols;
+import java.io.BufferedReader;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
 import java.text.NumberFormat;
 import java.util.Locale;
 
@@ -74,6 +76,8 @@ public class ReceiveActivity extends AppCompatActivity {
         final Button button = (Button) findViewById(R.id.receiver_continue);
         button.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
+                writeToFile("request", money);
+
                 Intent intent = new Intent("com.imme.immeclient.ReceiveQRCodeActivity");
                 startActivity(intent);
             }
@@ -173,8 +177,6 @@ public class ReceiveActivity extends AppCompatActivity {
 
                 String formated_money = NumberFormat.getNumberInstance(Locale.GERMANY).format(Integer.parseInt(money));
                 balance.setText(formated_money);
-
-                balance.setText(formated_money);
                 balance.setLayoutParams(new TableRow.LayoutParams(
                         TableRow.LayoutParams.WRAP_CONTENT,
                         TableRow.LayoutParams.WRAP_CONTENT));
@@ -205,5 +207,46 @@ public class ReceiveActivity extends AppCompatActivity {
 
         String formated_money = NumberFormat.getNumberInstance(Locale.GERMANY).format(Integer.parseInt(money));
         balance.setText(formated_money);
+    }
+
+    private void writeToFile(String varname, String data) {
+        try {
+            OutputStreamWriter outputStreamWriter = new OutputStreamWriter(openFileOutput(varname + ".txt", Context.MODE_PRIVATE));
+            outputStreamWriter.write(data);
+            outputStreamWriter.close();
+        }
+        catch (IOException e) {
+            Log.e("Exception", "File write failed: " + e.toString());
+        }
+    }
+
+    private String readFromFile(String varname) {
+
+        String ret = "";
+
+        try {
+            InputStream inputStream = openFileInput(varname + ".txt");
+
+            if ( inputStream != null ) {
+                InputStreamReader inputStreamReader = new InputStreamReader(inputStream);
+                BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
+                String receiveString = "";
+                StringBuilder stringBuilder = new StringBuilder();
+
+                while ( (receiveString = bufferedReader.readLine()) != null ) {
+                    stringBuilder.append(receiveString);
+                }
+
+                inputStream.close();
+                ret = stringBuilder.toString();
+            }
+        }
+        catch (FileNotFoundException e) {
+            Log.e("MainActivity", "File not found: " + e.toString());
+        } catch (IOException e) {
+            Log.e("MainActivity", "Can not read file: " + e.toString());
+        }
+
+        return ret;
     }
 }

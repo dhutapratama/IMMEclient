@@ -17,9 +17,6 @@ public class UserAgreementActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setTitle("");
-        getSupportActionBar().setDisplayUseLogoEnabled(true);
-        getSupportActionBar().setLogo(R.mipmap.imme_logo);
 
         SystemBarTintManager tintManager = new SystemBarTintManager(this);
         // enable status bar tint
@@ -27,7 +24,7 @@ public class UserAgreementActivity extends AppCompatActivity {
         // enable navigation bar tint
         tintManager.setNavigationBarTintEnabled(true);
         // set a custom tint color for all system bars
-        tintManager.setTintColor(Color.parseColor("#FF03B0FF"));
+        tintManager.setTintColor(Color.parseColor("#FF249962"));
     }
 
     @Override
