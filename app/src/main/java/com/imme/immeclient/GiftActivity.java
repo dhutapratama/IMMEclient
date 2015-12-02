@@ -21,9 +21,6 @@ public class GiftActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setTitle("");
-        getSupportActionBar().setDisplayUseLogoEnabled(true);
-        getSupportActionBar().setLogo(R.mipmap.imme_logo);
 
         SystemBarTintManager tintManager = new SystemBarTintManager(this);
         // enable status bar tint
