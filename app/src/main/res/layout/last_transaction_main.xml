@@ -43,7 +43,8 @@
                 android:paddingBottom="@dimen/main_lastTransaction_padding"
                 android:paddingLeft="@dimen/main_LastTransaction_paddingLeft"/>
 
-            <TextView android:text="PT. Lazada Indonesia"
+            <TextView
+                android:text="PT. Lazada Indonesia"
                 android:id="@+id/main_history_name1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -88,6 +89,7 @@
                     android:width="120dp"
                     />
             </LinearLayout>
+
         </RelativeLayout>
 
         <RelativeLayout

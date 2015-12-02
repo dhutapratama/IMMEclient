@@ -11,6 +11,7 @@
     <color name="colorWhite">#ffffff</color>
 
     <color name="textWhite">#FFFFFF</color>
+    <color name="textBlack">#000000</color>
 
     <color name="main_lastTransaction_bg">#0F84BA</color>
     <color name="main_lastTransaction_bg_1">#03B0FF</color>
