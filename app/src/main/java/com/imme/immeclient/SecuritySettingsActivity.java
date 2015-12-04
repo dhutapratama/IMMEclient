@@ -34,24 +34,24 @@ public class SecuritySettingsActivity extends AppCompatActivity {
         tintManager.setTintColor(Color.parseColor("#FF249962"));
 
         //Get widgets reference from XML layout
-        final TextView tView = (TextView) findViewById(R.id.tv);
-        Switch sButton = (Switch) findViewById(R.id.switch_btn);
+        //final TextView tView = (TextView) findViewById(R.id.tv);
+        //Switch sButton = (Switch) findViewById(R.id.switch_btn);
 
         //Set a Click Listener for Switch Button
-        sButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+        //sButton.setOnClickListener(new View.OnClickListener() {
+        //@Override
+        //public void onClick(View v) {
                 //Is the switch is on?
-                boolean on = ((Switch) v).isChecked();
-                if (on) {
+        //  boolean on = ((Switch) v).isChecked();
+        //      if (on) {
                     //Do something when switch is on/checked
-                    tView.setText("Switch is on....");
-                } else {
+        //          tView.setText("Switch is on....");
+        //      } else {
                     //Do something when switch is off/unchecked
-                    tView.setText("Switch is off....");
-                }
-            }
-        });
+        //          tView.setText("Switch is off....");
+        //      }
+        //  }
+        //});
     }
 
     @Override
