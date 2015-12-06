@@ -195,6 +195,16 @@
                             android:paddingTop="10dp"
                             android:paddingBottom="3dp"
                             android:textColor="#000000"/>
+
+                        <EditText
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:inputType="textPersonName"
+                            android:text="Name"
+                            android:ems="10"
+                            android:id="@+id/editText"
+                            android:background="@drawable/account_account_setting_name_list"
+                            />
                     </LinearLayout>
 
                     <LinearLayout
