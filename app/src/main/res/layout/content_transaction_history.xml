@@ -66,7 +66,7 @@
                     android:paddingTop="17dp"
                     android:paddingBottom="10dp"
                     android:paddingLeft="5dp"
-                    android:paddingRight="10dp">
+                    android:paddingRight="6dp">
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -85,7 +85,7 @@
                 <LinearLayout
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical"
+                    android:orientation="horizontal"
                     android:paddingTop="23dp"
                     android:paddingBottom="10dp"
                     android:paddingRight="10dp">
@@ -93,7 +93,14 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Rp. 188.800"
+                        android:text="Rp."
+                        android:textSize="17sp"
+                        android:textColor="#000000"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="188.800"
                         android:layout_gravity="right"
                         android:gravity="right"
                         android:textSize="17dp"
@@ -142,7 +149,7 @@
                     android:paddingTop="17dp"
                     android:paddingBottom="10dp"
                     android:paddingLeft="5dp"
-                    android:paddingRight="10dp">
+                    android:paddingRight="15dp">
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -161,7 +168,7 @@
                 <LinearLayout
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical"
+                    android:orientation="horizontal"
                     android:paddingTop="23dp"
                     android:paddingBottom="10dp"
                     android:paddingRight="10dp">
@@ -169,7 +176,14 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Rp. 2.100.800"
+                        android:text="Rp."
+                        android:textSize="17sp"
+                        android:textColor="#000000"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="2.100.800"
                         android:layout_gravity="right"
                         android:gravity="right"
                         android:textSize="17dp"
@@ -218,7 +232,7 @@
                     android:paddingTop="17dp"
                     android:paddingBottom="10dp"
                     android:paddingLeft="5dp"
-                    android:paddingRight="10dp">
+                    android:paddingRight="18dp">
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -237,7 +251,7 @@
                 <LinearLayout
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical"
+                    android:orientation="horizontal"
                     android:paddingTop="23dp"
                     android:paddingBottom="10dp"
                     android:paddingRight="10dp">
@@ -245,7 +259,14 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Rp. 100.000"
+                        android:text="Rp."
+                        android:textSize="17sp"
+                        android:textColor="#000000"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="100.000"
                         android:layout_gravity="right"
                         android:gravity="right"
                         android:textSize="17dp"
@@ -294,7 +315,7 @@
                     android:paddingTop="17dp"
                     android:paddingBottom="10dp"
                     android:paddingLeft="5dp"
-                    android:paddingRight="10dp">
+                    android:paddingRight="6dp">
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -313,7 +334,7 @@
                 <LinearLayout
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical"
+                    android:orientation="horizontal"
                     android:paddingTop="23dp"
                     android:paddingBottom="10dp"
                     android:paddingRight="10dp">
@@ -321,7 +342,14 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Rp. 188.800"
+                        android:text="Rp."
+                        android:textSize="17sp"
+                        android:textColor="#000000"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="188.800"
                         android:layout_gravity="right"
                         android:gravity="right"
                         android:textSize="17dp"
@@ -370,7 +398,7 @@
                     android:paddingTop="17dp"
                     android:paddingBottom="10dp"
                     android:paddingLeft="5dp"
-                    android:paddingRight="10dp">
+                    android:paddingRight="15dp">
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -389,7 +417,7 @@
                 <LinearLayout
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical"
+                    android:orientation="horizontal"
                     android:paddingTop="23dp"
                     android:paddingBottom="10dp"
                     android:paddingRight="10dp">
@@ -397,7 +425,14 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Rp. 2.100.800"
+                        android:text="Rp."
+                        android:textSize="17sp"
+                        android:textColor="#000000"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="2.100.800"
                         android:layout_gravity="right"
                         android:gravity="right"
                         android:textSize="17dp"
@@ -446,7 +481,7 @@
                     android:paddingTop="17dp"
                     android:paddingBottom="10dp"
                     android:paddingLeft="5dp"
-                    android:paddingRight="10dp">
+                    android:paddingRight="18dp">
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -465,7 +500,7 @@
                 <LinearLayout
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical"
+                    android:orientation="horizontal"
                     android:paddingTop="23dp"
                     android:paddingBottom="10dp"
                     android:paddingRight="10dp">
@@ -473,7 +508,14 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Rp. 100.000"
+                        android:text="Rp."
+                        android:textSize="17sp"
+                        android:textColor="#000000"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="100.000"
                         android:layout_gravity="right"
                         android:gravity="right"
                         android:textSize="17dp"
@@ -522,7 +564,7 @@
                     android:paddingTop="17dp"
                     android:paddingBottom="10dp"
                     android:paddingLeft="5dp"
-                    android:paddingRight="10dp">
+                    android:paddingRight="6dp">
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -541,7 +583,7 @@
                 <LinearLayout
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical"
+                    android:orientation="horizontal"
                     android:paddingTop="23dp"
                     android:paddingBottom="10dp"
                     android:paddingRight="10dp">
@@ -549,7 +591,14 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Rp. 188.800"
+                        android:text="Rp."
+                        android:textSize="17sp"
+                        android:textColor="#000000"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="188.800"
                         android:layout_gravity="right"
                         android:gravity="right"
                         android:textSize="17dp"
@@ -598,7 +647,7 @@
                     android:paddingTop="17dp"
                     android:paddingBottom="10dp"
                     android:paddingLeft="5dp"
-                    android:paddingRight="10dp">
+                    android:paddingRight="15dp">
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -617,7 +666,7 @@
                 <LinearLayout
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical"
+                    android:orientation="horizontal"
                     android:paddingTop="23dp"
                     android:paddingBottom="10dp"
                     android:paddingRight="10dp">
@@ -625,7 +674,14 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Rp. 2.100.800"
+                        android:text="Rp."
+                        android:textSize="17sp"
+                        android:textColor="#000000"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="2.100.800"
                         android:layout_gravity="right"
                         android:gravity="right"
                         android:textSize="17dp"
@@ -674,7 +730,7 @@
                     android:paddingTop="17dp"
                     android:paddingBottom="10dp"
                     android:paddingLeft="5dp"
-                    android:paddingRight="10dp">
+                    android:paddingRight="18dp">
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -693,7 +749,7 @@
                 <LinearLayout
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical"
+                    android:orientation="horizontal"
                     android:paddingTop="23dp"
                     android:paddingBottom="10dp"
                     android:paddingRight="10dp">
@@ -701,7 +757,14 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Rp. 100.000"
+                        android:text="Rp."
+                        android:textSize="17sp"
+                        android:textColor="#000000"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="100.000"
                         android:layout_gravity="right"
                         android:gravity="right"
                         android:textSize="17dp"
