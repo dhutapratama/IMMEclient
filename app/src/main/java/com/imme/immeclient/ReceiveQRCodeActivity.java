@@ -56,7 +56,7 @@ public class ReceiveQRCodeActivity extends AppCompatActivity {
 
         LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         View vi = inflater.inflate(R.layout.content_main, null); //log.xml is your file.
-        TextView main_balance_value = (TextView)vi.findViewById(R.id.main_balance_value); //get a reference to the textview on the log.xml file.
+        TextView main_balance_value = (TextView)vi.findViewById(R.id.main_textview_balance_value); //get a reference to the textview on the log.xml file.
         String formated_money = NumberFormat.getNumberInstance(Locale.GERMANY).format(balance_int);
         main_balance_value.setText(formated_money);
 
