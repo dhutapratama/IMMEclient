@@ -57,50 +57,50 @@ public class MainActivity extends AppCompatActivity
         Typeface hbqLight = Typeface.createFromAsset(getAssets(),
                 "fonts/HelveticaBQ-Light.otf");
 
-        TextView text_main_balance = (TextView) findViewById(R.id.main_balance);
-        text_main_balance.setTypeface(hnLight);
+        TextView main_textview_balance = (TextView) findViewById(R.id.main_textview_balance);
+        main_textview_balance.setTypeface(hnLight);
 
-        TextView text_main_rp = (TextView) findViewById(R.id.main_rp);
-        text_main_rp.setTypeface(hnLight);
+        TextView main_textview_rp = (TextView) findViewById(R.id.main_textview_rp);
+        main_textview_rp.setTypeface(hnLight);
 
-        TextView text_main_balance_value = (TextView) findViewById(R.id.main_balance_value);
-        text_main_balance_value.setTypeface(hbqLight);
+        TextView main_textview_balance_value = (TextView) findViewById(R.id.main_textview_balance_value);
+        main_textview_balance_value.setTypeface(hbqLight);
 
-        TextView text_main_last_transaction = (TextView) findViewById(R.id.main_last_transaction);
-        text_main_last_transaction.setTypeface(hnLight);
+        TextView main_textview_last_transaction = (TextView) findViewById(R.id.main_textview_last_transaction);
+        main_textview_last_transaction.setTypeface(hnLight);
 
-        TextView text_main_history_name1 = (TextView) findViewById(R.id.main_history_name1);
-        text_main_history_name1.setTypeface(hnLight);
+        TextView main_textview_history_name1 = (TextView) findViewById(R.id.main_textview_history_name1);
+        main_textview_history_name1.setTypeface(hnLight);
 
-        TextView text_main_history_name2 = (TextView) findViewById(R.id.main_history_name2);
-        text_main_history_name2.setTypeface(hnLight);
+        TextView main_textview_history_name2 = (TextView) findViewById(R.id.main_textview_history_name2);
+        main_textview_history_name2.setTypeface(hnLight);
 
-        TextView text_main_history_name3 = (TextView) findViewById(R.id.main_history_name3);
-        text_main_history_name3.setTypeface(hnLight);
+        TextView main_textview_history_name3 = (TextView) findViewById(R.id.main_textview_history_name3);
+        main_textview_history_name3.setTypeface(hnLight);
 
-        TextView text_main_history_total1 = (TextView) findViewById(R.id.main_history_total1);
-        text_main_history_total1.setTypeface(hnLight);
+        TextView main_textview_history_total1 = (TextView) findViewById(R.id.main_textview_history_total1);
+        main_textview_history_total1.setTypeface(hnLight);
 
-        TextView text_main_history_total2 = (TextView) findViewById(R.id.main_history_total2);
-        text_main_history_total2.setTypeface(hnLight);
+        TextView main_textview_history_total2 = (TextView) findViewById(R.id.main_textview_history_total2);
+        main_textview_history_total2.setTypeface(hnLight);
 
-        TextView text_main_history_total3 = (TextView) findViewById(R.id.main_history_total3);
-        text_main_history_total3.setTypeface(hnLight);
+        TextView main_textview_history_total3 = (TextView) findViewById(R.id.main_textview_history_total3);
+        main_textview_history_total3.setTypeface(hnLight);
 
-        TextView text_main_history_date1 = (TextView) findViewById(R.id.main_history_date1);
-        text_main_history_date1.setTypeface(hnLight);
+        TextView main_textview_history_date1 = (TextView) findViewById(R.id.main_textview_history_date1);
+        main_textview_history_date1.setTypeface(hnLight);
 
-        TextView text_main_history_date2 = (TextView) findViewById(R.id.main_history_date2);
-        text_main_history_date2.setTypeface(hnLight);
+        TextView main_textview_history_date2 = (TextView) findViewById(R.id.main_textview_history_date2);
+        main_textview_history_date2.setTypeface(hnLight);
 
-        TextView text_main_history_date3 = (TextView) findViewById(R.id.main_history_date3);
-        text_main_history_date3.setTypeface(hnLight);
+        TextView main_textview_history_date3 = (TextView) findViewById(R.id.main_textview_history_date3);
+        main_textview_history_date3.setTypeface(hnLight);
 
-        TextView text_main_hello = (TextView) findViewById(R.id.main_hello);
-        text_main_hello.setTypeface(hnLight);
+        TextView main_textview_hello = (TextView) findViewById(R.id.main_textview_hello);
+        main_textview_hello.setTypeface(hnLight);
 
-        TextView text_main_what_do_you_need = (TextView) findViewById(R.id.main_what_do_you_need);
-        text_main_what_do_you_need.setTypeface(hnLight);
+        TextView main_textview_what_do_you_need = (TextView) findViewById(R.id.main_textview_what_do_you_need);
+        main_textview_what_do_you_need.setTypeface(hnLight);
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -128,11 +128,11 @@ public class MainActivity extends AppCompatActivity
         // Balance
         String balance_value = readFromFile("balance");
         String formated_money = NumberFormat.getNumberInstance(Locale.GERMANY).format(Integer.parseInt(balance_value));
-        text_main_balance_value.setText(formated_money);
+        main_textview_balance_value.setText(formated_money);
 
         // Button Action
-        ImageButton send_pay = (ImageButton) findViewById(R.id.send_pay);
-        send_pay.setOnClickListener(new View.OnClickListener() {
+        ImageButton main_button_send_pay = (ImageButton) findViewById(R.id.main_button_send_pay);
+        main_button_send_pay.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent("com.imme.immeclient.SendPayActivity");
@@ -140,8 +140,8 @@ public class MainActivity extends AppCompatActivity
             }
         });
 
-        ImageButton receive = (ImageButton) findViewById(R.id.receive);
-        receive.setOnClickListener(new View.OnClickListener() {
+        ImageButton main_button_receive = (ImageButton) findViewById(R.id.main_button_receive);
+        main_button_receive.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent("com.imme.immeclient.ReceiveActivity");
@@ -149,8 +149,8 @@ public class MainActivity extends AppCompatActivity
             }
         });
 
-        ImageButton topup = (ImageButton) findViewById(R.id.topup);
-        topup.setOnClickListener(new View.OnClickListener() {
+        ImageButton main_button_topup = (ImageButton) findViewById(R.id.main_button_topup);
+        main_button_topup.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 IntentIntegrator integrator = new IntentIntegrator(MainActivity.this);
