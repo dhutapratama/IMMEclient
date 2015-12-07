@@ -11,13 +11,22 @@
     tools:context="com.imme.immeclient.FeedbackActivity"
     android:orientation="vertical">
 
-        <TextView
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center_horizontal"
-            android:text="Feedback"
-            android:textSize="8pt"
-            android:textStyle="bold"
-            android:padding="4dp"/>
+    <EditText
+        android:id="@+id/EditTextFeedbackBody"
+        android:layout_height="wrap_content"
+        android:hint="Enter you describe problem"
+        android:textColor="#000000"
+        android:inputType="textMultiLine"
+        android:lines="5"
+        android:layout_width="fill_parent">
+    </EditText>
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="send"
+        android:paddingTop="10dp"
+        android:layout_gravity="center"
+        android:background="@drawable/account_balance_gift_bg"/>
 
 </LinearLayout>

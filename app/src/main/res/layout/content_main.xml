@@ -26,9 +26,9 @@
                 android:background="@drawable/imme_home_balance_bg"
                 android:layout_height="@dimen/main_balance_layout_height"
                 android:orientation="vertical">
-
-                <TextView android:text="@string/main_balance"
-                    android:id="@+id/main_balance"
+                <TextView
+                    android:text="@string/main_balance"
+                    android:id="@+id/main_textview_balance"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:paddingTop="@dimen/main_balance_text_paddingTop"
@@ -42,52 +42,43 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
                     android:paddingTop="@dimen/main_balance_paddingTop">
-
                     <TextView android:text="@string/main_rupiah"
-                        android:id="@+id/main_rp"
+                        android:id="@+id/main_textview_rp"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textColor="@color/textWhite"
                         android:textSize="25sp"
                         android:paddingTop="@dimen/main_balance_rp_paddingTop"
                         android:paddingRight="@dimen/main_balance_rp_paddingRight" />
-
                     <TextView android:text="@string/main_balance_value"
                         android:layout_width="fill_parent"
                         android:layout_height="wrap_content"
                         android:textColor="@color/textWhite"
                         android:textSize="50sp"
-                        android:id="@+id/main_balance_value"
+                        android:id="@+id/main_textview_balance_value"
                         android:layout_gravity="center_horizontal" />
-
                 </LinearLayout>
 
             </LinearLayout>
 
-            <include layout="@layout/last_transaction_main" android:layout_width="fill_parent" android:layout_height="wrap_content"></include>
+            <include layout="@layout/content_main_last_transaction" android:layout_width="fill_parent" android:layout_height="wrap_content"></include>
 
             <LinearLayout
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
-                >
-
+                android:orientation="vertical">
                 <TextView android:text="Hello!"
-                    android:id="@+id/main_hello"
+                    android:id="@+id/main_textview_hello"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:paddingTop="@dimen/main_balance_text_paddingTop"
                     android:textSize="30sp"
-                    android:layout_gravity="center"
-                    />
-
+                    android:layout_gravity="center" />
                 <TextView android:text="What Do You Need?"
-                    android:id="@+id/main_what_do_you_need"
+                    android:id="@+id/main_textview_what_do_you_need"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    />
-
+                    android:layout_gravity="center" />
             </LinearLayout>
 
             <HorizontalScrollView
@@ -96,6 +87,7 @@
                 android:paddingRight="24dp"
                 android:paddingLeft="24dp"
                 android:touchscreenBlocksFocus="true">
+
                 <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content">
@@ -107,7 +99,7 @@
                         <ImageButton
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:id="@+id/send_pay"
+                            android:id="@+id/main_button_send_pay"
                             android:src="@mipmap/main_button_send_icon"
                             android:background="@null"
                             android:layout_marginTop="20dp"
@@ -119,7 +111,7 @@
                             android:layout_height="wrap_content"
                             android:textAppearance="?android:attr/textAppearanceSmall"
                             android:text="Send/Pay"
-                            android:id="@+id/main_sendpay1"
+                            android:id="@+id/main_textview_sendpay"
                             android:layout_gravity="center_horizontal"
                             android:layout_marginTop="10dp"
                             android:layout_marginBottom="20dp" />
@@ -132,7 +124,7 @@
                         <ImageButton
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:id="@+id/receive"
+                            android:id="@+id/main_button_receive"
                             android:src="@mipmap/main_button_receive_icon"
                             android:background="@null"
                             android:layout_marginTop="20dp"
@@ -157,7 +149,7 @@
                         <ImageButton
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:id="@+id/topup"
+                            android:id="@+id/main_button_topup"
                             android:src="@mipmap/main_button_topup_icon"
                             android:background="@null"
                             android:layout_marginTop="20dp"
@@ -169,7 +161,7 @@
                             android:layout_height="wrap_content"
                             android:textAppearance="?android:attr/textAppearanceSmall"
                             android:text="Topup"
-                            android:id="@+id/main_topup1"
+                            android:id="@+id/main_textview_topup"
                             android:layout_gravity="center_horizontal"
                             android:layout_marginTop="10dp"
                             android:layout_marginBottom="20dp" />
@@ -182,7 +174,7 @@
                         <ImageButton
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:id="@+id/send_pay"
+                            android:id="@+id/main_button_busway"
                             android:src="@mipmap/icon_transjakarta"
                             android:background="@null"
                             android:layout_marginTop="20dp"
@@ -194,7 +186,7 @@
                             android:layout_height="wrap_content"
                             android:textAppearance="?android:attr/textAppearanceSmall"
                             android:text="Busway"
-                            android:id="@+id/main_sendpay2"
+                            android:id="@+id/main_textview_busway"
                             android:layout_gravity="center_horizontal"
                             android:layout_marginTop="10dp"
                             android:layout_marginBottom="20dp" />
@@ -207,8 +199,8 @@
                         <ImageButton
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:id="@+id/receive"
-                            android:src="@mipmap/icon_near_me"
+                            android:id="@+id/main_button_near_me"
+                            android:src="@mipmap/main_button_near_me_icon"
                             android:background="@null"
                             android:layout_marginTop="20dp"
                             android:layout_marginLeft="12dp"
@@ -218,8 +210,8 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:textAppearance="?android:attr/textAppearanceSmall"
-                            android:text="Near me ?"
-                            android:id="@+id/main_receive2"
+                            android:text="Near me?"
+                            android:id="@+id/main_textview_near_me"
                             android:layout_gravity="center_horizontal"
                             android:layout_marginTop="10dp"
                             android:layout_marginBottom="20dp" />
@@ -232,7 +224,7 @@
                         <ImageButton
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:id="@+id/topup"
+                            android:id="@+id/main_button_market"
                             android:src="@mipmap/icon_sevel"
                             android:background="@null"
                             android:layout_marginTop="20dp"
@@ -244,15 +236,18 @@
                             android:layout_height="wrap_content"
                             android:textAppearance="?android:attr/textAppearanceSmall"
                             android:text="Market"
-                            android:id="@+id/main_topup2"
+                            android:id="@+id/main_textview_market"
                             android:layout_gravity="center_horizontal"
                             android:layout_marginTop="10dp"
                             android:layout_marginBottom="20dp" />
                     </LinearLayout>
 
                 </LinearLayout>
+
             </HorizontalScrollView>
 
         </LinearLayout>
+
     </ScrollView>
+
 </LinearLayout>

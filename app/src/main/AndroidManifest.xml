@@ -266,7 +266,7 @@
             android:name=".GiftActivity"
             android:label="@string/title_activity_gift"
             android:parentActivityName=".MainActivity"
-            android:theme="@style/AppTheme.NoActionBar" >
+            android:theme="@style/AppThemeBlue.NoActionBar" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.imme.immeclient.MainActivity" />
