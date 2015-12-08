@@ -94,13 +94,6 @@ public class AccountActivity extends AppCompatActivity {
         TextView account_button_save = (TextView) findViewById(R.id.account_button_save);
         account_button_save.setTypeface(hbqLight);
 
-
-
-
-
-
-
-
         TextView account_textview_account_details = (TextView) findViewById(R.id.account_textview_account_details);
         account_textview_account_details.setTypeface(hbqLight);
 
@@ -127,21 +120,6 @@ public class AccountActivity extends AppCompatActivity {
 
         TextView account_textview_verification_phone_number = (TextView) findViewById(R.id.account_textview_verification_phone_number);
         account_textview_verification_phone_number.setTypeface(hbqLight);
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
     }
 

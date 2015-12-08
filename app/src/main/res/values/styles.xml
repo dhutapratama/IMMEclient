@@ -93,8 +93,8 @@
         <item name="android:textColorSecondary">@color/textWhite</item>
     </style>
 
-    <style name="AppThemeGreen.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar">
-    </style>
+    <style name="AppThemeGreen.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar"></style>
+
     <style name="AppThemeGreen.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 
     <!-- Theme for Blue Colour -->
