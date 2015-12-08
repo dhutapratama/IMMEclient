@@ -56,7 +56,37 @@ public class ReceiveActivity extends AppCompatActivity {
                 "fonts/HelveticaNeue-Light.otf");
         Typeface hbqLight = Typeface.createFromAsset(getAssets(),
                 "fonts/HelveticaBQ-Light.otf");
- 
+
+        Button button_0 = (Button) findViewById(R.id.button_0);
+        button_0.setTypeface(hnLight);
+
+        Button button_1 = (Button) findViewById(R.id.button_1);
+        button_1.setTypeface(hnLight);
+
+        Button button_2 = (Button) findViewById(R.id.button_2);
+        button_2.setTypeface(hnLight);
+
+        Button button_3 = (Button) findViewById(R.id.button_3);
+        button_3.setTypeface(hnLight);
+
+        Button button_4 = (Button) findViewById(R.id.button_4);
+        button_4.setTypeface(hnLight);
+
+        Button button_5 = (Button) findViewById(R.id.button_5);
+        button_5.setTypeface(hnLight);
+
+        Button button_6 = (Button) findViewById(R.id.button_6);
+        button_6.setTypeface(hnLight);
+
+        Button button_7 = (Button) findViewById(R.id.button_7);
+        button_7.setTypeface(hnLight);
+
+        Button button_8 = (Button) findViewById(R.id.button_8);
+        button_8.setTypeface(hnLight);
+
+        Button button_9 = (Button) findViewById(R.id.button_9);
+        button_9.setTypeface(hnLight);
+
         TextView text_receive_enter_amount = (TextView) findViewById(R.id.receive_enter_amount);
         text_receive_enter_amount.setTypeface(hnLight);
 
@@ -69,7 +99,7 @@ public class ReceiveActivity extends AppCompatActivity {
         TextView text_receiver_list_text = (TextView) findViewById(R.id.receiver_list_text);
         text_receiver_list_text.setTypeface(hnLight);
 
-        TextView text_receiver_continue = (TextView) findViewById(R.id.receiver_continue);
+        Button text_receiver_continue = (Button) findViewById(R.id.receiver_continue);
         text_receiver_continue.setTypeface(hnLight);
         // Close Font
 
