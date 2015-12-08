@@ -181,4 +181,8 @@ distribution media, documentation, registration cards, and insertions.</string>
     <string name="title_activity_personal_send">Send Money</string>
     <string name="title_activity_sign_up">Sign Up</string>
     <string name="title_activity_sign_in">SignIn</string>
+    <string name="title_activity_account_verify_phone_number_step1">Verify Phone Number Step 1
+    </string>
+    <string name="title_activity_account_verify_phone_number_step2">Verify Phone Number Step 2
+    </string>
 </resources>

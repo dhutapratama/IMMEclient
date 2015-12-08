@@ -1,11 +1,13 @@
 package com.imme.immeclient;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
 
@@ -115,11 +117,17 @@ public class AccountActivity extends AppCompatActivity {
         TextView account_textview_verification_email = (TextView) findViewById(R.id.account_textview_verification_email);
         account_textview_verification_email.setTypeface(hbqLight);
 
-        TextView account_textview_verify_phone_number = (TextView) findViewById(R.id.account_textview_verify_phone_number);
-        account_textview_verify_phone_number.setTypeface(hnLight);
-
         TextView account_textview_verification_phone_number = (TextView) findViewById(R.id.account_textview_verification_phone_number);
         account_textview_verification_phone_number.setTypeface(hbqLight);
+
+        TextView account_textview_verify_phone_number = (TextView) findViewById(R.id.account_textview_verify_phone_number);
+        account_textview_verify_phone_number.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent("com.imme.immeclient.AccountVerifyPhoneNumberStep1Activity");
+                startActivity(intent);
+            }
+        });
 
     }
 
