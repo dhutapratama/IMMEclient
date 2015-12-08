@@ -179,4 +179,5 @@ distribution media, documentation, registration cards, and insertions.</string>
     <string name="default_receive_balance">0</string>
     <string name="title_activity_payment_details">Payment Details</string>
     <string name="title_activity_personal_send">Send Money</string>
+    <string name="title_activity_sign_up">Sign Up</string>
 </resources>
