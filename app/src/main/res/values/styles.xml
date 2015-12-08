@@ -82,7 +82,7 @@
         <item name="colorPrimaryDark">#249962</item>
         <!-- Custom for ToolBar-->
         <item name="colorPrimary">#2bb673</item>
-        <item name="colorAccent">@color/colorPrimaryDark</item>
+        <item name="colorAccent">#2bb673</item>
     </style>
 
     <style name="AppThemeGreen.NoActionBar">
