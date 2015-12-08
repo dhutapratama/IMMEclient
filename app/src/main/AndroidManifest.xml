@@ -25,6 +25,7 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+
         <activity
             android:name=".SplashScreen"
             android:label="@string/app_name"
@@ -36,6 +37,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
         <activity
             android:name=".MainActivity"
             android:label="@string/app_name"
@@ -47,6 +49,7 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
+
         <activity
             android:name=".PinActivity"
             android:label="@string/title_activity_pin"
@@ -63,6 +66,7 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
+
         <activity
             android:name=".LoginActivity"
             android:label="@string/title_activity_login"
@@ -78,6 +82,7 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
+
         <activity
             android:name=".FeedbackActivity"
             android:label="@string/title_activity_feedback"
@@ -94,6 +99,7 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
+
         <activity
             android:name=".HelpAndSupportActivity"
             android:label="@string/title_activity_help_and_support"
@@ -110,6 +116,7 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
+
         <activity
             android:name=".PrivacyPolicyActivity"
             android:label="@string/title_activity_privacy_policy"
@@ -126,6 +133,7 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
+
         <activity
             android:name=".RecipientListActivity"
             android:label="Recipient Accounts"
@@ -142,6 +150,7 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
+
         <activity
             android:name=".SendPayActivity"
             android:label="@string/title_activity_send_pay"
@@ -158,6 +167,7 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
+
         <activity
             android:name=".SecuritySettingsActivity"
             android:label="@string/title_activity_security_setting"
@@ -174,6 +184,7 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
+
         <activity
             android:name=".TransactionHistoryActivity"
             android:label="@string/title_activity_transaction_history"
@@ -190,6 +201,7 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
+
         <activity
             android:name=".UserAgreementActivity"
             android:label="@string/title_activity_user_agreement"
@@ -206,6 +218,7 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
+
         <activity
             android:name=".AccountActivity"
             android:label="@string/title_activity_account"
@@ -221,6 +234,7 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
+
         <activity
             android:name=".ReceiveActivity"
             android:label="@string/title_activity_receive"
@@ -237,6 +251,7 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
+
         <activity
             android:name=".Send_pay_details"
             android:label="@string/title_activity_send_pay_details"
@@ -252,6 +267,7 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
+
         <activity
             android:name=".WelcomeScreen"
             android:label="@string/app_name"
@@ -262,6 +278,7 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
+
         <activity
             android:name=".GiftActivity"
             android:label="@string/title_activity_gift"
@@ -277,6 +294,7 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
+
         <activity
             android:name=".ReceiveQRCodeActivity"
             android:label="@string/title_activity_receive_qrcode"
@@ -292,6 +310,7 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
+
         <activity
             android:name=".AboutActivity"
             android:label="@string/title_activity_about"
@@ -308,6 +327,7 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
+
         <activity
             android:name=".PaymentDetails"
             android:label="@string/title_activity_payment_details"
@@ -323,6 +343,7 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
+
         <activity
             android:name=".InviteGetMoneyActivity"
             android:label="@string/title_activity_invite_get_money"
@@ -337,6 +358,7 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
+
         <activity
             android:name=".PersonalSend"
             android:label="@string/title_activity_personal_send"
@@ -352,6 +374,7 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
+
         <activity
             android:name=".SignUpActivity"
             android:label="@string/title_activity_sign_up"
@@ -366,7 +389,22 @@
 
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
+        </activity>
 
+        <activity
+            android:name=".SignInActivity"
+            android:label="@string/title_activity_sign_in"
+            android:parentActivityName=".MainActivity"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.imme.immeclient.MainActivity" />
+
+            <intent-filter>
+                <action android:name="com.imme.immeclient.SignInActivity" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
         </activity>
     </application>
 

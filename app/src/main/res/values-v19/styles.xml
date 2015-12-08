@@ -42,7 +42,7 @@
         <!-- Customize your theme here. -->
         <item name="colorPrimary">#17b882</item>
         <item name="colorPrimaryDark">#0d8967</item>
-        <item name="colorAccent">@color/colorPrimaryDark</item>
+        <item name="colorAccent">#2bb673</item>
         <item name="android:windowTranslucentStatus">true</item>
     </style>
 
