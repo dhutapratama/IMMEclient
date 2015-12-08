@@ -3,7 +3,8 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    android:fitsSystemWindows="true">
+    android:fitsSystemWindows="true"
+    android:background="#108b62">
 
     <LinearLayout
         android:orientation="vertical"
@@ -32,10 +33,11 @@
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
                 <TextView
+                    android:clickable="true"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Sign up"
-                    android:id="@+id/sign_up_textview_sign_up"
+                    android:id="@+id/sign_in_textview_sign_up"
                     android:textSize="15sp"
                     android:paddingBottom="5dp"
                     android:paddingTop="5dp"
@@ -44,10 +46,11 @@
                     android:textColor="#ffffff"
                     android:background="@drawable/sign_up_text_border"/>
                 <TextView
+                    android:clickable="true"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Sign in"
-                    android:id="@+id/sign_up_textview_sign_in"
+                    android:id="@+id/sign_in_textview_sign_in"
                     android:layout_gravity="right"
                     android:layout_marginLeft="90dp"
                     android:paddingBottom="5dp"
@@ -78,13 +81,13 @@
                 android:layout_marginBottom="8dp"
                 android:textColorHint="#ffffff">
                 <EditText
-                    android:id="@+id/sign_up_textview_email"
+                    android:id="@+id/sign_in_edittext_email"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:inputType="textEmailAddress"
                     android:textColor="#ffffff"
                     android:hint="Email"
-                    android:textSize="15sp"
+                    android:textSize="12sp"
                     android:background="@drawable/sign_up_bg"/>
             </android.support.design.widget.TextInputLayout>
 
@@ -95,13 +98,13 @@
                 android:layout_marginBottom="8dp"
                 android:textColorHint="#ffffff">
                 <EditText
-                    android:id="@+id/sign_up_textview_password"
+                    android:id="@+id/sign_in_edittext_password"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:inputType="textPassword"
                     android:hint="Password"
                     android:textColor="#ffffff"
-                    android:textSize="15sp"
+                    android:textSize="12sp"
                     android:background="@drawable/sign_up_bg"/>
             </android.support.design.widget.TextInputLayout>
 
@@ -114,12 +117,12 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Sign in"
-                    android:id="@+id/sign_up_button_sign_up"
-                    android:textSize="20sp"
-                    android:paddingBottom="10dp"
-                    android:paddingTop="10dp"
-                    android:paddingLeft="70dp"
-                    android:paddingRight="70dp"
+                    android:id="@+id/sign_in_button_sign_in"
+                    android:textSize="15sp"
+                    android:paddingBottom="5dp"
+                    android:paddingTop="5dp"
+                    android:paddingLeft="30dp"
+                    android:paddingRight="30dp"
                     android:textColor="#ffffff"
                     android:background="@drawable/account_save_verify"/>
             </LinearLayout>
