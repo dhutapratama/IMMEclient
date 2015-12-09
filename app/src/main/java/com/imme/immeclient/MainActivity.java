@@ -20,6 +20,7 @@ import android.view.MenuItem;
 import android.widget.ImageButton;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.readystatesoftware.systembartint.SystemBarTintManager;
@@ -33,6 +34,9 @@ import java.io.OutputStreamWriter;
 import java.text.NumberFormat;
 import java.util.Locale;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
@@ -42,14 +46,16 @@ public class MainActivity extends AppCompatActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+        TextView main_textview_balance = (TextView) findViewById(R.id.main_textview_balance);
 
         if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.KITKAT) {
             toolbar.setPadding(0, getStatusBarHeight(), 0, 0);
             toolbar.getLayoutParams().height = toolbar.getLayoutParams().height + getStatusBarHeight();
         }
+
         // Start Font
         Typeface hnLight = Typeface.createFromAsset(getAssets(),
                 "fonts/HelveticaNeue-Light.otf");
@@ -57,7 +63,7 @@ public class MainActivity extends AppCompatActivity
         Typeface hbqLight = Typeface.createFromAsset(getAssets(),
                 "fonts/HelveticaBQ-Light.otf");
 
-        TextView main_textview_balance = (TextView) findViewById(R.id.main_textview_balance);
+
         main_textview_balance.setTypeface(hnLight);
 
         TextView main_textview_rp = (TextView) findViewById(R.id.main_textview_rp);
@@ -114,10 +120,9 @@ public class MainActivity extends AppCompatActivity
         actionBar.setDisplayUseLogoEnabled(true);
         actionBar.setLogo(R.mipmap.imme_logo);
 
-        /* Ridding Activity
+        // Tutorial 3 Halaman
         startActivity(new Intent(MainActivity.this, WelcomeScreen.class));
         overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
-        */
 
         // Status Bar Coloring
         SystemBarTintManager tintManager = new SystemBarTintManager(this);
@@ -194,8 +199,11 @@ public class MainActivity extends AppCompatActivity
             }
         });
 
+
+
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+
     }
 
     @Override
@@ -257,7 +265,6 @@ public class MainActivity extends AppCompatActivity
             startActivity(intent);
             return true;
         }
-
         return super.onOptionsItemSelected(item);
     }
 
@@ -351,8 +358,6 @@ public class MainActivity extends AppCompatActivity
 
         return ret;
     }
-
-
 
 }
 
