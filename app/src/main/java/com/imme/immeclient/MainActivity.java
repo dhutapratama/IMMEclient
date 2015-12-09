@@ -58,10 +58,14 @@ public class MainActivity extends AppCompatActivity
         TextView main_textview_balance = (TextView) findViewById(R.id.main_textview_balance);
 
         try {
-            JSONObject serviceResult = WebServiceClient.requestWebService(GlobalVariable.OPEN_EXCHANGES_API_BASED_URL
-                    + GlobalVariable.OPEN_EXCHANGES_API_CURRENCY_LIST_URL);
+            JSONObject serviceResult = WebServiceClient.requestWebService(GlobalVariable.DISTRIBUTOR_SERVER
+                    + GlobalVariable.ACK);
 
-            main_textview_balance.setText(serviceResult.toString());
+            try {
+                main_textview_balance.setText(serviceResult.getString("hello_message"));
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
         } catch (IOException ioex) {
             Toast.makeText(this, ioex.getStackTrace().toString() + "\r\n" + ioex.getMessage(),
                     Toast.LENGTH_LONG).show();
