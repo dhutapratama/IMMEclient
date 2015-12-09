@@ -6,6 +6,7 @@ import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.StrictMode;
 import android.support.v7.app.ActionBar;
 import android.util.Log;
 import android.view.View;
@@ -17,7 +18,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.AdapterView;
 import android.widget.ImageButton;
+import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -44,12 +47,38 @@ public class MainActivity extends AppCompatActivity
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+        StrictMode.setThreadPolicy(policy);
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
         TextView main_textview_balance = (TextView) findViewById(R.id.main_textview_balance);
+
+        try {
+            JSONObject serviceResult = WebServiceClient.requestWebService(GlobalVariable.OPEN_EXCHANGES_API_BASED_URL
+                    + GlobalVariable.OPEN_EXCHANGES_API_CURRENCY_LIST_URL);
+
+            main_textview_balance.setText(serviceResult.toString());
+        } catch (IOException ioex) {
+            Toast.makeText(this, ioex.getStackTrace().toString() + "\r\n" + ioex.getMessage(),
+                    Toast.LENGTH_LONG).show();
+        }
+
+
+
+
+
+
+
+
+
+
+
+
+
 
         if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.KITKAT) {
             toolbar.setPadding(0, getStatusBarHeight(), 0, 0);
