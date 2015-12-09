@@ -39,6 +39,7 @@ import java.util.Locale;
 
 import org.json.JSONException;
 import org.json.JSONObject;
+import com.imme.immeclient.WriteReadFile;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -55,35 +56,6 @@ public class MainActivity extends AppCompatActivity
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        TextView main_textview_balance = (TextView) findViewById(R.id.main_textview_balance);
-
-        try {
-            JSONObject serviceResult = WebServiceClient.requestWebService(GlobalVariable.DISTRIBUTOR_SERVER
-                    + GlobalVariable.ACK);
-
-            try {
-                main_textview_balance.setText(serviceResult.getString("hello_message"));
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
-        } catch (IOException ioex) {
-            Toast.makeText(this, ioex.getStackTrace().toString() + "\r\n" + ioex.getMessage(),
-                    Toast.LENGTH_LONG).show();
-        }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
         if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.KITKAT) {
             toolbar.setPadding(0, getStatusBarHeight(), 0, 0);
             toolbar.getLayoutParams().height = toolbar.getLayoutParams().height + getStatusBarHeight();
@@ -96,7 +68,7 @@ public class MainActivity extends AppCompatActivity
         Typeface hbqLight = Typeface.createFromAsset(getAssets(),
                 "fonts/HelveticaBQ-Light.otf");
 
-
+        TextView main_textview_balance = (TextView) findViewById(R.id.main_textview_balance);
         main_textview_balance.setTypeface(hnLight);
 
         TextView main_textview_rp = (TextView) findViewById(R.id.main_textview_rp);
@@ -164,9 +136,9 @@ public class MainActivity extends AppCompatActivity
         tintManager.setTintColor(Color.parseColor("#FF03B0FF"));
 
         // Balance
-        String balance_value = readFromFile("balance");
-        String formated_money = NumberFormat.getNumberInstance(Locale.GERMANY).format(Integer.parseInt(balance_value));
-        main_textview_balance_value.setText(formated_money);
+        //String balance_value = readFromFile( "balance");
+        //String formated_money = NumberFormat.getNumberInstance(Locale.GERMANY).format(Integer.parseInt(balance_value));
+        //main_textview_balance_value.setText(formated_money);
 
         // Button Action
         ImageButton main_button_send_pay = (ImageButton) findViewById(R.id.main_button_send_pay);
@@ -345,9 +317,11 @@ public class MainActivity extends AppCompatActivity
         return result;
     }
 
+
+    // Initial Commit
     private void writeToFile(String varname, String data) {
         try {
-            OutputStreamWriter outputStreamWriter = new OutputStreamWriter(openFileOutput(varname + ".txt", Context.MODE_PRIVATE));
+            OutputStreamWriter outputStreamWriter = new OutputStreamWriter(openFileOutput(varname + ".json", Context.MODE_PRIVATE));
             outputStreamWriter.write(data);
             outputStreamWriter.close();
         }
@@ -361,7 +335,7 @@ public class MainActivity extends AppCompatActivity
         String ret = "";
 
         try {
-            InputStream inputStream = openFileInput(varname + ".txt");
+            InputStream inputStream = openFileInput(varname + ".json");
 
             if ( inputStream != null ) {
                 InputStreamReader inputStreamReader = new InputStreamReader(inputStream);
