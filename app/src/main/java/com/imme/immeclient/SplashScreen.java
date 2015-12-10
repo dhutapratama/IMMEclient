@@ -103,14 +103,15 @@ public class SplashScreen extends Activity {
             GlobalVariable.ACK = "?request_code=1000"
                     + "&device_id=" + URLEncoder.encode(GlobalVariable.ANDROID_ID, "UTF-8")
                     + "&device_type=android"
-                    + "&device_ip=" + URLEncoder.encode(getLocalIpAddress(), "UTF-8")
+                    + "&device_ip=" + URLEncoder.encode(GlobalVariable.CLIENT_IP(), "UTF-8")
                     + "&date=" + "2015-12-07+00%3A00%3A00" //URLEncoder.encode(date, "UTF-8")
                     + "&client_version=" + URLEncoder.encode( GlobalVariable.CLIENT_VERSION, "UTF-8")
                     + "&authentication_code=0sgsOhUwJ9dSLDZ78ztEG4LclvIdIOMjlLwbw9QjD4g%3D";
 
             serviceResult = WebServiceClient.getRequest(GlobalVariable.DISTRIBUTOR_SERVER + GlobalVariable.ACK);
 
-            Toast.makeText(this, serviceResult.toString(), Toast.LENGTH_LONG).show();
+            //Toast.makeText(this, serviceResult.toString(), Toast.LENGTH_LONG).show();
+            loginStatus.put("first_time_app", "true");
             loginStatus.put("login_status", "false");
             loginStatus.put("user_agent", serviceResult.getString("user_agent"));
             loginStatus.put("csrf_token", serviceResult.getString("csrf_token"));
@@ -118,8 +119,13 @@ public class SplashScreen extends Activity {
             GlobalVariable.USER_AGENT = serviceResult.getString("user_agent");
             GlobalVariable.CSRF_TOKEN = serviceResult.getString("csrf_token");
 
-
             writeFile(GlobalVariable.MOBILESTATUS_FILE, loginStatus.toString());
+
+            if (serviceResult.getBoolean("error")){
+                Toast.makeText(this, serviceResult.getString("message"), Toast.LENGTH_LONG).show();
+            } else {
+                Toast.makeText(this, serviceResult.getString("hello_message"), Toast.LENGTH_LONG).show();
+            }
             //Log.v("Write File", loginStatus.toString());
         } else {
             loginStatus = new JSONObject(fileContent);
@@ -168,23 +174,5 @@ public class SplashScreen extends Activity {
         }
         //Log.v("SplashScreen", ret);
         return ret;
-    }
-
-    public String getLocalIpAddress()
-    {
-        try {
-            for (Enumeration<NetworkInterface> en = NetworkInterface.getNetworkInterfaces(); en.hasMoreElements();) {
-                NetworkInterface intf = en.nextElement();
-                for (Enumeration<InetAddress> enumIpAddr = intf.getInetAddresses(); enumIpAddr.hasMoreElements();) {
-                    InetAddress inetAddress = enumIpAddr.nextElement();
-                    if (!inetAddress.isLoopbackAddress()) {
-                        return inetAddress.getHostAddress().toString();
-                    }
-                }
-            }
-        } catch (Exception ex) {
-            Log.e("IP Address", ex.toString());
-        }
-        return "0.0.0.0";
     }
 }

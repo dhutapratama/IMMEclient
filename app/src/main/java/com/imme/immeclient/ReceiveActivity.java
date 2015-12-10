@@ -29,7 +29,6 @@ import java.util.Locale;
 
 public class ReceiveActivity extends AppCompatActivity {
     String money = "0";
-    Button button_0, button_1, button_2, button_3, button_4, button_5, button_6, button_7, button_8, button_9;
     ImageButton button_backspace;
     TextView balance;
 
