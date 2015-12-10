@@ -18,14 +18,14 @@ public class SignInActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign_in);
 
-        TextView sign_in_textview_sign_up = (TextView) findViewById(R.id.sign_in_textview_sign_up);
-        sign_in_textview_sign_up.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent("com.imme.immeclient.SignUpActivity");
-                startActivity(intent);
-            }
-        });
+        //TextView sign_in_textview_sign_up = (TextView) findViewById(R.id.sign_in_textview_sign_up);
+        //sign_in_textview_sign_up.setOnClickListener(new View.OnClickListener() {
+        //@Override
+        //public void onClick(View view) {
+        //   Intent intent = new Intent("com.imme.immeclient.SignUpActivity");
+        //    startActivity(intent);
+        // }
+        //});
 
         // Start Font
         Typeface hnLight = Typeface.createFromAsset(getAssets(),

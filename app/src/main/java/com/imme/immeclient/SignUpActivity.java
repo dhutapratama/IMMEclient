@@ -30,8 +30,8 @@ public class SignUpActivity extends AppCompatActivity {
         // set a custom tint color for all system bars
         tintManager.setTintColor(Color.parseColor("#ff0f99da"));
 
-        TextView sign_up_textview_sign_in = (TextView) findViewById(R.id.sign_up_textview_sign_in);
-        sign_up_textview_sign_in.setOnClickListener(new View.OnClickListener() {
+        TextView sign_up_button_sign_up = (TextView) findViewById(R.id.sign_up_button_sign_in);
+        sign_up_button_sign_up.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent("com.imme.immeclient.SignInActivity");
@@ -61,8 +61,8 @@ public class SignUpActivity extends AppCompatActivity {
         TextView sign_up_edittext_phone_number = (EditText) findViewById(R.id.sign_up_edittext_phone_number);
         sign_up_edittext_phone_number.setTypeface(hnLight);
 
-        TextView sign_up_button_sign_up = (TextView) findViewById(R.id.sign_up_button_sign_up);
-        sign_up_button_sign_up.setTypeface(hbqLight);
+        //TextView sign_up_button_sign_up = (TextView) findViewById(R.id.sign_up_button_sign_up);
+        //sign_up_button_sign_up.setTypeface(hbqLight);
     }
 
 }
