@@ -21,6 +21,10 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
+import java.net.InetAddress;
+import java.net.NetworkInterface;
+import java.net.URLEncoder;
+import java.util.Enumeration;
 
 public class SignInActivity extends AppCompatActivity {
     public String email = new String();
@@ -28,6 +32,19 @@ public class SignInActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        Boolean first_time = true;
+        try {
+            first_time = checkFirstTimeApp();
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        if (first_time) {
+            // Tutorial 3 Halaman
+            startActivity(new Intent(SignInActivity.this, WelcomeScreen.class));
+            overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
+        }
+
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
         StrictMode.setThreadPolicy(policy);
 
@@ -58,24 +75,26 @@ public class SignInActivity extends AppCompatActivity {
 
         final TextView sign_in_button_sign_in = (TextView) findViewById(R.id.sign_in_button_sign_in);
         sign_in_button_sign_in.setTypeface(hbqLight);
-
-        // Read Log Status
-        String fileContent = readFile(GlobalVariable.MOBILESTATUS_FILE);
-        try {
-            JSONObject mobileStatus = new JSONObject(fileContent);
-            GlobalVariable.CSRF_TOKEN = mobileStatus.getString("csrf_token");
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-
         // Sign in button action
         sign_in_button_sign_in.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                email = sign_in_edittext_email.getText().toString();
-                password = sign_in_edittext_password.getText().toString();
-                doLogin();
-            }
+                try {
+                    email = sign_in_edittext_email.getText().toString();
+                    password = sign_in_edittext_password.getText().toString();
+                    doLogin();
+                } catch (JSONException e) {
+                    Log.e("JSONException", e.toString());
+                    e.printStackTrace();
+                } catch (IOException e) {
+                    Log.e("IOException", e.toString());
+                    e.printStackTrace();
+                }
 
+                if (GlobalVariable.LOGIN_STATUS.equals("true")) {
+                    Intent intent = new Intent(SignInActivity.this, MainActivity.class);
+                    startActivity(intent);
+                }
+            }
         });
     }
 
@@ -119,48 +138,54 @@ public class SignInActivity extends AppCompatActivity {
         return ret;
     }
 
-    public void doLogin() {
+    public void doLogin() throws JSONException, IOException {
+        String fileContent = readFile(GlobalVariable.MOBILESTATUS_FILE);
+        JSONObject mobileStatus = new JSONObject(fileContent);
+
+        GlobalVariable.CSRF_TOKEN = mobileStatus.getString("csrf_token");
         String request_code = "1002";
-        String csrf_token = "";
-        String device_ip = "";
-        JSONObject mobileStatus = new JSONObject();
 
-        String file_data = readFile(GlobalVariable.MOBILESTATUS_FILE);
-        Log.v("Read File Login", file_data);
-        csrf_token = GlobalVariable.CSRF_TOKEN;
-        //Toast.makeText(this, file_data, Toast.LENGTH_LONG).show();
-        //Toast.makeText(this, "CSRF : " + csrf_token, Toast.LENGTH_LONG).show();
+        String postData = "request_code=" + request_code
+                + "&csrf_token=" + URLEncoder.encode(GlobalVariable.CSRF_TOKEN, "UTF-8")
+                + "&email=" + URLEncoder.encode(email, "UTF-8")
+                + "&password=" + URLEncoder.encode(password, "UTF-8")
+                + "&device_ip=" + URLEncoder.encode(GlobalVariable.CLIENT_IP(), "UTF-8");
 
-        String query = "request_code=" + request_code
-                + "&csrf_token=" + csrf_token
-                + "&email=" + email
-                + "&password=" + password
-                + "&device_ip=" + device_ip;
-        Log.v("QUERY : ", query);
-        try {
-            JSONObject serviceResult = WebServiceClient.postRequest(GlobalVariable.DISTRIBUTOR_SERVER, query);
-            try {
-                mobileStatus = new JSONObject(file_data);
-                mobileStatus.put("csrf_token", serviceResult.getString("csrf_token"));
-                //GlobalVariable.CSRF_TOKEN = serviceResult.getString("csrf_token");
 
-                if (serviceResult.getBoolean("error"))
-                {
-                    Log.v("Error" + serviceResult.getString("code"), serviceResult.getString("message"));
-                } else {
-                    Log.v("Login Success", serviceResult.toString());
-                }
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
-            writeFile(GlobalVariable.MOBILESTATUS_FILE, mobileStatus.toString());
-            Log.v("Write File", mobileStatus.toString());
-            //Toast.makeText(this, "query : " + query /*serviceResult.getString("csrf_token")*/, Toast.LENGTH_LONG).show();
-            //Toast.makeText(this, "Result : " + serviceResult.toString(), Toast.LENGTH_LONG).show();
-            Log.v("Post Result", serviceResult.toString());
-        } catch (IOException ioex) {
-            Toast.makeText(this, ioex.getStackTrace().toString() + "\r\n" + ioex.getMessage(),
-                    Toast.LENGTH_LONG).show();
+        //Toast.makeText(this, postData, Toast.LENGTH_LONG).show();
+
+        JSONObject serviceResult = WebServiceClient.postRequest(GlobalVariable.DISTRIBUTOR_SERVER, postData);
+
+        if (serviceResult.getBoolean("error")){
+            Toast.makeText(this, serviceResult.getString("message"), Toast.LENGTH_LONG).show();
+            GlobalVariable.CSRF_TOKEN = serviceResult.getString("csrf_token");
+        } else {
+            Toast.makeText(this, serviceResult.getString("login_message"), Toast.LENGTH_LONG).show();
+            mobileStatus.put("first_time_app", "false");
+            mobileStatus.put("login_status", "true");
+            mobileStatus.put("csrf_token", serviceResult.getString("csrf_token"));
+            mobileStatus.put("session_key", serviceResult.getString("session_key"));
+            mobileStatus.put("imme_algorithm", serviceResult.getString("imme_algorithm"));
+            mobileStatus.put("tba_algorithm", serviceResult.getString("tba_algorithm"));
+            mobileStatus.put("cba_algorithm", serviceResult.getString("cba_algorithm"));
+            mobileStatus.put("cba_counter", serviceResult.getString("cba_counter"));
+            GlobalVariable.CSRF_TOKEN = serviceResult.getString("csrf_token");
+            GlobalVariable.CSRF_TOKEN = serviceResult.getString("csrf_token");
+           GlobalVariable.LOGIN_STATUS = "true";
         }
+        writeFile(GlobalVariable.MOBILESTATUS_FILE, mobileStatus.toString());
+    }
+
+    private Boolean checkFirstTimeApp() throws JSONException {
+        String fileContent = readFile(GlobalVariable.MOBILESTATUS_FILE);
+        JSONObject mobileStatus = new JSONObject(fileContent);
+        Boolean first_time = true;
+
+        GlobalVariable.FIRST_TIME_APP = mobileStatus.getString("first_time_app");
+
+        if (GlobalVariable.FIRST_TIME_APP.equals("false")) {
+            first_time = false;
+        }
+        return first_time;
     }
 }
