@@ -6,6 +6,7 @@ import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.StrictMode;
 import android.support.v7.app.ActionBar;
 import android.util.Log;
 import android.view.View;
@@ -17,9 +18,12 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.AdapterView;
 import android.widget.ImageButton;
+import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.readystatesoftware.systembartint.SystemBarTintManager;
@@ -33,6 +37,10 @@ import java.io.OutputStreamWriter;
 import java.text.NumberFormat;
 import java.util.Locale;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+import com.imme.immeclient.WriteReadFile;
+
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
@@ -40,9 +48,11 @@ public class MainActivity extends AppCompatActivity
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+        StrictMode.setThreadPolicy(policy);
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
@@ -50,6 +60,7 @@ public class MainActivity extends AppCompatActivity
             toolbar.setPadding(0, getStatusBarHeight(), 0, 0);
             toolbar.getLayoutParams().height = toolbar.getLayoutParams().height + getStatusBarHeight();
         }
+
         // Start Font
         Typeface hnLight = Typeface.createFromAsset(getAssets(),
                 "fonts/HelveticaNeue-Light.otf");
@@ -114,10 +125,9 @@ public class MainActivity extends AppCompatActivity
         actionBar.setDisplayUseLogoEnabled(true);
         actionBar.setLogo(R.mipmap.imme_logo);
 
-        /* Ridding Activity
+        // Tutorial 3 Halaman
         startActivity(new Intent(MainActivity.this, WelcomeScreen.class));
         overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
-        */
 
         // Status Bar Coloring
         SystemBarTintManager tintManager = new SystemBarTintManager(this);
@@ -126,9 +136,9 @@ public class MainActivity extends AppCompatActivity
         tintManager.setTintColor(Color.parseColor("#FF03B0FF"));
 
         // Balance
-        String balance_value = readFromFile("balance");
-        String formated_money = NumberFormat.getNumberInstance(Locale.GERMANY).format(Integer.parseInt(balance_value));
-        main_textview_balance_value.setText(formated_money);
+        //String balance_value = readFromFile( "balance");
+        //String formated_money = NumberFormat.getNumberInstance(Locale.GERMANY).format(Integer.parseInt(balance_value));
+        //main_textview_balance_value.setText(formated_money);
 
         // Button Action
         ImageButton main_button_send_pay = (ImageButton) findViewById(R.id.main_button_send_pay);
@@ -194,8 +204,11 @@ public class MainActivity extends AppCompatActivity
             }
         });
 
+
+
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+
     }
 
     @Override
@@ -257,7 +270,6 @@ public class MainActivity extends AppCompatActivity
             startActivity(intent);
             return true;
         }
-
         return super.onOptionsItemSelected(item);
     }
 
@@ -305,9 +317,11 @@ public class MainActivity extends AppCompatActivity
         return result;
     }
 
+
+    // Initial Commit
     private void writeToFile(String varname, String data) {
         try {
-            OutputStreamWriter outputStreamWriter = new OutputStreamWriter(openFileOutput(varname + ".txt", Context.MODE_PRIVATE));
+            OutputStreamWriter outputStreamWriter = new OutputStreamWriter(openFileOutput(varname + ".json", Context.MODE_PRIVATE));
             outputStreamWriter.write(data);
             outputStreamWriter.close();
         }
@@ -321,7 +335,7 @@ public class MainActivity extends AppCompatActivity
         String ret = "";
 
         try {
-            InputStream inputStream = openFileInput(varname + ".txt");
+            InputStream inputStream = openFileInput(varname + ".json");
 
             if ( inputStream != null ) {
                 InputStreamReader inputStreamReader = new InputStreamReader(inputStream);
@@ -351,8 +365,6 @@ public class MainActivity extends AppCompatActivity
 
         return ret;
     }
-
-
 
 }
 
