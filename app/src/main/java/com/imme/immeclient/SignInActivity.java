@@ -4,17 +4,14 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
+import android.os.StrictMode;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -24,14 +21,16 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.Map;
 
 public class SignInActivity extends AppCompatActivity {
+    public String email = new String();
+    public String password = new String();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+        StrictMode.setThreadPolicy(policy);
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign_in);
 
@@ -44,22 +43,6 @@ public class SignInActivity extends AppCompatActivity {
             }
         });
 
-        // Read Log Status
-        String fileContent = readFile(GlobalVariable.MOBILESTATUS_FILE);
-
-        if (fileContent.isEmpty() || fileContent.equals("created")) {
-            Toast.makeText(this, "Fresh Installing IMME" + fileContent, Toast.LENGTH_LONG).show();
-        } else {
-            try {
-                JSONObject mobileStatus = new JSONObject(fileContent);
-                Toast.makeText(this, mobileStatus.getString("csrf_token"),Toast.LENGTH_LONG).show();
-                Log.e("SignInActivity", fileContent);
-            } catch (JSONException e) {
-                Log.e("SignInActivity", "Error Extraction : " + e.toString());
-                //e.printStackTrace();
-            }
-        }
-
         // Start Font
         Typeface hnLight = Typeface.createFromAsset(getAssets(),
                 "fonts/HelveticaNeue-Light.otf");
@@ -67,20 +50,38 @@ public class SignInActivity extends AppCompatActivity {
         Typeface hbqLight = Typeface.createFromAsset(getAssets(),
                 "fonts/HelveticaBQ-Light.otf");
 
-        EditText sign_in_edittext_email = (EditText) findViewById(R.id.sign_in_edittext_email);
+        final EditText sign_in_edittext_email = (EditText) findViewById(R.id.sign_in_edittext_email);
         sign_in_edittext_email.setTypeface(hnLight);
 
-        EditText sign_in_edittext_password = (EditText) findViewById(R.id.sign_in_edittext_password);
+        final EditText sign_in_edittext_password = (EditText) findViewById(R.id.sign_in_edittext_password);
         sign_in_edittext_password.setTypeface(hnLight);
 
-        TextView sign_in_button_sign_in = (TextView) findViewById(R.id.sign_in_button_sign_in);
+        final TextView sign_in_button_sign_in = (TextView) findViewById(R.id.sign_in_button_sign_in);
         sign_in_button_sign_in.setTypeface(hbqLight);
-    }
 
+        // Read Log Status
+        String fileContent = readFile(GlobalVariable.MOBILESTATUS_FILE);
+        try {
+            JSONObject mobileStatus = new JSONObject(fileContent);
+            GlobalVariable.CSRF_TOKEN = mobileStatus.getString("csrf_token");
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        // Sign in button action
+        sign_in_button_sign_in.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                email = sign_in_edittext_email.getText().toString();
+                password = sign_in_edittext_password.getText().toString();
+                doLogin();
+            }
+
+        });
+    }
 
     public void writeFile(String varname, String data) {
         try {
-            OutputStreamWriter outputStreamWriter = new OutputStreamWriter(openFileOutput(varname + ".json", Context.MODE_PRIVATE));
+            OutputStreamWriter outputStreamWriter = new OutputStreamWriter(openFileOutput(varname, Context.MODE_PRIVATE));
             outputStreamWriter.write(data);
             outputStreamWriter.close();
         }
@@ -92,7 +93,7 @@ public class SignInActivity extends AppCompatActivity {
     private String readFile(String varname) {
         String ret = "";
         try {
-            InputStream inputStream = openFileInput(varname + ".json");
+            InputStream inputStream = openFileInput(varname);
 
             if ( inputStream != null ) {
                 InputStreamReader inputStreamReader = new InputStreamReader(inputStream);
@@ -118,4 +119,48 @@ public class SignInActivity extends AppCompatActivity {
         return ret;
     }
 
+    public void doLogin() {
+        String request_code = "1002";
+        String csrf_token = "";
+        String device_ip = "";
+        JSONObject mobileStatus = new JSONObject();
+
+        String file_data = readFile(GlobalVariable.MOBILESTATUS_FILE);
+        Log.v("Read File Login", file_data);
+        csrf_token = GlobalVariable.CSRF_TOKEN;
+        //Toast.makeText(this, file_data, Toast.LENGTH_LONG).show();
+        //Toast.makeText(this, "CSRF : " + csrf_token, Toast.LENGTH_LONG).show();
+
+        String query = "request_code=" + request_code
+                + "&csrf_token=" + csrf_token
+                + "&email=" + email
+                + "&password=" + password
+                + "&device_ip=" + device_ip;
+        Log.v("QUERY : ", query);
+        try {
+            JSONObject serviceResult = WebServiceClient.postRequest(GlobalVariable.DISTRIBUTOR_SERVER, query);
+            try {
+                mobileStatus = new JSONObject(file_data);
+                mobileStatus.put("csrf_token", serviceResult.getString("csrf_token"));
+                //GlobalVariable.CSRF_TOKEN = serviceResult.getString("csrf_token");
+
+                if (serviceResult.getBoolean("error"))
+                {
+                    Log.v("Error" + serviceResult.getString("code"), serviceResult.getString("message"));
+                } else {
+                    Log.v("Login Success", serviceResult.toString());
+                }
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+            writeFile(GlobalVariable.MOBILESTATUS_FILE, mobileStatus.toString());
+            Log.v("Write File", mobileStatus.toString());
+            //Toast.makeText(this, "query : " + query /*serviceResult.getString("csrf_token")*/, Toast.LENGTH_LONG).show();
+            //Toast.makeText(this, "Result : " + serviceResult.toString(), Toast.LENGTH_LONG).show();
+            Log.v("Post Result", serviceResult.toString());
+        } catch (IOException ioex) {
+            Toast.makeText(this, ioex.getStackTrace().toString() + "\r\n" + ioex.getMessage(),
+                    Toast.LENGTH_LONG).show();
+        }
+    }
 }
