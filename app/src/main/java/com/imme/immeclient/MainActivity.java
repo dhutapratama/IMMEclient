@@ -241,13 +241,8 @@ public class MainActivity extends AppCompatActivity
             startActivity(intent);
             return true;
         }
-        //else if (id == R.id.nav_help_support) {
-          //  Intent intent = new Intent("com.imme.immeclient.HelpAndSupportActivity");
-            //startActivity(intent);
-            //return true;
-
         else if (id == R.id.nav_help_support) {
-            Intent intent = new Intent("com.imme.immeclient.SignUpActivity");
+            Intent intent = new Intent("com.imme.immeclient.HelpAndSupportActivity");
             startActivity(intent);
             return true;
         }
