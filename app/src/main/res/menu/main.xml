@@ -32,5 +32,6 @@
         android:title="Help"
         android:icon="@mipmap/main_button_help_support_icon2"
         android:orderInCategory="200"
-        app:showAsAction="ifRoom" />
+        app:showAsAction="ifRoom"
+        />
 </menu>

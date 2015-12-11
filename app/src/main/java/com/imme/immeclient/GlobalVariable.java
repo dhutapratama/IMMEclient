@@ -12,7 +12,23 @@ import java.util.Enumeration;
 public class GlobalVariable {
     // SERVER
     public static final String DISTRIBUTOR_SERVER = "http://api.studiwidie.com/";
-    public static String ACK = "?request_code=1000&device_id=823498723948723984729&device_type=android&device_ip=192.168.1.1&date=2015-12-07+00%3A00%3A00&client_version=1.0.0&authentication_code=0sgsOhUwJ9dSLDZ78ztEG4LclvIdIOMjlLwbw9QjD4g%3D";
+    public static final String ACK_CODE = "5GwcTzO0ODM6eSV3s66PJjeedlEvxWc9";
+    public static String otp_key_generator () {
+        long unixTime = System.currentTimeMillis() / 1000L;
+        Integer date = (int)(long) unixTime;
+        // Key Rebuilding
+        int keylength = Integer.toString(date).length();
+        String temp = Integer.toString(date);
+        if (keylength == 16) {
+            int diff = Integer.toString(date).length() - 16;
+            for (int i = 0; i < diff; i ++) {
+                temp = temp + "i";
+            }
+        }
+
+        return temp;
+    }
+    public static String OTP_KEY = otp_key_generator();
 
     // FILE
     public static final String MOBILESTATUS_FILE = "MobileStatus.json";
