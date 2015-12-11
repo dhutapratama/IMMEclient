@@ -20,7 +20,6 @@
         android:orderInCategory="100"
         app:showAsAction="never" />
     <item android:id="@+id/nav_sign_out"
-        android:onClick="true"
         android:title="Sign out"
         android:orderInCategory="100"
         app:showAsAction="never" />
