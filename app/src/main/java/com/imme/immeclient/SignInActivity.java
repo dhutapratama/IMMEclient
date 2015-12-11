@@ -2,6 +2,7 @@ package com.imme.immeclient;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.os.StrictMode;
@@ -11,6 +12,8 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.readystatesoftware.systembartint.SystemBarTintManager;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -53,6 +56,14 @@ public class SignInActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign_in);
 
+        SystemBarTintManager tintManager = new SystemBarTintManager(this);
+        // enable status bar tint
+        tintManager.setStatusBarTintEnabled(true);
+        // enable navigation bar tint
+        tintManager.setNavigationBarTintEnabled(true);
+        // set a custom tint color for all system bars
+        tintManager.setTintColor(Color.parseColor("#FF249962"));
+
         //TextView sign_in_textview_sign_up = (TextView) findViewById(R.id.sign_in_textview_sign_up);
         //sign_in_textview_sign_up.setOnClickListener(new View.OnClickListener() {
         //@Override
@@ -77,6 +88,17 @@ public class SignInActivity extends AppCompatActivity {
 
         final TextView sign_in_button_sign_in = (TextView) findViewById(R.id.sign_in_button_sign_in);
         sign_in_button_sign_in.setTypeface(hbqLight);
+
+        // sign up destination
+        TextView sign_in_button_sign_up = (TextView) findViewById(R.id.sign_in_button_sign_up);
+        sign_in_button_sign_up.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent("com.imme.immeclient.SignUpActivity");
+                startActivity(intent);
+            }
+        });
+
         // Sign in button action
         sign_in_button_sign_in.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {

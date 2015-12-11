@@ -30,11 +30,11 @@ public class SignUpActivity extends AppCompatActivity {
         // set a custom tint color for all system bars
         tintManager.setTintColor(Color.parseColor("#ff0f99da"));
 
-        TextView sign_up_button_sign_up = (TextView) findViewById(R.id.sign_up_button_sign_in);
+        TextView sign_up_button_sign_up = (TextView) findViewById(R.id.sign_up_button_sign_up);
         sign_up_button_sign_up.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent("com.imme.immeclient.SignInActivity");
+                Intent intent = new Intent("com.imme.immeclient.SignUpActivity");
                 startActivity(intent);
             }
         });
