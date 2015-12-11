@@ -7,13 +7,15 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Toast;
 
 public class SignOutActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_sign_out);
+        setContentView(R.layout.activity_sign_in);
+        Toast.makeText(this, "You've been signed out", Toast.LENGTH_LONG).show();
 
     }
 

@@ -6,13 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
-    tools:context="com.imme.immeclient.TransactionHistoryActivity"
-    tools:openDrawer="start">
-
-    <include
-        layout="@layout/app_bar_transaction_history"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+    tools:context=".TransactionHistoryActivity">
 
     <android.support.design.widget.AppBarLayout
         android:layout_height="wrap_content"
@@ -22,9 +16,7 @@
         <android.support.v7.widget.Toolbar
             android:id="@+id/toolbar_th"
             android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize"
-            android:background="?attr/colorPrimary"
-            app:popupTheme="@style/AppTheme.PopupOverlay" />
+            android:layout_height="wrap_content"/>
 
     </android.support.design.widget.AppBarLayout>
 
