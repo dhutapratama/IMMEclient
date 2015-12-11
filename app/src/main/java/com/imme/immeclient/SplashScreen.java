@@ -4,12 +4,14 @@ package com.imme.immeclient;
  * Created by lasedev on 11/11/2015.
  */
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.StrictMode;
 import android.provider.Settings;
+import android.util.Base64;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -29,6 +31,9 @@ import java.net.URLEncoder;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Enumeration;
+
+import javax.crypto.Cipher;
+import javax.crypto.spec.SecretKeySpec;
 
 public class SplashScreen extends Activity {
 
@@ -59,6 +64,10 @@ public class SplashScreen extends Activity {
             //moveTaskToBack(true);
             //android.os.Process.killProcess(android.os.Process.myPid());
             //System.exit(1);
+        } catch (Exception e) {
+            Toast.makeText(this, "Error Exception", Toast.LENGTH_LONG).show();
+            Toast.makeText(this, "Server Error", Toast.LENGTH_LONG).show();
+            e.printStackTrace();
         }
 
         Thread timerThread = new Thread(){
@@ -88,33 +97,31 @@ public class SplashScreen extends Activity {
         finish();
     }
 
-    public boolean initialProcedure() throws IOException, JSONException {
+    public boolean initialProcedure() throws Exception {
         //Initial Variable
         JSONObject serviceResult;
 
         // Check File
         String fileContent = readFile(GlobalVariable.MOBILESTATUS_FILE);
-        //Log.v("Read File",fileContent);
         GlobalVariable.ANDROID_ID = Settings.Secure.getString(getContentResolver(), Settings.Secure.ANDROID_ID);
-
         JSONObject loginStatus = new JSONObject();
-        //Log.v("Status","No file / Fresh installing");
 
-        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        Date today = new Date();
-        String date = formatter.format(today);
+        long unixTime = System.currentTimeMillis() / 1000L;
+        Integer date = (int)(long) unixTime;
 
+        SecurityOTP MCrypt = new SecurityOTP();
+        String authentication_code = MCrypt.bytesToHex(MCrypt.encrypt(GlobalVariable.ACK_CODE));
 
         if (fileContent.equals("created")) {
-            GlobalVariable.ACK = "?request_code=1000"
+            String requestData = "?request_code=1000"
                     + "&device_id=" + URLEncoder.encode(GlobalVariable.ANDROID_ID, "UTF-8")
                     + "&device_type=android"
                     + "&device_ip=" + URLEncoder.encode(GlobalVariable.CLIENT_IP(), "UTF-8")
-                    + "&date=" + "2015-12-07+00%3A00%3A00" //URLEncoder.encode(date, "UTF-8")
+                    + "&date=" + URLEncoder.encode(Integer.toString(date), "UTF-8")
                     + "&client_version=" + URLEncoder.encode( GlobalVariable.CLIENT_VERSION, "UTF-8")
-                    + "&authentication_code=0sgsOhUwJ9dSLDZ78ztEG4LclvIdIOMjlLwbw9QjD4g%3D";
+                    + "&authentication_code=" + URLEncoder.encode( authentication_code, "UTF-8");
 
-            serviceResult = WebServiceClient.getRequest(GlobalVariable.DISTRIBUTOR_SERVER + GlobalVariable.ACK);
+            serviceResult = WebServiceClient.getRequest(GlobalVariable.DISTRIBUTOR_SERVER + requestData);
 
             //Toast.makeText(this, serviceResult.toString(), Toast.LENGTH_LONG).show();
             loginStatus.put("first_time_app", "true");
