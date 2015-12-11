@@ -79,7 +79,7 @@
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
                     android:gravity="center"
-                    android:paddingTop="28dp">
+                    android:paddingTop="48dp">
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -102,6 +102,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:id="@+id/dont_have_account"
                         android:text="Don't Have an Account?"
                         android:textSize="16dp"/>
                 </LinearLayout>

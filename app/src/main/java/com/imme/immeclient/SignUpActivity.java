@@ -30,15 +30,6 @@ public class SignUpActivity extends AppCompatActivity {
         // set a custom tint color for all system bars
         tintManager.setTintColor(Color.parseColor("#ff0f99da"));
 
-        TextView sign_up_button_sign_up = (TextView) findViewById(R.id.sign_up_button_sign_up);
-        sign_up_button_sign_up.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent("com.imme.immeclient.SignUpActivity");
-                startActivity(intent);
-            }
-        });
-
         // Start Font
         Typeface hnLight = Typeface.createFromAsset(getAssets(),
                 "fonts/HelveticaNeue-Light.otf");
@@ -61,8 +52,17 @@ public class SignUpActivity extends AppCompatActivity {
         TextView sign_up_edittext_phone_number = (EditText) findViewById(R.id.sign_up_edittext_phone_number);
         sign_up_edittext_phone_number.setTypeface(hnLight);
 
-        //TextView sign_up_button_sign_up = (TextView) findViewById(R.id.sign_up_button_sign_up);
-        //sign_up_button_sign_up.setTypeface(hbqLight);
+        TextView sign_up_button_sign_up = (TextView) findViewById(R.id.sign_up_button_sign_up);
+        sign_up_button_sign_up.setTypeface(hbqLight);
+
+        // sign up destination
+        sign_up_button_sign_up.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent("com.imme.immeclient.SignUpActivity");
+                startActivity(intent);
+            }
+        });
     }
 
 }
