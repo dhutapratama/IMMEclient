@@ -51,8 +51,14 @@ public class SplashScreen extends Activity {
             Log.e("IOException", e.toString());
             e.printStackTrace();
         } catch (JSONException e) {
+            Toast.makeText(this, "Error JSON Format", Toast.LENGTH_LONG).show();
+            Toast.makeText(this, "Server Error", Toast.LENGTH_LONG).show();
             Log.e("JSONException", e.toString());
             e.printStackTrace();
+
+            //moveTaskToBack(true);
+            //android.os.Process.killProcess(android.os.Process.myPid());
+            //System.exit(1);
         }
 
         Thread timerThread = new Thread(){
@@ -130,6 +136,9 @@ public class SplashScreen extends Activity {
         } else {
             loginStatus = new JSONObject(fileContent);
             GlobalVariable.LOGIN_STATUS = loginStatus.getString("login_status");
+            if (GlobalVariable.LOGIN_STATUS.equals("true")) {
+                initVariable();
+            }
         }
         return true;
     }
@@ -174,5 +183,37 @@ public class SplashScreen extends Activity {
         }
         //Log.v("SplashScreen", ret);
         return ret;
+    }
+
+    private void initVariable() throws JSONException {
+        String securityContent = readFile(GlobalVariable.SECURITY_FILE);
+
+        JSONObject securityData = new JSONObject(securityContent);
+
+        String accountContent = readFile(GlobalVariable.USERDATA_FILE);
+        JSONObject accountData = new JSONObject(accountContent);
+
+        String balanceContent = readFile(GlobalVariable.BALANCE_FILE);
+        JSONObject balanceData = new JSONObject(balanceContent);
+
+        GlobalVariable.TBA_ALGORITHM = securityData.getString("tba_algorithm");
+        GlobalVariable.CBA_ALGORITHM = securityData.getString("cba_algorithm");
+        GlobalVariable.CBA_COUNTER = securityData.getString("cba_counter");
+        GlobalVariable.SESSION_KEY = securityData.getString("session_key");
+
+        Toast.makeText(this, GlobalVariable.CBA_COUNTER, Toast.LENGTH_LONG).show();
+
+        GlobalVariable.MAIN_BALANCE = Integer.parseInt(balanceData.getString("main_balance"));
+        GlobalVariable.GIFT_BALANCE = Integer.parseInt(balanceData.getString("gift_balance"));
+
+        GlobalVariable.ACCOUNT_NUMBER = accountData.getString("account_number");
+        GlobalVariable.FULL_NAME = accountData.getString("full_name");
+        GlobalVariable.PICTURE_URL = accountData.getString("picture_url");
+        GlobalVariable.EMAIL = accountData.getString("email");
+        GlobalVariable.PHONE_NUMBER = accountData.getString("phone_number");
+        GlobalVariable.IDCARD_NUMBER = accountData.getString("idcard_number");
+        GlobalVariable.IDCARD_TYPE = accountData.getString("idcard_type");
+        GlobalVariable.IS_VERIFIED_EMAIL = accountData.getString("is_verified_email");
+        GlobalVariable.IS_VERIFIED_PHONE = accountData.getString("is_verified_phone");
     }
 }
