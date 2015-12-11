@@ -19,8 +19,12 @@
         android:title="About Imme"
         android:orderInCategory="100"
         app:showAsAction="never" />
+    <item android:id="@+id/nav_sign_out"
+        android:onClick="true"
+        android:title="Sign Out"
+        android:orderInCategory="100"
+        app:showAsAction="never" />
     <item android:id="@+id/nav_gift"
-
         android:title="Gift"
         android:icon="@mipmap/main_button_gift_icon"
         android:orderInCategory="200"
