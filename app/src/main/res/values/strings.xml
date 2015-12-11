@@ -186,4 +186,5 @@ distribution media, documentation, registration cards, and insertions.</string>
     <string name="title_activity_account_verify_phone_number_step2">Verify Phone Number Step 2
     </string>
     <string name="title_activity_sign_up2">SignUpActivity2</string>
+    <string name="title_activity_sign_out">Sign Out</string>
 </resources>

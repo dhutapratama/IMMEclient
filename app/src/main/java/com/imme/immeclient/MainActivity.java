@@ -218,7 +218,7 @@ public class MainActivity extends AppCompatActivity
     }
 
     @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
+    public boolean onCreateOptionsMenu(Menu menu)  {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.main, menu);
         return true;
@@ -241,15 +241,10 @@ public class MainActivity extends AppCompatActivity
             startActivity(intent);
             return true;
         }
-        //else if (id == R.id.nav_help_support) {
-          //  Intent intent = new Intent("com.imme.immeclient.HelpAndSupportActivity");
-            //startActivity(intent);
-            //return true;
-
-            else if (id == R.id.nav_help_support) {
-                Intent intent = new Intent("com.imme.immeclient.SignUpActivity");
-                startActivity(intent);
-                return true;
+        else if (id == R.id.nav_help_support) {
+            Intent intent = new Intent("com.imme.immeclient.HelpAndSupportActivity");
+            startActivity(intent);
+            return true;
         }
         else if (id == R.id.nav_feedback) {
             Intent intent = new Intent("com.imme.immeclient.FeedbackActivity");
@@ -261,6 +256,15 @@ public class MainActivity extends AppCompatActivity
             startActivity(intent);
             return true;
         }
+
+
+        else if (id == R.id.nav_sign_out) {
+            Intent intent = new Intent("com.imme.immeclient.SignOutActivity");
+            startActivity(intent);
+            return true;
+        }
+
+
         else if (id == R.id.nav_gift) {
             Intent intent = new Intent("com.imme.immeclient.GiftActivity");
             startActivity(intent);
@@ -312,6 +316,56 @@ public class MainActivity extends AppCompatActivity
         }
         return result;
     }
+
+
+    // Initial Commit
+    private void writeToFile(String varname, String data) {
+        try {
+            OutputStreamWriter outputStreamWriter = new OutputStreamWriter(openFileOutput(varname + ".json", Context.MODE_PRIVATE));
+            outputStreamWriter.write(data);
+            outputStreamWriter.close();
+        }
+        catch (IOException e) {
+            Log.e("Exception", "File write failed: " + e.toString());
+        }
+    }
+
+    private String readFromFile(String varname) {
+
+        String ret = "";
+
+        try {
+            InputStream inputStream = openFileInput(varname + ".json");
+
+            if ( inputStream != null ) {
+                InputStreamReader inputStreamReader = new InputStreamReader(inputStream);
+                BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
+                String receiveString = "";
+                StringBuilder stringBuilder = new StringBuilder();
+
+                while ( (receiveString = bufferedReader.readLine()) != null ) {
+                    stringBuilder.append(receiveString);
+                }
+
+                inputStream.close();
+                ret = stringBuilder.toString();
+            }
+        }
+        catch (FileNotFoundException e) {
+            Log.e("MainActivity", "File not found: " + e.toString());
+            if (varname.equals("balance")) {
+                writeToFile("balance", "0");
+                ret = readFromFile("balance");
+            } else {
+
+            }
+        } catch (IOException e) {
+            Log.e("MainActivity", "Can not read file: " + e.toString());
+        }
+
+        return ret;
+    }
+
 }
 
 /**
