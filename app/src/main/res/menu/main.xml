@@ -11,10 +11,6 @@
           android:title="Privacy Policy"
           android:orderInCategory="100"
           app:showAsAction="never" />
-    <item android:id="@+id/nav_help_support"
-          android:title="Help &amp; Support"
-          android:orderInCategory="100"
-          app:showAsAction="never" />
     <item android:id="@+id/nav_feedback"
           android:title="Feedback"
           android:orderInCategory="100"
@@ -23,9 +19,19 @@
         android:title="About Imme"
         android:orderInCategory="100"
         app:showAsAction="never" />
+    <item android:id="@+id/nav_sign_out"
+        android:onClick="true"
+        android:title="Sign Out"
+        android:orderInCategory="100"
+        app:showAsAction="never" />
     <item android:id="@+id/nav_gift"
         android:title="Gift"
         android:icon="@mipmap/main_button_gift_icon"
+        android:orderInCategory="200"
+        app:showAsAction="ifRoom" />
+    <item android:id="@+id/nav_help_support"
+        android:title="Help"
+        android:icon="@mipmap/main_button_help_support_icon"
         android:orderInCategory="200"
         app:showAsAction="ifRoom" />
 </menu>

@@ -6,6 +6,7 @@ import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.StrictMode;
 import android.support.v7.app.ActionBar;
 import android.util.Log;
 import android.view.View;
@@ -17,9 +18,12 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.AdapterView;
 import android.widget.ImageButton;
+import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.readystatesoftware.systembartint.SystemBarTintManager;
@@ -33,6 +37,10 @@ import java.io.OutputStreamWriter;
 import java.text.NumberFormat;
 import java.util.Locale;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+import com.imme.immeclient.WriteReadFile;
+
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
@@ -40,9 +48,11 @@ public class MainActivity extends AppCompatActivity
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+        StrictMode.setThreadPolicy(policy);
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
@@ -50,6 +60,7 @@ public class MainActivity extends AppCompatActivity
             toolbar.setPadding(0, getStatusBarHeight(), 0, 0);
             toolbar.getLayoutParams().height = toolbar.getLayoutParams().height + getStatusBarHeight();
         }
+
         // Start Font
         Typeface hnLight = Typeface.createFromAsset(getAssets(),
                 "fonts/HelveticaNeue-Light.otf");
@@ -114,11 +125,6 @@ public class MainActivity extends AppCompatActivity
         actionBar.setDisplayUseLogoEnabled(true);
         actionBar.setLogo(R.mipmap.imme_logo);
 
-        /* Ridding Activity
-        startActivity(new Intent(MainActivity.this, WelcomeScreen.class));
-        overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
-        */
-
         // Status Bar Coloring
         SystemBarTintManager tintManager = new SystemBarTintManager(this);
         tintManager.setStatusBarTintEnabled(true);
@@ -126,9 +132,9 @@ public class MainActivity extends AppCompatActivity
         tintManager.setTintColor(Color.parseColor("#FF03B0FF"));
 
         // Balance
-        String balance_value = readFromFile("balance");
-        String formated_money = NumberFormat.getNumberInstance(Locale.GERMANY).format(Integer.parseInt(balance_value));
-        main_textview_balance_value.setText(formated_money);
+        //String balance_value = readFromFile( "balance");
+        //String formated_money = NumberFormat.getNumberInstance(Locale.GERMANY).format(Integer.parseInt(balance_value));
+        //main_textview_balance_value.setText(formated_money);
 
         // Button Action
         ImageButton main_button_send_pay = (ImageButton) findViewById(R.id.main_button_send_pay);
@@ -196,6 +202,7 @@ public class MainActivity extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+
     }
 
     @Override
@@ -252,12 +259,20 @@ public class MainActivity extends AppCompatActivity
             startActivity(intent);
             return true;
         }
+
+
+        else if (id == R.id.nav_sign_out) {
+            Intent intent = new Intent("com.imme.immeclient.SignOutActivity");
+            startActivity(intent);
+            return true;
+        }
+
+
         else if (id == R.id.nav_gift) {
             Intent intent = new Intent("com.imme.immeclient.GiftActivity");
             startActivity(intent);
             return true;
         }
-
         return super.onOptionsItemSelected(item);
     }
 
@@ -304,56 +319,6 @@ public class MainActivity extends AppCompatActivity
         }
         return result;
     }
-
-    private void writeToFile(String varname, String data) {
-        try {
-            OutputStreamWriter outputStreamWriter = new OutputStreamWriter(openFileOutput(varname + ".txt", Context.MODE_PRIVATE));
-            outputStreamWriter.write(data);
-            outputStreamWriter.close();
-        }
-        catch (IOException e) {
-            Log.e("Exception", "File write failed: " + e.toString());
-        }
-    }
-
-    private String readFromFile(String varname) {
-
-        String ret = "";
-
-        try {
-            InputStream inputStream = openFileInput(varname + ".txt");
-
-            if ( inputStream != null ) {
-                InputStreamReader inputStreamReader = new InputStreamReader(inputStream);
-                BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
-                String receiveString = "";
-                StringBuilder stringBuilder = new StringBuilder();
-
-                while ( (receiveString = bufferedReader.readLine()) != null ) {
-                    stringBuilder.append(receiveString);
-                }
-
-                inputStream.close();
-                ret = stringBuilder.toString();
-            }
-        }
-        catch (FileNotFoundException e) {
-            Log.e("MainActivity", "File not found: " + e.toString());
-            if (varname.equals("balance")) {
-                writeToFile("balance", "0");
-                ret = readFromFile("balance");
-            } else {
-
-            }
-        } catch (IOException e) {
-            Log.e("MainActivity", "Can not read file: " + e.toString());
-        }
-
-        return ret;
-    }
-
-
-
 }
 
 /**

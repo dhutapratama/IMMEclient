@@ -43,21 +43,14 @@ public class ReceiveQRCodeActivity extends AppCompatActivity {
         tintManager.setTintColor(Color.parseColor("#FF03B0FF"));
 
         // Create Barcode
-        String request = readFromFile("request");
-        Bitmap encoded_qr = encodeToQrCode("REC:" + request, 500, 500);
+        Bitmap encoded_qr = encodeToQrCode(GlobalVariable.TRANSACTION_CODE, 500, 500);
         ImageView myImage = (ImageView) findViewById(R.id.qr_code);
         myImage.setImageBitmap(encoded_qr);
-
-        // Add balance
-        String balance = readFromFile("balance");
-        Integer balance_int = Integer.parseInt(balance);
-        balance_int = balance_int + Integer.parseInt(request);
-        writeToFile("balance", Integer.toString(balance_int));
 
         LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         View vi = inflater.inflate(R.layout.content_main, null); //log.xml is your file.
         TextView main_balance_value = (TextView)vi.findViewById(R.id.main_textview_balance_value); //get a reference to the textview on the log.xml file.
-        String formated_money = NumberFormat.getNumberInstance(Locale.GERMANY).format(balance_int);
+        String formated_money = NumberFormat.getNumberInstance(Locale.GERMANY).format(GlobalVariable.REQUEST_AMOUNT);
         main_balance_value.setText(formated_money);
 
     }
