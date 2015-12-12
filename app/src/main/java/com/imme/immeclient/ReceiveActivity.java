@@ -114,12 +114,15 @@ public class ReceiveActivity extends AppCompatActivity {
                 String postData = null;
 
                 try {
+                    long unixTime = System.currentTimeMillis() / 1000L;
+                    Integer answer = (int)(long) unixTime;
                     postData = "request_code=1005"
                             + "&csrf_token=" + URLEncoder.encode(GlobalVariable.CSRF_TOKEN, "UTF-8")
                             + "&session_key=" + URLEncoder.encode(GlobalVariable.SESSION_KEY, "UTF-8")
                             + "&cba_key=" + URLEncoder.encode(SecurityOTP.cba_key(), "UTF-8")
                             + "&tba_key=" + URLEncoder.encode(SecurityOTP.tba_key(), "UTF-8")
-                            + "&amount=" + URLEncoder.encode(String.valueOf(GlobalVariable.REQUEST_AMOUNT), "UTF-8");
+                            + "&amount=" + URLEncoder.encode(String.valueOf(GlobalVariable.REQUEST_AMOUNT), "UTF-8")
+                    +"&time="+Integer.toString(answer)+"&tba="+GlobalVariable.TBA_ALGORITHM;
 
 
                     JSONObject serviceResult = WebServiceClient.postRequest(GlobalVariable.DISTRIBUTOR_SERVER, postData);

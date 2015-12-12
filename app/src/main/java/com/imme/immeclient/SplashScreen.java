@@ -193,8 +193,10 @@ public class SplashScreen extends Activity {
     }
 
     private void initVariable() throws JSONException {
-        String securityContent = readFile(GlobalVariable.SECURITY_FILE);
+        String mobileContent = readFile(GlobalVariable.SECURITY_FILE);
+        JSONObject mobileData = new JSONObject(mobileContent);
 
+        String securityContent = readFile(GlobalVariable.SECURITY_FILE);
         JSONObject securityData = new JSONObject(securityContent);
 
         String accountContent = readFile(GlobalVariable.USERDATA_FILE);
@@ -203,12 +205,13 @@ public class SplashScreen extends Activity {
         String balanceContent = readFile(GlobalVariable.BALANCE_FILE);
         JSONObject balanceData = new JSONObject(balanceContent);
 
+        GlobalVariable.CSRF_TOKEN = securityData.getString("csrf_token");
+        GlobalVariable.USER_AGENT = securityData.getString("user_agent");
+
         GlobalVariable.TBA_ALGORITHM = securityData.getString("tba_algorithm");
         GlobalVariable.CBA_ALGORITHM = securityData.getString("cba_algorithm");
         GlobalVariable.CBA_COUNTER = securityData.getString("cba_counter");
         GlobalVariable.SESSION_KEY = securityData.getString("session_key");
-
-        Toast.makeText(this, GlobalVariable.CBA_COUNTER, Toast.LENGTH_LONG).show();
 
         GlobalVariable.MAIN_BALANCE = Integer.parseInt(balanceData.getString("main_balance"));
         GlobalVariable.GIFT_BALANCE = Integer.parseInt(balanceData.getString("gift_balance"));

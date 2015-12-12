@@ -193,6 +193,7 @@ public class SignInActivity extends AppCompatActivity {
         if (serviceResult.getBoolean("error")){
             Toast.makeText(this, serviceResult.getString("message"), Toast.LENGTH_LONG).show();
             GlobalVariable.CSRF_TOKEN = serviceResult.getString("csrf_token");
+            mobileStatus.put("csrf_token", serviceResult.getString("csrf_token"));
         } else {
             Toast.makeText(this, serviceResult.getString("login_message"), Toast.LENGTH_LONG).show();
 
