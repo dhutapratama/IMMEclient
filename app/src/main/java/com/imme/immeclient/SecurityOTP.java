@@ -1,6 +1,8 @@
 package com.imme.immeclient;
 
 import android.text.TextUtils;
+import android.util.Log;
+
 import java.security.NoSuchAlgorithmException;
 
 import javax.crypto.Cipher;
@@ -88,20 +90,25 @@ public class SecurityOTP {
 
     public static String tba_key(){
         long unixTime = System.currentTimeMillis() / 1000L;
-        Integer answer = (int)(long) unixTime;
+        long answer = (int)(long) unixTime;
         for (int i = 0; i < 5; i++) {
             String operator_code = TextUtils.substring(GlobalVariable.TBA_ALGORITHM, i, i+1);
             String factor = TextUtils.substring(GlobalVariable.TBA_ALGORITHM, i + 5, i+6);
 
             if (operator_code.equals("1")) {
-                answer = plus(answer, factor);
+                Log.w(Integer.toString(i), "plus(" + answer + ", " + factor + ")");
+                answer +=  Integer.parseInt(factor);
             } else if (operator_code.equals("2")) {
-                answer = minus(answer, factor);
+                Log.w(Integer.toString(i), "minus(" + answer + ", " + factor + ")");
+                answer -=  Integer.parseInt(factor);
             } else if (operator_code.equals("3")) {
-                answer = times(answer, factor);
+                Log.w(Integer.toString(i), "minus(" + answer + ", " + factor + ")");
+                answer *=  Integer.parseInt(factor);
             }
         }
-        return answer.toString();
+
+        Log.w("Answer", String.valueOf(answer));
+        return String.valueOf(answer);
     }
 
     public static String cba_key(){
