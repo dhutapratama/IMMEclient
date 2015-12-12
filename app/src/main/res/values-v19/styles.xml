@@ -1,7 +1,4 @@
-<resources>
-
-    <!-- Change color menu icon & nav icon. -->
-
+<resources>>
 
     <style name="AppTheme" parent="Theme.AppCompat.Light">
         <!-- Customize your theme here. -->
