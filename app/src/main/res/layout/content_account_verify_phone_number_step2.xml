@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="@dimen/zero"
+    android:paddingLeft="@dimen/zero"
+    android:paddingRight="@dimen/zero"
+    android:paddingTop="@dimen/zero"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    tools:context="com.imme.immeclient.AccountVerifyPhoneNumberStep2Activity"
+    tools:showIn="@layout/activity_account_verify_phone_number_step2">
+
+    <RelativeLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/one"
+        android:paddingTop="30dp">
+        <ImageView
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:src="@mipmap/account_verify_phone_number"/>
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/one"
+        android:gravity="center"
+        android:paddingTop="40dp">
+        <TextView
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:text="YOU'VE BEEN VERIFIED!"
+            android:gravity="center"
+            android:textColor="#5D93FE"
+            android:textSize="30sp"/>
+    </RelativeLayout>
+
+</RelativeLayout>

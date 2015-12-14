@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+<manifest
+    xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.imme.immeclient">
 
     <!-- To auto-complete the email text field in the login form with the user's emails -->
@@ -7,17 +8,17 @@
     <uses-permission android:name="android.permission.READ_PROFILE" />
     <uses-permission android:name="android.permission.READ_CONTACTS" />
     <uses-permission android:name="android.permission.CAMERA" />
-
-    <uses-feature android:name="android.hardware.camera" />
-
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.VIBRATE" />
     <uses-permission android:name="android.permission.FLASHLIGHT" />
     <uses-permission android:name="android.permission.READ_CONTACTS" />
-    <uses-permission android:name="com.android.browser.permission.READ_HISTORY_BOOKMARKS" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+
+    <uses-feature android:name="android.hardware.camera" />
 
     <application
         android:allowBackup="true"
@@ -39,6 +40,7 @@
         <activity
             android:name=".MainActivity"
             android:label="@string/app_name"
+            android:permission="android.permission.INTERNET"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
@@ -56,25 +58,8 @@
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.imme.immeclient.MainActivity" />
-
             <intent-filter>
                 <action android:name="com.imme.immeclient.PinActivity" />
-
-                <category android:name="android.intent.category.DEFAULT" />
-            </intent-filter>
-        </activity>
-        <activity
-            android:name=".LoginActivity"
-            android:label="@string/title_activity_login"
-            android:parentActivityName=".MainActivity"
-            android:screenOrientation="portrait">
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.imme.immeclient.MainActivity" />
-
-            <intent-filter>
-                <action android:name="com.imme.immeclient.LoginActivity" />
-
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
@@ -87,10 +72,8 @@
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.imme.immeclient.MainActivity" />
-
             <intent-filter>
                 <action android:name="com.imme.immeclient.FeedbackActivity" />
-
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
@@ -103,10 +86,8 @@
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.imme.immeclient.MainActivity" />
-
             <intent-filter>
                 <action android:name="com.imme.immeclient.HelpAndSupportActivity" />
-
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
@@ -119,10 +100,8 @@
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.imme.immeclient.MainActivity" />
-
             <intent-filter>
                 <action android:name="com.imme.immeclient.PrivacyPolicyActivity" />
-
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
@@ -135,10 +114,8 @@
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.imme.immeclient.MainActivity" />
-
             <intent-filter>
                 <action android:name="com.imme.immeclient.RecipientListActivity" />
-
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
@@ -151,10 +128,8 @@
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.imme.immeclient.MainActivity" />
-
             <intent-filter>
                 <action android:name="com.imme.immeclient.SendPayActivity" />
-
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
@@ -167,10 +142,8 @@
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.imme.immeclient.MainActivity" />
-
             <intent-filter>
                 <action android:name="com.imme.immeclient.SecuritySettingsActivity" />
-
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
@@ -179,14 +152,12 @@
             android:label="@string/title_activity_transaction_history"
             android:parentActivityName=".MainActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/AppThemeGreen.NoActionBar">
+            android:theme="@style/AppTheme.NoActionBar">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.imme.immeclient.MainActivity" />
-
             <intent-filter>
                 <action android:name="com.imme.immeclient.TransactionHistoryActivity" />
-
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
@@ -199,10 +170,8 @@
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.imme.immeclient.MainActivity" />
-
             <intent-filter>
                 <action android:name="com.imme.immeclient.UserAgreementActivity" />
-
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
@@ -210,14 +179,13 @@
             android:name=".AccountActivity"
             android:label="@string/title_activity_account"
             android:parentActivityName=".MainActivity"
+            android:screenOrientation="portrait"
             android:theme="@style/AppThemeGreen.NoActionBar">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.imme.immeclient.MainActivity" />
-
             <intent-filter>
                 <action android:name="com.imme.immeclient.AccountActivity" />
-
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
@@ -230,10 +198,8 @@
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.imme.immeclient.MainActivity" />
-
             <intent-filter>
                 <action android:name="com.imme.immeclient.ReceiveActivity" />
-
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
@@ -241,14 +207,13 @@
             android:name=".Send_pay_details"
             android:label="@string/title_activity_send_pay_details"
             android:parentActivityName=".MainActivity"
+            android:screenOrientation="portrait"
             android:theme="@style/AppThemeBlue.NoActionBar">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.imme.immeclient.MainActivity" />
-
             <intent-filter>
                 <action android:name="com.imme.immeclient.Send_pay_details" />
-
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
@@ -258,7 +223,6 @@
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="com.screen.lasedev.welcome_layout" />
-
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
@@ -266,14 +230,13 @@
             android:name=".GiftActivity"
             android:label="@string/title_activity_gift"
             android:parentActivityName=".MainActivity"
+            android:screenOrientation="portrait"
             android:theme="@style/AppThemeBlue.NoActionBar">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.imme.immeclient.MainActivity" />
-
             <intent-filter>
                 <action android:name="com.imme.immeclient.GiftActivity" />
-
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
@@ -281,14 +244,13 @@
             android:name=".ReceiveQRCodeActivity"
             android:label="@string/title_activity_receive_qrcode"
             android:parentActivityName=".MainActivity"
+            android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.imme.immeclient.MainActivity" />
-
             <intent-filter>
                 <action android:name="com.imme.immeclient.ReceiveQRCodeActivity" />
-
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
@@ -301,10 +263,8 @@
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.imme.immeclient.MainActivity" />
-
             <intent-filter>
                 <action android:name="com.imme.immeclient.AboutActivity" />
-
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
@@ -312,28 +272,27 @@
             android:name=".PaymentDetails"
             android:label="@string/title_activity_payment_details"
             android:parentActivityName=".MainActivity"
+            android:screenOrientation="portrait"
             android:theme="@style/AppThemeBlue.NoActionBar">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.imme.immeclient.MainActivity" />
-
             <intent-filter>
                 <action android:name="com.imme.immeclient.PaymentDetails" />
-
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
         <activity
             android:name=".InviteGetMoneyActivity"
             android:label="@string/title_activity_invite_get_money"
+            android:parentActivityName=".MainActivity"
+            android:screenOrientation="portrait"
             android:theme="@style/AppThemeGreen.NoActionBar">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.imme.immeclient.MainActivity" />
-
             <intent-filter>
                 <action android:name="com.imme.immeclient.InviteGetMoneyActivity" />
-
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
@@ -341,14 +300,13 @@
             android:name=".PersonalSend"
             android:label="@string/title_activity_personal_send"
             android:parentActivityName=".MainActivity"
+            android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.imme.immeclient.MainActivity" />
-
             <intent-filter>
                 <action android:name="com.imme.immeclient.PersonalSend" />
-
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
@@ -356,17 +314,71 @@
             android:name=".SignUpActivity"
             android:label="@string/title_activity_sign_up"
             android:parentActivityName=".MainActivity"
+            android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.imme.immeclient.MainActivity" />
-
             <intent-filter>
                 <action android:name="com.imme.immeclient.SignUpActivity" />
-
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
-
+        </activity>
+        <activity
+            android:name=".SignInActivity"
+            android:label="@string/title_activity_sign_in"
+            android:parentActivityName=".MainActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.imme.immeclient.MainActivity" />
+            <intent-filter>
+                <action android:name="com.imme.immeclient.SignInActivity" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".AccountVerifyPhoneNumberStep1Activity"
+            android:label="@string/title_activity_account_verify_phone_number_step1"
+            android:parentActivityName=".MainActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.imme.immeclient.MainActivity" />
+            <intent-filter>
+                <action android:name="com.imme.immeclient.AccountVerifyPhoneNumberStep1Activity" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".AccountVerifyPhoneNumberStep2Activity"
+            android:label="@string/title_activity_account_verify_phone_number_step2"
+            android:parentActivityName=".MainActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.imme.immeclient.MainActivity" />
+            <intent-filter>
+                <action android:name="com.imme.immeclient.AccountVerifyPhoneNumberStep2Activity" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".SignOutActivity"
+            android:label="@string/title_activity_sign_out"
+            android:parentActivityName=".MainActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.imme.immeclient.MainActivity" />
+            <intent-filter>
+                <action android:name="com.imme.immeclient.SignOutActivity" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
         </activity>
     </application>
 

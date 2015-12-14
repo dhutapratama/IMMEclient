@@ -90,34 +90,19 @@ public class SendPayActivity extends AppCompatActivity {
         IntentResult result = IntentIntegrator.parseActivityResult(requestCode, resultCode, data);
         if(result != null) {
             String received_data = result.getContents();
-            String[] decoded_data = received_data.split(":");
-            String selector = decoded_data[0];
-            Integer value = Integer.parseInt(decoded_data[1]);
 
-            if(result.getContents().equals("null")) {
-                //Toast.makeText(this, "Cancelled", Toast.LENGTH_LONG).show();
-                //Intent intentView = new Intent("com.imme.immeclient.Send_pay_details");
-               // startActivity(intentView);
+
+            if(resultCode == 0) {
+                Toast.makeText(this, "Cancelled", Toast.LENGTH_LONG).show();
+                Intent intentView = new Intent("com.imme.immeclient.Send_pay_details");
+                startActivity(intentView);
             } else {
-                //Toast.makeText(this, "Scanned: " + result.getContents(), Toast.LENGTH_LONG).show();
-                if (selector.equals("REC")) {
-                    String balance = readFromFile("balance");
-                    Integer balance_int = Integer.parseInt(balance);
-                    balance_int = balance_int - value;
-                    writeToFile("balance", Integer.toString(balance_int));
-
-                    LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-                    View vi = inflater.inflate(R.layout.content_main, null); //log.xml is your file.
-                    TextView main_balance_value = (TextView)vi.findViewById(R.id.main_textview_balance_value); //get a reference to the textview on the log.xml file.
-                    String formated_money = NumberFormat.getNumberInstance(Locale.GERMANY).format(balance_int);
-                    main_balance_value.setText(formated_money);
+                Toast.makeText(this, received_data, Toast.LENGTH_LONG).show();
+                    //String formated_money = NumberFormat.getNumberInstance(Locale.GERMANY).format(balance_int);
+                    //main_balance_value.setText(formated_money);
 
                     Intent intentView = new Intent("com.imme.immeclient.PinActivity");
                     startActivity(intentView);
-                } else {
-                    Intent intentView = new Intent("com.imme.immeclient.Send_pay_details");
-                    startActivity(intentView);
-                }
             }
         } else {
             // This is important, otherwise the result will not be passed to the fragment

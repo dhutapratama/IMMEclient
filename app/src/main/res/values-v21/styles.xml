@@ -1,10 +1,16 @@
 <resources>>
 
+    <!-- Change color icon toolbar. -->
+    <style name="MyToolBarTheme" parent="ThemeOverlay.AppCompat.Light">
+        <item name="android:textColorPrimary">#000000</item>
+        <item name="android:textColorSecondary">#02afff</item>
+    </style>
+
     <style name="AppTheme" parent="Theme.AppCompat.Light">
         <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
-        <item name="colorAccent">@color/colorAccent</item>
+        <item name="colorAccent">#2bb673</item>
         <item name="android:icon">@drawable/transparent_icon</item>
         <item name="android:windowTranslucentStatus">true</item>
 
