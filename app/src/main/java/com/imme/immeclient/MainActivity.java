@@ -200,8 +200,6 @@ public class MainActivity extends AppCompatActivity
             }
         });
 
-
-
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
@@ -241,11 +239,6 @@ public class MainActivity extends AppCompatActivity
             startActivity(intent);
             return true;
         }
-        //else if (id == R.id.nav_help_support) {
-          //  Intent intent = new Intent("com.imme.immeclient.HelpAndSupportActivity");
-            //startActivity(intent);
-            //return true;
-
         else if (id == R.id.nav_help_support) {
             Intent intent = new Intent("com.imme.immeclient.HelpAndSupportActivity");
             startActivity(intent);
@@ -261,15 +254,16 @@ public class MainActivity extends AppCompatActivity
             startActivity(intent);
             return true;
         }
-
-
+        else if (id == R.id.nav_font) {
+            Intent intent = new Intent("com.imme.immeclient.FontActivity");
+            startActivity(intent);
+            return true;
+        }
         else if (id == R.id.nav_sign_out) {
             Intent intent = new Intent("com.imme.immeclient.SignOutActivity");
             startActivity(intent);
             return true;
         }
-
-
         else if (id == R.id.nav_gift) {
             Intent intent = new Intent("com.imme.immeclient.GiftActivity");
             startActivity(intent);
