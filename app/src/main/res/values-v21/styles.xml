@@ -2,7 +2,7 @@
 
     <!-- Change color icon toolbar. -->
     <style name="MyToolBarTheme" parent="ThemeOverlay.AppCompat.Light">
-        <item name="android:textColorPrimary">#ffffff</item>
+        <item name="android:textColorPrimary">#000000</item>
         <item name="android:textColorSecondary">#02afff</item>
     </style>
 
