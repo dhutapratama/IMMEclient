@@ -1,5 +1,6 @@
 <resources>
 
+    <!-- Change color iicon toolbar. -->
     <style name="MyToolBarTheme" parent="ThemeOverlay.AppCompat.Light">
         <item name="android:textColorPrimary">#000000</item>
         <item name="android:textColorSecondary">#00aeff</item>
