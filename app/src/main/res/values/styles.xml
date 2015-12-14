@@ -1,7 +1,7 @@
 <resources>
     <style name="MyToolBarTheme" parent="ThemeOverlay.AppCompat.Light">
-        <item name="android:textColorPrimary">#000000</item>
-        <item name="android:textColorSecondary">#00aeff</item>
+        <item name="android:textColorPrimary">#FFFF00</item>
+        <item name="android:textColorSecondary">#F00</item>
     </style>
 
     <!-- Base application theme. -->
