@@ -23,10 +23,6 @@
         android:title="Sign out"
         android:orderInCategory="100"
         app:showAsAction="never" />
-    <item android:id="@+id/nav_font"
-        android:title="Font Size Testing"
-        android:orderInCategory="100"
-        app:showAsAction="never" />
     <item android:id="@+id/nav_gift"
         android:title="Gift"
         android:icon="@mipmap/main_button_gift_icon"
