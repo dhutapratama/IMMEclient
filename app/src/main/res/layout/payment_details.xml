@@ -522,8 +522,6 @@
         android:layout_gravity="center_horizontal"
         android:layout_alignParentBottom="true"
         android:id="@+id/bottomxxx">
-
-
     </LinearLayout>
 
 </RelativeLayout>
