@@ -261,20 +261,17 @@ public class MainActivity extends AppCompatActivity
             startActivity(intent);
             return true;
         }
-
-
         else if (id == R.id.nav_sign_out) {
             Intent intent = new Intent("com.imme.immeclient.SignOutActivity");
             startActivity(intent);
             return true;
         }
-
-
-        else if (id == R.id.nav_gift) {
-            Intent intent = new Intent("com.imme.immeclient.GiftActivity");
-            startActivity(intent);
-            return true;
-        }
+        // Gift page hide
+        //else if (id == R.id.nav_gift) {
+          //  Intent intent = new Intent("com.imme.immeclient.GiftActivity");
+            //startActivity(intent);
+            //return true;
+        //}
         return super.onOptionsItemSelected(item);
     }
 

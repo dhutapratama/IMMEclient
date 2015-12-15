@@ -1,763 +1,878 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:paddingBottom="@dimen/zero"
     android:paddingLeft="@dimen/zero"
     android:paddingRight="@dimen/zero"
     android:paddingTop="@dimen/zero"
-    android:paddingBottom="@dimen/zero"
-    android:background="@color/colorWhite"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:showIn="@layout/activity_transaction_history"
-    tools:context="com.imme.immeclient.TransactionHistoryActivity">
+    tools:context="com.imme.immeclient.TransactionHistoryActivity"
+    tools:showIn="@layout/activity_transaction_history">
 
-    <ScrollView
+    <LinearLayout
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="fill_parent"
-        android:scrollbarThumbVertical="@drawable/scrollbar"
-        android:scrollbarSize="5dp"
-        android:layout_above="@+id/bottomxxx">
+        android:id="@+id/linearLayout"
+        android:layout_above="@+id/linearup">
+
+    <ScrollView
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/scroll">
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:orientation="vertical">
+            <!-- one child -->
+
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="fill_parent"
+                android:orientation="horizontal"
+                android:background="@drawable/payment_details_name_list">
+                <!-- one linear -->
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:paddingBottom="5dp"
+                    android:paddingTop="10dp"
+                    android:paddingLeft="10dp"
+                    android:paddingRight="5dp">
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:paddingBottom="5dp"
+                        android:src="@mipmap/transaction_history_button_send_icon"/>
+                    <TextView
+                        android:id="@+id/transaction_history_send"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Send"
+                        android:textSize="8sp"
+                        android:layout_gravity="center"/>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:paddingBottom="5dp"
+                    android:paddingTop="15dp"
+                    android:paddingLeft="55dp"
+                    android:paddingRight="5dp">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="27-08-2015, 20:12"
+                        android:textSize="10dp"/>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Seven Eleven Kuta Bali tanah lot"
+                        android:singleLine="true"
+                        android:layout_marginLeft="1dp"
+                        android:layout_marginRight="140dp"
+                        android:textSize="12dp"/>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:paddingRight="110dp"
+                    android:paddingTop="20dp"
+                    android:layout_gravity="right"
+                    android:gravity="right">
+                    <TextView
+                        android:text="Rp."
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="15sp"/>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:paddingRight="10dp"
+                    android:paddingTop="20dp">
+                    <TextView
+                        android:text="150.000.000"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="15sp"
+                        android:width="110dp"
+                        android:singleLine="true"
+                        android:layout_gravity="right"
+                        android:gravity="right"/>
+                </LinearLayout>
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="fill_parent"
+                android:orientation="horizontal"
+                android:background="@drawable/payment_details_name_list">
+                <!-- one linear -->
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:paddingBottom="5dp"
+                    android:paddingTop="10dp"
+                    android:paddingLeft="10dp"
+                    android:paddingRight="5dp">
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:paddingBottom="5dp"
+                        android:src="@mipmap/transaction_history_button_send_icon"/>
+                    <TextView
+                        android:id="@+id/transaction_history_send"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Send"
+                        android:textSize="8sp"
+                        android:layout_gravity="center"/>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:paddingBottom="5dp"
+                    android:paddingTop="15dp"
+                    android:paddingLeft="55dp"
+                    android:paddingRight="5dp">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="27-08-2015, 20:12"
+                        android:textSize="10dp"/>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Seven Eleven Kuta Bali tanah lot"
+                        android:singleLine="true"
+                        android:layout_marginLeft="1dp"
+                        android:layout_marginRight="140dp"
+                        android:textSize="12dp"/>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:paddingRight="110dp"
+                    android:paddingTop="20dp"
+                    android:layout_gravity="right"
+                    android:gravity="right">
+                    <TextView
+                        android:text="Rp."
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="15sp"/>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:paddingRight="10dp"
+                    android:paddingTop="20dp">
+                    <TextView
+                        android:text="150.000.000"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="15sp"
+                        android:width="110dp"
+                        android:singleLine="true"
+                        android:layout_gravity="right"
+                        android:gravity="right"/>
+                </LinearLayout>
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="fill_parent"
+                android:orientation="horizontal"
+                android:background="@drawable/payment_details_name_list">
+                <!-- one linear -->
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:paddingBottom="5dp"
+                    android:paddingTop="10dp"
+                    android:paddingLeft="10dp"
+                    android:paddingRight="5dp">
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:paddingBottom="5dp"
+                        android:src="@mipmap/transaction_history_button_send_icon"/>
+                    <TextView
+                        android:id="@+id/transaction_history_send"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Send"
+                        android:textSize="8sp"
+                        android:layout_gravity="center"/>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:paddingBottom="5dp"
+                    android:paddingTop="15dp"
+                    android:paddingLeft="55dp"
+                    android:paddingRight="5dp">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="27-08-2015, 20:12"
+                        android:textSize="10dp"/>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Seven Eleven Kuta Bali tanah lot"
+                        android:singleLine="true"
+                        android:layout_marginLeft="1dp"
+                        android:layout_marginRight="140dp"
+                        android:textSize="12dp"/>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:paddingRight="110dp"
+                    android:paddingTop="20dp"
+                    android:layout_gravity="right"
+                    android:gravity="right">
+                    <TextView
+                        android:text="Rp."
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="15sp"/>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:paddingRight="10dp"
+                    android:paddingTop="20dp">
+                    <TextView
+                        android:text="150.000.000"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="15sp"
+                        android:width="110dp"
+                        android:singleLine="true"
+                        android:layout_gravity="right"
+                        android:gravity="right"/>
+                </LinearLayout>
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="fill_parent"
+                android:orientation="horizontal"
+                android:background="@drawable/payment_details_name_list">
+                <!-- one linear -->
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:paddingBottom="5dp"
+                    android:paddingTop="10dp"
+                    android:paddingLeft="10dp"
+                    android:paddingRight="5dp">
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:paddingBottom="5dp"
+                        android:src="@mipmap/transaction_history_button_send_icon"/>
+                    <TextView
+                        android:id="@+id/transaction_history_send"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Send"
+                        android:textSize="8sp"
+                        android:layout_gravity="center"/>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:paddingBottom="5dp"
+                    android:paddingTop="15dp"
+                    android:paddingLeft="55dp"
+                    android:paddingRight="5dp">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="27-08-2015, 20:12"
+                        android:textSize="10dp"/>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Seven Eleven Kuta Bali tanah lot"
+                        android:singleLine="true"
+                        android:layout_marginLeft="1dp"
+                        android:layout_marginRight="140dp"
+                        android:textSize="12dp"/>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:paddingRight="110dp"
+                    android:paddingTop="20dp"
+                    android:layout_gravity="right"
+                    android:gravity="right">
+                    <TextView
+                        android:text="Rp."
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="15sp"/>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:paddingRight="10dp"
+                    android:paddingTop="20dp">
+                    <TextView
+                        android:text="150.000.000"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="15sp"
+                        android:width="110dp"
+                        android:singleLine="true"
+                        android:layout_gravity="right"
+                        android:gravity="right"/>
+                </LinearLayout>
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="fill_parent"
+                android:orientation="horizontal"
+                android:background="@drawable/payment_details_name_list">
+                <!-- one linear -->
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:paddingBottom="5dp"
+                    android:paddingTop="10dp"
+                    android:paddingLeft="10dp"
+                    android:paddingRight="5dp">
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:paddingBottom="5dp"
+                        android:src="@mipmap/transaction_history_button_send_icon"/>
+                    <TextView
+                        android:id="@+id/transaction_history_send"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Send"
+                        android:textSize="8sp"
+                        android:layout_gravity="center"/>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:paddingBottom="5dp"
+                    android:paddingTop="15dp"
+                    android:paddingLeft="55dp"
+                    android:paddingRight="5dp">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="27-08-2015, 20:12"
+                        android:textSize="10dp"/>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Seven Eleven Kuta Bali tanah lot"
+                        android:singleLine="true"
+                        android:layout_marginLeft="1dp"
+                        android:layout_marginRight="140dp"
+                        android:textSize="12dp"/>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:paddingRight="110dp"
+                    android:paddingTop="20dp"
+                    android:layout_gravity="right"
+                    android:gravity="right">
+                    <TextView
+                        android:text="Rp."
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="15sp"/>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:paddingRight="10dp"
+                    android:paddingTop="20dp">
+                    <TextView
+                        android:text="150.000.000"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="15sp"
+                        android:width="110dp"
+                        android:singleLine="true"
+                        android:layout_gravity="right"
+                        android:gravity="right"/>
+                </LinearLayout>
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="fill_parent"
+                android:orientation="horizontal"
+                android:background="@drawable/payment_details_name_list">
+                <!-- one linear -->
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:paddingBottom="5dp"
+                    android:paddingTop="10dp"
+                    android:paddingLeft="10dp"
+                    android:paddingRight="5dp">
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:paddingBottom="5dp"
+                        android:src="@mipmap/transaction_history_button_send_icon"/>
+                    <TextView
+                        android:id="@+id/transaction_history_send"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Send"
+                        android:textSize="8sp"
+                        android:layout_gravity="center"/>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:paddingBottom="5dp"
+                    android:paddingTop="15dp"
+                    android:paddingLeft="55dp"
+                    android:paddingRight="5dp">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="27-08-2015, 20:12"
+                        android:textSize="10dp"/>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Seven Eleven Kuta Bali tanah lot"
+                        android:singleLine="true"
+                        android:layout_marginLeft="1dp"
+                        android:layout_marginRight="140dp"
+                        android:textSize="12dp"/>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:paddingRight="110dp"
+                    android:paddingTop="20dp"
+                    android:layout_gravity="right"
+                    android:gravity="right">
+                    <TextView
+                        android:text="Rp."
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="15sp"/>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:paddingRight="10dp"
+                    android:paddingTop="20dp">
+                    <TextView
+                        android:text="150.000.000"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="15sp"
+                        android:width="110dp"
+                        android:singleLine="true"
+                        android:layout_gravity="right"
+                        android:gravity="right"/>
+                </LinearLayout>
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="fill_parent"
+                android:orientation="horizontal"
+                android:background="@drawable/payment_details_name_list">
+                <!-- one linear -->
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:paddingBottom="5dp"
+                    android:paddingTop="10dp"
+                    android:paddingLeft="10dp"
+                    android:paddingRight="5dp">
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:paddingBottom="5dp"
+                        android:src="@mipmap/transaction_history_button_send_icon"/>
+                    <TextView
+                        android:id="@+id/transaction_history_send"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Send"
+                        android:textSize="8sp"
+                        android:layout_gravity="center"/>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:paddingBottom="5dp"
+                    android:paddingTop="15dp"
+                    android:paddingLeft="55dp"
+                    android:paddingRight="5dp">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="27-08-2015, 20:12"
+                        android:textSize="10dp"/>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Seven Eleven Kuta Bali tanah lot"
+                        android:singleLine="true"
+                        android:layout_marginLeft="1dp"
+                        android:layout_marginRight="140dp"
+                        android:textSize="12dp"/>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:paddingRight="110dp"
+                    android:paddingTop="20dp"
+                    android:layout_gravity="right"
+                    android:gravity="right">
+                    <TextView
+                        android:text="Rp."
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="15sp"/>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:paddingRight="10dp"
+                    android:paddingTop="20dp">
+                    <TextView
+                        android:text="150.000.000"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="15sp"
+                        android:width="110dp"
+                        android:singleLine="true"
+                        android:layout_gravity="right"
+                        android:gravity="right"/>
+                </LinearLayout>
+
+            </RelativeLayout>
+
+        </LinearLayout>
+    </ScrollView>
+    </LinearLayout>
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_alignParentBottom="true"
+        android:id="@+id/linearup"
+        android:background="#2cb674">
 
         <LinearLayout
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
-            <!-- one child -->
+            android:orientation="vertical"
+            android:background="#2cb674">
 
-            <LinearLayout
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:background="@drawable/payment_details_name_list">
-            <!-- one linear -->
-
-            <LinearLayout
+            <RelativeLayout
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:paddingTop="10dp"
-                android:paddingBottom="10dp"
-                android:paddingLeft="10dp"
-                android:paddingRight="5dp">
-                <ImageView
+                android:layout_height="fill_parent"
+                android:orientation="horizontal">
+                <!-- one linear -->
+                <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:paddingBottom="5dp"
-                    android:src="@mipmap/transaction_history_button_send_icon"/>
-                <TextView
-                    android:id="@+id/transaction_history_send"
-                    android:layout_width="wrap_content"
+                    android:orientation="vertical"
+                    android:paddingTop="10dp"
+                    android:paddingLeft="10dp">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Beginning Balance"
+                        android:textColor="#ffffff"
+                        android:textSize="15sp"
+                        android:layout_gravity="center"/>
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
-                    android:text="Send"
-                    android:textSize="8sp"
-                    android:layout_gravity="center"/>
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:paddingTop="17dp"
-                android:paddingBottom="10dp"
-                android:paddingLeft="5dp"
-                android:paddingRight="6dp">
-                <TextView
-                    android:id="@+id/transaction_history_send_date"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="27-08-2015, 20:12"
-                    android:textSize="12dp"/>
-                <TextView
-                    android:id="@+id/transaction_history_send_action"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Seven Eleven"
-                    android:textSize="15dp"/>
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:paddingTop="23dp"
-                android:paddingBottom="10dp"
-                android:paddingRight="10dp">
-                <TextView
-                    android:id="@+id/transaction_history_send_rp"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Rp."
-                    android:paddingLeft="46dp"
-                    android:textSize="12sp"
-                    android:textColor="#000000"/>
-                <TextView
-                    android:id="@+id/transaction_history_send_value"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="188.800"
+                    android:orientation="vertical"
+                    android:paddingRight="110dp"
+                    android:paddingTop="10dp"
                     android:layout_gravity="right"
-                    android:gravity="right"
-                    android:textSize="15dp"
-                    android:textColor="#000000"
-                    android:width="120dp"/>
-            </LinearLayout>
+                    android:gravity="right">
+                    <TextView
+                        android:text="Rp."
+                        android:textColor="#ffffff"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="15sp"/>
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:paddingRight="10dp"
+                    android:paddingTop="10dp">
+                    <TextView
+                        android:text="100.000"
+                        android:textColor="#ffffff"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="15sp"
+                        android:width="110dp"
+                        android:singleLine="true"
+                        android:layout_gravity="right"
+                        android:gravity="right"/>
+                </LinearLayout>
+            </RelativeLayout>
 
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="fill_parent"
+                android:orientation="horizontal">
+                <!-- one linear -->
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:paddingTop="10dp"
+                    android:paddingLeft="10dp">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="#ffffff"
+                        android:text="Credit"
+                        android:textSize="15sp"
+                        android:layout_gravity="center"/>
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:paddingRight="110dp"
+                    android:paddingTop="10dp"
+                    android:layout_gravity="right"
+                    android:gravity="right">
+                    <TextView
+                        android:text="Rp."
+                        android:textColor="#ffffff"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="15sp"/>
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:paddingRight="10dp"
+                    android:paddingTop="10dp">
+                    <TextView
+                        android:text="100.000"
+                        android:textColor="#ffffff"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="15sp"
+                        android:width="110dp"
+                        android:singleLine="true"
+                        android:layout_gravity="right"
+                        android:gravity="right"/>
+                </LinearLayout>
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="fill_parent"
+                android:orientation="horizontal">
+                <!-- one linear -->
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:paddingTop="10dp"
+                    android:paddingLeft="10dp">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Debit"
+                        android:textColor="#ffffff"
+                        android:textSize="15sp"
+                        android:layout_gravity="center"/>
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:paddingRight="110dp"
+                    android:paddingTop="10dp"
+                    android:layout_gravity="right"
+                    android:gravity="right">
+                    <TextView
+                        android:text="Rp."
+                        android:textColor="#ffffff"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="15sp"/>
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:paddingRight="10dp"
+                    android:paddingTop="10dp">
+                    <TextView
+                        android:text="100.000"
+                        android:textColor="#ffffff"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="15sp"
+                        android:width="110dp"
+                        android:singleLine="true"
+                        android:layout_gravity="right"
+                        android:gravity="right"/>
+                </LinearLayout>
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="fill_parent"
+                android:orientation="horizontal"
+                android:background="#239961"
+                android:paddingBottom="10dp">
+                <!-- one linear -->
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:paddingTop="10dp"
+                    android:paddingLeft="10dp">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Total balance"
+                        android:textColor="#ffffff"
+                        android:textSize="15sp"
+                        android:layout_gravity="center"/>
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:paddingRight="110dp"
+                    android:paddingTop="10dp"
+                    android:layout_gravity="right"
+                    android:gravity="right">
+                    <TextView
+                        android:text="Rp."
+                        android:textColor="#ffffff"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="15sp"/>
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:paddingRight="10dp"
+                    android:paddingTop="10dp">
+                    <TextView
+                        android:text="100.000"
+                        android:textColor="#ffffff"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="15sp"
+                        android:width="110dp"
+                        android:singleLine="true"
+                        android:layout_gravity="right"
+                        android:gravity="right"/>
+                </LinearLayout>
+            </RelativeLayout>
         </LinearLayout>
 
-            <LinearLayout
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:background="@drawable/payment_details_name_list">
-                <!-- one linear -->
-
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:paddingTop="10dp"
-                    android:paddingBottom="10dp"
-                    android:paddingLeft="10dp"
-                    android:paddingRight="5dp">
-                    <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:paddingBottom="5dp"
-                        android:src="@mipmap/transaction_history_button_receive_icon"/>
-                    <TextView
-                        android:id="@+id/transaction_history_receive"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Receive"
-                        android:textSize="8sp"
-                        android:layout_gravity="center"/>
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:paddingTop="17dp"
-                    android:paddingBottom="10dp"
-                    android:paddingLeft="5dp"
-                    android:paddingRight="15dp">
-                    <TextView
-                        android:id="@+id/transaction_history_receive_date"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="27-08-2015, 09:55"
-                        android:textSize="12dp"/>
-                    <TextView
-                        android:id="@+id/transaction_history_receive_action"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Joko Susilo"
-                        android:textSize="15dp"/>
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="fill_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:paddingTop="23dp"
-                    android:paddingBottom="10dp"
-                    android:paddingRight="10dp">
-                    <TextView
-                        android:id="@+id/transaction_history_receive_rp"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Rp."
-                        android:paddingLeft="38dp"
-                        android:textSize="12sp"
-                        android:textColor="#000000"/>
-                    <TextView
-                        android:id="@+id/transaction_history_receive_value"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="2.100.800"
-                        android:layout_gravity="right"
-                        android:gravity="right"
-                        android:textSize="15dp"
-                        android:textColor="#000000"
-                        android:width="120dp"/>
-                </LinearLayout>
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:background="@drawable/payment_details_name_list">
-                <!-- one linear -->
-
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:paddingTop="10dp"
-                    android:paddingBottom="10dp"
-                    android:paddingLeft="10dp"
-                    android:paddingRight="5dp">
-                    <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:paddingBottom="5dp"
-                        android:src="@mipmap/transaction_history_button_topup_icon"/>
-                    <TextView
-                        android:id="@+id/transaction_history_topup"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Topup"
-                        android:textSize="8sp"
-                        android:layout_gravity="center"/>
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:paddingTop="17dp"
-                    android:paddingBottom="10dp"
-                    android:paddingLeft="5dp"
-                    android:paddingRight="18dp">
-                    <TextView
-                        android:id="@+id/transaction_history_topup_date"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="27-01-2015, 11:25"
-                        android:textSize="12dp"/>
-                    <TextView
-                        android:id="@+id/transaction_history_topup_action"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Indomaret Kuta Bali"
-                        android:textSize="15dp"/>
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="fill_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:paddingTop="23dp"
-                    android:paddingBottom="10dp"
-                    android:paddingRight="10dp">
-                    <TextView
-                        android:id="@+id/transaction_history_topup_rp"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Rp."
-                        android:paddingLeft="7dp"
-                        android:textSize="12sp"
-                        android:textColor="#000000"/>
-                    <TextView
-                        android:id="@+id/transaction_history_topup_value"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="10.000.000.000"
-                        android:layout_gravity="right"
-                        android:gravity="right"
-                        android:textSize="15dp"
-                        android:textColor="#000000"
-                        android:width="120dp"/>
-                </LinearLayout>
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:background="@drawable/payment_details_name_list">
-                <!-- one linear -->
-
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:paddingTop="10dp"
-                    android:paddingBottom="10dp"
-                    android:paddingLeft="10dp"
-                    android:paddingRight="5dp">
-                    <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:paddingBottom="5dp"
-                        android:src="@mipmap/transaction_history_button_send_icon"/>
-                    <TextView
-                        android:id="@+id/transaction_history_send"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Send"
-                        android:textSize="8sp"
-                        android:layout_gravity="center"/>
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:paddingTop="17dp"
-                    android:paddingBottom="10dp"
-                    android:paddingLeft="5dp"
-                    android:paddingRight="6dp">
-                    <TextView
-                        android:id="@+id/transaction_history_send_date"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="27-08-2015, 20:12"
-                        android:textSize="12dp"/>
-                    <TextView
-                        android:id="@+id/transaction_history_send_action"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Seven Eleven"
-                        android:textSize="15dp"/>
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="fill_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:paddingTop="23dp"
-                    android:paddingBottom="10dp"
-                    android:paddingRight="10dp">
-                    <TextView
-                        android:id="@+id/transaction_history_send_rp"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Rp."
-                        android:paddingLeft="46dp"
-                        android:textSize="12sp"
-                        android:textColor="#000000"/>
-                    <TextView
-                        android:id="@+id/transaction_history_send_value"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="188.800"
-                        android:layout_gravity="right"
-                        android:gravity="right"
-                        android:textSize="15dp"
-                        android:textColor="#000000"
-                        android:width="120dp"/>
-                </LinearLayout>
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:background="@drawable/payment_details_name_list">
-                <!-- one linear -->
-
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:paddingTop="10dp"
-                    android:paddingBottom="10dp"
-                    android:paddingLeft="10dp"
-                    android:paddingRight="5dp">
-                    <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:paddingBottom="5dp"
-                        android:src="@mipmap/transaction_history_button_receive_icon"/>
-                    <TextView
-                        android:id="@+id/transaction_history_receive"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Receive"
-                        android:textSize="8sp"
-                        android:layout_gravity="center"/>
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:paddingTop="17dp"
-                    android:paddingBottom="10dp"
-                    android:paddingLeft="5dp"
-                    android:paddingRight="15dp">
-                    <TextView
-                        android:id="@+id/transaction_history_receive_date"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="27-08-2015, 09:55"
-                        android:textSize="12dp"/>
-                    <TextView
-                        android:id="@+id/transaction_history_receive_action"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Joko Susilo"
-                        android:textSize="15dp"/>
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="fill_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:paddingTop="23dp"
-                    android:paddingBottom="10dp"
-                    android:paddingRight="10dp">
-                    <TextView
-                        android:id="@+id/transaction_history_receive_rp"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Rp."
-                        android:paddingLeft="38dp"
-                        android:textSize="12sp"
-                        android:textColor="#000000"/>
-                    <TextView
-                        android:id="@+id/transaction_history_receive_value"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="2.100.800"
-                        android:layout_gravity="right"
-                        android:gravity="right"
-                        android:textSize="15dp"
-                        android:textColor="#000000"
-                        android:width="120dp"/>
-                </LinearLayout>
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:background="@drawable/payment_details_name_list">
-                <!-- one linear -->
-
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:paddingTop="10dp"
-                    android:paddingBottom="10dp"
-                    android:paddingLeft="10dp"
-                    android:paddingRight="5dp">
-                    <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:paddingBottom="5dp"
-                        android:src="@mipmap/transaction_history_button_topup_icon"/>
-                    <TextView
-                        android:id="@+id/transaction_history_topup"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Topup"
-                        android:textSize="8sp"
-                        android:layout_gravity="center"/>
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:paddingTop="17dp"
-                    android:paddingBottom="10dp"
-                    android:paddingLeft="5dp"
-                    android:paddingRight="18dp">
-                    <TextView
-                        android:id="@+id/transaction_history_topup_date"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="27-01-2015, 11:25"
-                        android:textSize="12dp"/>
-                    <TextView
-                        android:id="@+id/transaction_history_topup_action"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Indomaret Kuta Bali"
-                        android:textSize="15dp"/>
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="fill_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:paddingTop="23dp"
-                    android:paddingBottom="10dp"
-                    android:paddingRight="10dp">
-                    <TextView
-                        android:id="@+id/transaction_history_topup_rp"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Rp."
-                        android:paddingLeft="7dp"
-                        android:textSize="12sp"
-                        android:textColor="#000000"/>
-                    <TextView
-                        android:id="@+id/transaction_history_topup_value"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="10.000.000.000"
-                        android:layout_gravity="right"
-                        android:gravity="right"
-                        android:textSize="15dp"
-                        android:textColor="#000000"
-                        android:width="120dp"/>
-                </LinearLayout>
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:background="@drawable/payment_details_name_list">
-                <!-- one linear -->
-
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:paddingTop="10dp"
-                    android:paddingBottom="10dp"
-                    android:paddingLeft="10dp"
-                    android:paddingRight="5dp">
-                    <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:paddingBottom="5dp"
-                        android:src="@mipmap/transaction_history_button_send_icon"/>
-                    <TextView
-                        android:id="@+id/transaction_history_send"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Send"
-                        android:textSize="8sp"
-                        android:layout_gravity="center"/>
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:paddingTop="17dp"
-                    android:paddingBottom="10dp"
-                    android:paddingLeft="5dp"
-                    android:paddingRight="6dp">
-                    <TextView
-                        android:id="@+id/transaction_history_send_date"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="27-08-2015, 20:12"
-                        android:textSize="12dp"/>
-                    <TextView
-                        android:id="@+id/transaction_history_send_action"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Seven Eleven"
-                        android:textSize="15dp"/>
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="fill_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:paddingTop="23dp"
-                    android:paddingBottom="10dp"
-                    android:paddingRight="10dp">
-                    <TextView
-                        android:id="@+id/transaction_history_send_rp"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Rp."
-                        android:paddingLeft="46dp"
-                        android:textSize="12sp"
-                        android:textColor="#000000"/>
-                    <TextView
-                        android:id="@+id/transaction_history_send_value"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="188.800"
-                        android:layout_gravity="right"
-                        android:gravity="right"
-                        android:textSize="15dp"
-                        android:textColor="#000000"
-                        android:width="120dp"/>
-                </LinearLayout>
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:background="@drawable/payment_details_name_list">
-                <!-- one linear -->
-
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:paddingTop="10dp"
-                    android:paddingBottom="10dp"
-                    android:paddingLeft="10dp"
-                    android:paddingRight="5dp">
-                    <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:paddingBottom="5dp"
-                        android:src="@mipmap/transaction_history_button_receive_icon"/>
-                    <TextView
-                        android:id="@+id/transaction_history_receive"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Receive"
-                        android:textSize="8sp"
-                        android:layout_gravity="center"/>
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:paddingTop="17dp"
-                    android:paddingBottom="10dp"
-                    android:paddingLeft="5dp"
-                    android:paddingRight="15dp">
-                    <TextView
-                        android:id="@+id/transaction_history_receive_date"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="27-08-2015, 09:55"
-                        android:textSize="12dp"/>
-                    <TextView
-                        android:id="@+id/transaction_history_receive_action"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Joko Susilo"
-                        android:textSize="15dp"/>
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="fill_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:paddingTop="23dp"
-                    android:paddingBottom="10dp"
-                    android:paddingRight="10dp">
-                    <TextView
-                        android:id="@+id/transaction_history_receive_rp"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Rp."
-                        android:paddingLeft="38dp"
-                        android:textSize="12sp"
-                        android:textColor="#000000"/>
-                    <TextView
-                        android:id="@+id/transaction_history_receive_value"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="2.100.800"
-                        android:layout_gravity="right"
-                        android:gravity="right"
-                        android:textSize="15dp"
-                        android:textColor="#000000"
-                        android:width="120dp"/>
-                </LinearLayout>
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:background="@drawable/payment_details_name_list">
-                <!-- one linear -->
-
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:paddingTop="10dp"
-                    android:paddingBottom="10dp"
-                    android:paddingLeft="10dp"
-                    android:paddingRight="5dp">
-                    <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:paddingBottom="5dp"
-                        android:src="@mipmap/transaction_history_button_topup_icon"/>
-                    <TextView
-                        android:id="@+id/transaction_history_topup"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Topup"
-                        android:textSize="8sp"
-                        android:layout_gravity="center"/>
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:paddingTop="17dp"
-                    android:paddingBottom="10dp"
-                    android:paddingLeft="5dp"
-                    android:paddingRight="18dp">
-                    <TextView
-                        android:id="@+id/transaction_history_topup_date"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="27-01-2015, 11:25"
-                        android:textSize="12dp"/>
-                    <TextView
-                        android:id="@+id/transaction_history_topup_action"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Indomaret Kuta Bali"
-                        android:textSize="15dp"/>
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="fill_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:paddingTop="23dp"
-                    android:paddingBottom="10dp"
-                    android:paddingRight="10dp">
-                    <TextView
-                        android:id="@+id/transaction_history_topup_rp"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Rp."
-                        android:paddingLeft="7dp"
-                        android:textSize="12sp"
-                        android:textColor="#000000"/>
-                    <TextView
-                        android:id="@+id/transaction_history_topup_value"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="10.000.000.000"
-                        android:layout_gravity="right"
-                        android:gravity="right"
-                        android:textSize="15dp"
-                        android:textColor="#000000"
-                        android:width="120dp"/>
-                </LinearLayout>
-
-            </LinearLayout>
-
-        </LinearLayout>
-
-    </ScrollView>
+    </LinearLayout>
 
 </RelativeLayout>
