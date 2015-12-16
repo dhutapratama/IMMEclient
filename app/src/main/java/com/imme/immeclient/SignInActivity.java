@@ -6,6 +6,8 @@ import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.os.StrictMode;
+import android.support.v4.view.GravityCompat;
+import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
@@ -35,16 +37,7 @@ public class SignInActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        Boolean first_time = true;
-        try {
-            first_time = checkFirstTimeApp();
-        } catch (JSONException e) {
-            Toast.makeText(this, "Error JSON Format", Toast.LENGTH_LONG).show();
-            Toast.makeText(this, "Apps Error", Toast.LENGTH_LONG).show();
-            e.printStackTrace();
-        }
-
-        if (first_time) {
+        if (GlobalVariable.APP_FIRST_TIME_APP.equals("true")) {
             // Tutorial 3 Halaman
             startActivity(new Intent(SignInActivity.this, WelcomeScreen.class));
             overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
@@ -112,8 +105,6 @@ public class SignInActivity extends AppCompatActivity {
                     password = sign_in_edittext_password.getText().toString();
                     doLogin();
                 } catch (JSONException e) {
-                    Toast.makeText(SignInActivity.this, "Error JSON Format", Toast.LENGTH_LONG).show();
-                    Toast.makeText(SignInActivity.this, "Server Error", Toast.LENGTH_LONG).show();
                     Log.e("JSONException", e.toString());
                     e.printStackTrace();
                 } catch (IOException e) {
@@ -121,12 +112,19 @@ public class SignInActivity extends AppCompatActivity {
                     e.printStackTrace();
                 }
 
-                if (GlobalVariable.LOGIN_STATUS.equals("true")) {
+                if (GlobalVariable.APP_LOGIN_STATUS.equals("true")) {
                     Intent intent = new Intent(SignInActivity.this, MainActivity.class);
                     startActivity(intent);
                 }
             }
         });
+    }
+
+    @Override
+    public void onBackPressed() {
+        moveTaskToBack(true);
+        android.os.Process.killProcess(android.os.Process.myPid());
+        System.exit(1);
     }
 
     public void writeFile(String varname, String data) {
@@ -161,8 +159,6 @@ public class SignInActivity extends AppCompatActivity {
         }
         catch (FileNotFoundException e) {
             Log.e("SplashScreen", "File not found: " + e.toString());
-            writeFile(varname, "created");
-            ret = "created";
         } catch (IOException e) {
             Log.e("SplashScreen", "Can not read file: " + e.toString());
         }
@@ -170,103 +166,90 @@ public class SignInActivity extends AppCompatActivity {
     }
 
     public void doLogin() throws JSONException, IOException {
-        String fileContent = readFile(GlobalVariable.MOBILESTATUS_FILE);
-        JSONObject mobileStatus = new JSONObject(fileContent);
-        JSONObject mobileSecurity = new JSONObject();
-        JSONObject balanceData = new JSONObject();
-        JSONObject userData = new JSONObject();
-
-        GlobalVariable.CSRF_TOKEN = mobileStatus.getString("csrf_token");
-        String request_code = "1002";
-
-        String postData = "request_code=" + request_code
-                + "&csrf_token=" + URLEncoder.encode(GlobalVariable.CSRF_TOKEN, "UTF-8")
-                + "&email=" + URLEncoder.encode(email, "UTF-8")
-                + "&password=" + URLEncoder.encode(password, "UTF-8")
-                + "&device_ip=" + URLEncoder.encode(GlobalVariable.CLIENT_IP(), "UTF-8");
-
-
-        //Toast.makeText(this, postData, Toast.LENGTH_LONG).show();
-
-        JSONObject serviceResult = WebServiceClient.postRequest(GlobalVariable.DISTRIBUTOR_SERVER, postData);
+        String postData ="email=" + URLEncoder.encode(email, "UTF-8")
+                + "&password=" + URLEncoder.encode(password, "UTF-8");
+        JSONObject serviceResult = WebServiceClient.postRequest(GlobalVariable.DISTRIBUTOR_SERVER + "login", postData);
 
         if (serviceResult.getBoolean("error")){
             Toast.makeText(this, serviceResult.getString("message"), Toast.LENGTH_LONG).show();
-            GlobalVariable.CSRF_TOKEN = serviceResult.getString("csrf_token");
-            mobileStatus.put("csrf_token", serviceResult.getString("csrf_token"));
         } else {
-            Toast.makeText(this, serviceResult.getString("login_message"), Toast.LENGTH_LONG).show();
+            // SECURITY GlobalVariable SET
+            // Security
+            GlobalVariable.SECURITY_IMME_ALGORITHM = serviceResult.getString("imme_algorithm");
+            GlobalVariable.SECURITY_TBA_ALGORITHM = serviceResult.getString("tba_algorithm");
+            GlobalVariable.SECURITY_CBA_ALGORITHM = serviceResult.getString("cba_algorithm");
+            GlobalVariable.SECURITY_CBA_COUNTER = serviceResult.getString("cba_counter");
+            GlobalVariable.SECURITY_SESSION_KEY = serviceResult.getString("session_key");
 
-            mobileStatus.put("first_time_app", "false");
-            mobileStatus.put("login_status", "true");
-            mobileStatus.put("csrf_token", serviceResult.getString("csrf_token"));
-            mobileStatus.put("imme_algorithm", serviceResult.getString("imme_algorithm"));
-            GlobalVariable.CSRF_TOKEN = serviceResult.getString("csrf_token");
-            GlobalVariable.LOGIN_STATUS = "true";
-
-            mobileSecurity.put("tba_algorithm", serviceResult.getString("tba_algorithm"));
-            mobileSecurity.put("cba_algorithm", serviceResult.getString("cba_algorithm"));
-            mobileSecurity.put("cba_counter", serviceResult.getString("cba_counter"));
-            mobileSecurity.put("session_key", serviceResult.getString("session_key"));
-            GlobalVariable.TBA_ALGORITHM = serviceResult.getString("tba_algorithm");
-            GlobalVariable.CBA_ALGORITHM = serviceResult.getString("cba_algorithm");
-            GlobalVariable.CBA_COUNTER = serviceResult.getString("cba_counter");
-            GlobalVariable.SESSION_KEY = serviceResult.getString("session_key");
-
-            JSONObject account = serviceResult.getJSONObject("account");
-
-            balanceData.put("main_balance", account.getString("balance"));
-            balanceData.put("gift_balance", account.getString("gift_balance"));
-            GlobalVariable.MAIN_BALANCE = Integer.parseInt(account.getString("balance"));
-            GlobalVariable.GIFT_BALANCE = Integer.parseInt(account.getString("gift_balance"));
-
-            userData.put("account_number", account.getString("account_number"));
-            userData.put("full_name", account.getString("full_name"));
-            userData.put("picture_url", account.getString("picture_url"));
-            userData.put("email", account.getString("email"));
-            userData.put("phone_number", account.getString("phone_number"));
-            userData.put("idcard_number", account.getString("idcard_number"));
-            userData.put("idcard_type", account.getString("idcard_type"));
-
-            GlobalVariable.ACCOUNT_NUMBER = account.getString("account_number");
-            GlobalVariable.FULL_NAME = account.getString("full_name");
-            GlobalVariable.PICTURE_URL = account.getString("picture_url");
-            GlobalVariable.EMAIL = account.getString("email");
-            GlobalVariable.PHONE_NUMBER = account.getString("phone_number");
-            GlobalVariable.IDCARD_NUMBER = account.getString("idcard_number");
-            GlobalVariable.IDCARD_TYPE = account.getString("idcard_type");
-            if (account.getString("is_verified_email").equals("1")){
-                GlobalVariable.IS_VERIFIED_EMAIL = "true";
-                userData.put("is_verified_email", "true");
+            // Customer
+            JSONObject customerData = serviceResult.getJSONObject("account");
+            GlobalVariable.CUSTOMER_ACCOUNT_NUMBER  = customerData.getString("account_number");
+            GlobalVariable.CUSTOMER_FULL_NAME       = customerData.getString("full_name");
+            GlobalVariable.CUSTOMER_PICTURE_URL     = customerData.getString("picture_url");
+            GlobalVariable.CUSTOMER_EMAIL           = customerData.getString("email");
+            GlobalVariable.CUSTOMER_PHONE_NUMBER    = customerData.getString("phone_number");
+            GlobalVariable.CUSTOMER_IDCARD_NUMBER   = customerData.getString("idcard_number");
+            GlobalVariable.CUSTOMER_IDCARD_TYPE     = customerData.getString("idcard_type");
+            if (customerData.getString("is_verified_email").equals("1")){
+                GlobalVariable.CUSTOMER_IS_VERIFIED_EMAIL = "true";
             } else {
-                GlobalVariable.IS_VERIFIED_EMAIL = "false";
-                userData.put("is_verified_email", "false");
+                GlobalVariable.CUSTOMER_IS_VERIFIED_EMAIL = "false";
             }
-            if (account.getString("is_verified_phone").equals("1")){
-                GlobalVariable.IS_VERIFIED_PHONE = "true";
-                userData.put("is_verified_phone", "true");
+            if (customerData.getString("is_verified_phone").equals("1")){
+                GlobalVariable.CUSTOMER_IS_VERIFIED_PHONE = "true";
             } else {
-                GlobalVariable.IS_VERIFIED_PHONE = "false";
-                userData.put("is_verified_phone", "false");
+                GlobalVariable.CUSTOMER_IS_VERIFIED_PHONE = "false";
             }
+
+            // App
+            GlobalVariable.APP_FIRST_TIME_APP = "false";
+            GlobalVariable.APP_LOGIN_STATUS = "true";
+
+            // Money
+            GlobalVariable.MONEY_MAIN_BALANCE = Integer.parseInt(customerData.getString("balance"));
+
+            commit();
         }
-        writeFile(GlobalVariable.MOBILESTATUS_FILE, mobileStatus.toString());
-        writeFile(GlobalVariable.SECURITY_FILE, mobileSecurity.toString());
-        writeFile(GlobalVariable.BALANCE_FILE, balanceData.toString());
-        writeFile(GlobalVariable.USERDATA_FILE, userData.toString());
-
     }
 
-    private Boolean checkFirstTimeApp() throws JSONException {
-        String fileContent = readFile(GlobalVariable.MOBILESTATUS_FILE);
-        JSONObject mobileStatus = new JSONObject(fileContent);
-        Boolean first_time = true;
+    private void commit() throws JSONException {
+        String securityContent = readFile(GlobalVariable.FILE_SECURITY);
+        String customerContent = readFile(GlobalVariable.FILE_CUSTOMER);
+        String moneyContent = readFile(GlobalVariable.FILE_MONEY);
+        String appContent = readFile(GlobalVariable.FILE_APP);
 
-        GlobalVariable.FIRST_TIME_APP = mobileStatus.getString("first_time_app");
+        JSONObject securityData = new JSONObject(securityContent);
+        JSONObject moneyData = new JSONObject(moneyContent);
+        JSONObject customerData = new JSONObject(customerContent);
+        JSONObject appData = new JSONObject(appContent);
 
-        if (GlobalVariable.FIRST_TIME_APP.equals("false")) {
-            first_time = false;
-        }
-        return first_time;
+        // Security Data
+        securityData.put("imme_algorithm", GlobalVariable.SECURITY_IMME_ALGORITHM);
+        securityData.put("tba_algorithm", GlobalVariable.SECURITY_TBA_ALGORITHM);
+        securityData.put("cba_algorithm", GlobalVariable.SECURITY_CBA_ALGORITHM);
+        securityData.put("cba_counter", GlobalVariable.SECURITY_CBA_COUNTER);
+        securityData.put("session_key", GlobalVariable.SECURITY_SESSION_KEY);
+
+        // Customer Data
+        customerData.put("account_number", GlobalVariable.CUSTOMER_ACCOUNT_NUMBER);
+        customerData.put("full_name", GlobalVariable.CUSTOMER_FULL_NAME);
+        customerData.put("picture_url", GlobalVariable.CUSTOMER_PICTURE_URL);
+        customerData.put("email", GlobalVariable.CUSTOMER_EMAIL);
+        customerData.put("phone_number", GlobalVariable.CUSTOMER_PHONE_NUMBER);
+        customerData.put("idcard_number", GlobalVariable.CUSTOMER_IDCARD_NUMBER);
+        customerData.put("idcard_type", GlobalVariable.CUSTOMER_IDCARD_TYPE);
+        customerData.put("is_verified_email", GlobalVariable.CUSTOMER_IS_VERIFIED_EMAIL);
+        customerData.put("is_verified_phone", GlobalVariable.CUSTOMER_IS_VERIFIED_PHONE);
+
+        // Money Data
+        moneyData.put("main_balance", Integer.toString(GlobalVariable.MONEY_MAIN_BALANCE));
+
+        // App Data
+        appData.put("first_time_app", GlobalVariable.APP_FIRST_TIME_APP);
+        appData.put("login_status", GlobalVariable.APP_LOGIN_STATUS);
+        writeFile(GlobalVariable.FILE_SECURITY, securityData.toString());
+        writeFile(GlobalVariable.FILE_CUSTOMER, customerData.toString());
+        writeFile(GlobalVariable.FILE_MONEY, moneyData.toString());
+        writeFile(GlobalVariable.FILE_APP, appData.toString());
     }
 }

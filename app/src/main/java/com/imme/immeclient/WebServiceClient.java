@@ -88,7 +88,7 @@ public class WebServiceClient {
             URL urlToRequest = new URL(serviceUrl);
             urlConnection = (HttpURLConnection) urlToRequest.openConnection();
             urlConnection.setRequestMethod("POST");
-            urlConnection.setRequestProperty("User-Agent", GlobalVariable.USER_AGENT);
+            urlConnection.setRequestProperty("User-Agent", GlobalVariable.SECURITY_USER_AGENT);
             urlConnection.setRequestProperty("Accept-Language", "en-US,en;q=0.5");
             //urlConnection.setDoOutput(true);
             urlConnection.setConnectTimeout(WebServiceClient.CONNECTION_TIMEOUT);

@@ -97,32 +97,22 @@ public class SignUpActivity extends AppCompatActivity {
     }
 
     private Boolean doSignup() throws JSONException, IOException {
-        String request_code = "1001";
-
-        String postData = "request_code=" + request_code
-                + "&csrf_token=" + URLEncoder.encode(GlobalVariable.CSRF_TOKEN, "UTF-8")
-                + "&fullname=" + URLEncoder.encode(fullname, "UTF-8")
+        String postData = "fullname=" + URLEncoder.encode(fullname, "UTF-8")
                 + "&email=" + URLEncoder.encode(email, "UTF-8")
                 + "&password=" + URLEncoder.encode(password, "UTF-8")
                 + "&confirmp=" + URLEncoder.encode(confirmp, "UTF-8")
                 + "&phone=" + URLEncoder.encode(phone, "UTF-8");
 
-        JSONObject serviceResult = WebServiceClient.postRequest(GlobalVariable.DISTRIBUTOR_SERVER, postData);
-
-        String fileContent = readFile(GlobalVariable.MOBILESTATUS_FILE);
-        JSONObject mobileStatus = new JSONObject(fileContent);
-        GlobalVariable.CSRF_TOKEN = mobileStatus.getString("csrf_token");
+        JSONObject serviceResult = WebServiceClient.postRequest(GlobalVariable.DISTRIBUTOR_SERVER + "registration", postData);
 
         Boolean signupstatus = false;
-        if (serviceResult.getBoolean("error")){
-            signupstatus = false;
-            Toast.makeText(this, serviceResult.getString("message"), Toast.LENGTH_LONG).show();
-        } else {
+        if (!serviceResult.getBoolean("error")){
             signupstatus = true;
-            Toast.makeText(this, serviceResult.getString("registration_message"), Toast.LENGTH_LONG).show();
+            GlobalVariable.APP_FIRST_TIME_APP = "false";
+            commit();
         }
-        writeFile(GlobalVariable.MOBILESTATUS_FILE, mobileStatus.toString());
 
+        Toast.makeText(this, serviceResult.getString("message"), Toast.LENGTH_LONG).show();
         return signupstatus;
     }
 
@@ -158,12 +148,18 @@ public class SignUpActivity extends AppCompatActivity {
         }
         catch (FileNotFoundException e) {
             Log.e("SplashScreen", "File not found: " + e.toString());
-            writeFile(varname, "created");
-            ret = "created";
         } catch (IOException e) {
             Log.e("SplashScreen", "Can not read file: " + e.toString());
         }
         return ret;
     }
 
+    private void commit() throws JSONException {
+        String appContent = readFile(GlobalVariable.FILE_APP);
+        JSONObject appData = new JSONObject(appContent);
+
+        // App Data
+        appData.put("first_time_app", GlobalVariable.APP_FIRST_TIME_APP);
+        writeFile(GlobalVariable.FILE_APP, appData.toString());
+    }
 }
