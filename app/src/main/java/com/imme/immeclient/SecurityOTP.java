@@ -92,8 +92,8 @@ public class SecurityOTP {
         long unixTime = System.currentTimeMillis() / 1000L;
         long answer = (int)(long) unixTime;
         for (int i = 0; i < 5; i++) {
-            String operator_code = TextUtils.substring(GlobalVariable.TBA_ALGORITHM, i, i+1);
-            String factor = TextUtils.substring(GlobalVariable.TBA_ALGORITHM, i + 5, i+6);
+            String operator_code = TextUtils.substring(GlobalVariable.SECURITY_TBA_ALGORITHM, i, i+1);
+            String factor = TextUtils.substring(GlobalVariable.SECURITY_TBA_ALGORITHM, i + 5, i+6);
 
             if (operator_code.equals("1")) {
                 Log.w(Integer.toString(i), "plus(" + answer + ", " + factor + ")");
@@ -112,11 +112,11 @@ public class SecurityOTP {
     }
 
     public static String cba_key(){
-        Integer answer = Integer.parseInt(GlobalVariable.CBA_COUNTER);
+        Integer answer = Integer.parseInt(GlobalVariable.SECURITY_CBA_COUNTER);
 
         for (int i = 0; i < 5; i++) {
-            String operator_code = TextUtils.substring(GlobalVariable.CBA_ALGORITHM, i, i + 1);
-            String factor = TextUtils.substring(GlobalVariable.CBA_ALGORITHM, i + 5, i + 6);
+            String operator_code = TextUtils.substring(GlobalVariable.SECURITY_CBA_ALGORITHM, i, i + 1);
+            String factor = TextUtils.substring(GlobalVariable.SECURITY_CBA_ALGORITHM, i + 5, i + 6);
             if (operator_code.equals("1")) {
                 answer = plus(answer, factor);
             } else if (operator_code.equals("2")) {

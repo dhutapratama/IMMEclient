@@ -19,12 +19,16 @@ import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
 import com.readystatesoftware.systembartint.SystemBarTintManager;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
+import java.net.URLEncoder;
 import java.text.NumberFormat;
 import java.util.Locale;
 
@@ -37,15 +41,10 @@ public class SendPayActivity extends AppCompatActivity {
         setContentView(R.layout.activity_send_pay);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-
         SystemBarTintManager tintManager = new SystemBarTintManager(this);
-        // enable status bar tint
         tintManager.setStatusBarTintEnabled(true);
-        // enable navigation bar tint
         tintManager.setNavigationBarTintEnabled(true);
-        // set a custom tint color for all system bars
         tintManager.setTintColor(Color.parseColor("#FF03B0FF"));
 
         mButton = (Button) findViewById(R.id.scan_button);
@@ -85,24 +84,35 @@ public class SendPayActivity extends AppCompatActivity {
         }
     }
 
+    String transaction_code = new String();
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         IntentResult result = IntentIntegrator.parseActivityResult(requestCode, resultCode, data);
+        transaction_code = result.getContents();
         if(result != null) {
-            String received_data = result.getContents();
-
-
             if(resultCode == 0) {
-                Toast.makeText(this, "Cancelled", Toast.LENGTH_LONG).show();
+                //Toast.makeText(this, "Cancelled", Toast.LENGTH_LONG).show();
                 Intent intentView = new Intent("com.imme.immeclient.Send_pay_details");
                 startActivity(intentView);
             } else {
-                Toast.makeText(this, received_data, Toast.LENGTH_LONG).show();
+                //Toast.makeText(this, transaction_code, Toast.LENGTH_LONG).show();
                     //String formated_money = NumberFormat.getNumberInstance(Locale.GERMANY).format(balance_int);
                     //main_balance_value.setText(formated_money);
+                try {
+                    if (!payCheck()) {
+                        Intent intentView = new Intent(SendPayActivity.this, SendPayPersonalDetail.class);
+                        startActivity(intentView);
+                    } else {
+                        Intent intent = new Intent(SendPayActivity.this, MainActivity.class);
+                        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                        startActivity(intent);
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
 
-                    Intent intentView = new Intent("com.imme.immeclient.PinActivity");
-                    startActivity(intentView);
             }
         } else {
             // This is important, otherwise the result will not be passed to the fragment
@@ -110,44 +120,21 @@ public class SendPayActivity extends AppCompatActivity {
         }
     }
 
-    private void writeToFile(String varname, String data) {
-        try {
-            OutputStreamWriter outputStreamWriter = new OutputStreamWriter(openFileOutput(varname + ".txt", Context.MODE_PRIVATE));
-            outputStreamWriter.write(data);
-            outputStreamWriter.close();
+    public Boolean payCheck() throws JSONException, IOException {
+        String postData ="session_key=" + URLEncoder.encode(GlobalVariable.SECURITY_SESSION_KEY, "UTF-8")
+                + "&transaction_code=" + URLEncoder.encode(transaction_code, "UTF-8");
+        JSONObject serviceResult = WebServiceClient.postRequest(GlobalVariable.DISTRIBUTOR_SERVER + "pay/check", postData);
+
+        if (serviceResult.getBoolean("error")){
+            Toast.makeText(this, serviceResult.getString("message"), Toast.LENGTH_LONG).show();
+        } else {
+            // VARIABLE SET
+            GlobalVariable.PAY_RECIPIENT_NAME = serviceResult.getString("recipient_name");
+            GlobalVariable.PAY_AMOUNT = serviceResult.getString("amount");
+            GlobalVariable.PAY_APPLY_CODE = serviceResult.getString("apply_code");
         }
-        catch (IOException e) {
-            Log.e("Exception", "File write failed: " + e.toString());
-        }
+        return serviceResult.getBoolean("error");
+
     }
 
-    private String readFromFile(String varname) {
-
-        String ret = "";
-
-        try {
-            InputStream inputStream = openFileInput(varname + ".txt");
-
-            if ( inputStream != null ) {
-                InputStreamReader inputStreamReader = new InputStreamReader(inputStream);
-                BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
-                String receiveString = "";
-                StringBuilder stringBuilder = new StringBuilder();
-
-                while ( (receiveString = bufferedReader.readLine()) != null ) {
-                    stringBuilder.append(receiveString);
-                }
-
-                inputStream.close();
-                ret = stringBuilder.toString();
-            }
-        }
-        catch (FileNotFoundException e) {
-            Log.e("MainActivity", "File not found: " + e.toString());
-        } catch (IOException e) {
-            Log.e("MainActivity", "Can not read file: " + e.toString());
-        }
-
-        return ret;
-    }
 }

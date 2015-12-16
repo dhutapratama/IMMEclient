@@ -4,14 +4,12 @@ package com.imme.immeclient;
  * Created by lasedev on 11/11/2015.
  */
 
-import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.StrictMode;
 import android.provider.Settings;
-import android.util.Base64;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -25,15 +23,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.io.UnsupportedEncodingException;
-import java.net.InetAddress;
-import java.net.NetworkInterface;
 import java.net.URLEncoder;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.Enumeration;
-
-import javax.crypto.Cipher;
-import javax.crypto.spec.SecretKeySpec;
 
 public class SplashScreen extends Activity {
 
@@ -46,30 +36,6 @@ public class SplashScreen extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.splash);
 
-        // Call Initial procedure
-        try {
-            initialProcedure();
-        } catch (UnsupportedEncodingException e) {
-            Log.e("UnsupportedEncoding", e.toString());
-            e.printStackTrace();
-        } catch (IOException e) {
-            Log.e("IOException", e.toString());
-            e.printStackTrace();
-        } catch (JSONException e) {
-            Toast.makeText(this, "Error JSON Format", Toast.LENGTH_LONG).show();
-            Toast.makeText(this, "Server Error", Toast.LENGTH_LONG).show();
-            Log.e("JSONException", e.toString());
-            e.printStackTrace();
-
-            //moveTaskToBack(true);
-            //android.os.Process.killProcess(android.os.Process.myPid());
-            //System.exit(1);
-        } catch (Exception e) {
-            Toast.makeText(this, "Error Exception", Toast.LENGTH_LONG).show();
-            Toast.makeText(this, "Server Error", Toast.LENGTH_LONG).show();
-            e.printStackTrace();
-        }
-
         Thread timerThread = new Thread(){
             public void run(){
                 try{
@@ -77,7 +43,14 @@ public class SplashScreen extends Activity {
                 }catch(InterruptedException e){
                     e.printStackTrace();
                 }finally{
-                    if (GlobalVariable.LOGIN_STATUS.equals("true")) {
+
+                    try {
+                        initialProcedure();
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+
+                    if (GlobalVariable.APP_LOGIN_STATUS.equals("true")) {
                         Intent intent = new Intent(SplashScreen.this,MainActivity.class);
                         startActivity(intent);
                     } else {
@@ -98,12 +71,11 @@ public class SplashScreen extends Activity {
     }
 
     public boolean initialProcedure() throws Exception {
-        //Initial Variable
-        JSONObject serviceResult;
-
-        // Check File
-        String fileContent = readFile(GlobalVariable.MOBILESTATUS_FILE);
+        // Init to all variable
+        initVariable();
+        /*
         GlobalVariable.ANDROID_ID = Settings.Secure.getString(getContentResolver(), Settings.Secure.ANDROID_ID);
+
         JSONObject loginStatus = new JSONObject();
 
         long unixTime = System.currentTimeMillis() / 1000L;
@@ -147,6 +119,7 @@ public class SplashScreen extends Activity {
                 initVariable();
             }
         }
+         */
         return true;
     }
 
@@ -161,7 +134,7 @@ public class SplashScreen extends Activity {
         }
     }
 
-    private String readFile(String varname) {
+    private String readFile(String varname) throws JSONException {
         String ret = "";
         try {
             InputStream inputStream = openFileInput(varname);
@@ -181,49 +154,105 @@ public class SplashScreen extends Activity {
             }
         }
         catch (FileNotFoundException e) {
-            //Log.e("SplashScreen", "File not found: " + e.toString());
-                writeFile(varname, "created");
-                ret = "created";
-            //Log.v("SplashScreen", "File Created");
+            create_initial_file();
+            ret = readFile(varname);
         } catch (IOException e) {
             Log.e("SplashScreen", "Can not read file: " + e.toString());
         }
-        //Log.v("SplashScreen", ret);
         return ret;
     }
 
-    private void initVariable() throws JSONException {
-        String mobileContent = readFile(GlobalVariable.SECURITY_FILE);
-        JSONObject mobileData = new JSONObject(mobileContent);
+    private void create_initial_file() throws JSONException {
+        JSONObject serverData = new JSONObject();
+        JSONObject securityData = new JSONObject();
+        JSONObject moneyData = new JSONObject();
+        JSONObject customerData = new JSONObject();
+        JSONObject appData = new JSONObject();
 
-        String securityContent = readFile(GlobalVariable.SECURITY_FILE);
+        // Server Data
+        serverData.put("distributor_server", "http://api.studiwidie.com/");
+        serverData.put("ack_code", "5GwcTzO0ODM6eSV3s66PJjeedlEvxWc9");
+        serverData.put("otp_key", "OTP_KEY");
+
+        // Security Data
+        securityData.put("tba_algorithm", "TBA_ALGORITHM");
+        securityData.put("cba_algorithm", "CBA_ALGORITHM");
+        securityData.put("cba_counter", "CBA_COUNTER");
+        securityData.put("session_key", "SESSION_KEY");
+        securityData.put("csrf_token", "CSRF_TOKEN");
+        securityData.put("user_agent","USER_AGENT");
+
+        // Customer Data
+        customerData.put("account_number", "ACCOUNT_NUMBER");
+        customerData.put("full_name", "FULL_NAME");
+        customerData.put("picture_url", "PICTURE_URL");
+        customerData.put("email", "EMAIL");
+        customerData.put("phone_number", "PHONE_NUMBER");
+        customerData.put("idcard_number", "IDCARD_NUMBER");
+        customerData.put("idcard_type", "IDCARD_TYPE");
+        customerData.put("is_verified_email", "false");
+        customerData.put("is_verified_phone", "false");
+
+        // Money Data
+        moneyData.put("main_balance", "0");
+        moneyData.put("send_ammount", "0");
+        moneyData.put("request_amount", "0");
+        moneyData.put("transaction_code", "0");
+
+        // App Data
+        appData.put("first_time_app", "true");
+        appData.put("login_status", "false");
+        appData.put("client_version","1.0.0");
+
+        writeFile(GlobalVariable.FILE_SERVER, serverData.toString());
+        writeFile(GlobalVariable.FILE_SECURITY, securityData.toString());
+        writeFile(GlobalVariable.FILE_CUSTOMER, customerData.toString());
+        writeFile(GlobalVariable.FILE_MONEY, moneyData.toString());
+        writeFile(GlobalVariable.FILE_APP, appData.toString());
+    }
+
+    private void initVariable() throws JSONException {
+        String securityContent = readFile(GlobalVariable.FILE_SECURITY);
         JSONObject securityData = new JSONObject(securityContent);
 
-        String accountContent = readFile(GlobalVariable.USERDATA_FILE);
-        JSONObject accountData = new JSONObject(accountContent);
+        String customerContent = readFile(GlobalVariable.FILE_CUSTOMER);
+        JSONObject customerData = new JSONObject(customerContent);
 
-        String balanceContent = readFile(GlobalVariable.BALANCE_FILE);
-        JSONObject balanceData = new JSONObject(balanceContent);
+        String moneyContent = readFile(GlobalVariable.FILE_MONEY);
+        JSONObject moneyData = new JSONObject(moneyContent);
 
-        GlobalVariable.CSRF_TOKEN = securityData.getString("csrf_token");
-        GlobalVariable.USER_AGENT = securityData.getString("user_agent");
+        String appContent = readFile(GlobalVariable.FILE_APP);
+        JSONObject appData = new JSONObject(appContent);
 
-        GlobalVariable.TBA_ALGORITHM = securityData.getString("tba_algorithm");
-        GlobalVariable.CBA_ALGORITHM = securityData.getString("cba_algorithm");
-        GlobalVariable.CBA_COUNTER = securityData.getString("cba_counter");
-        GlobalVariable.SESSION_KEY = securityData.getString("session_key");
+        // Security Data
+        GlobalVariable.SECURITY_IMME_ALGORITHM = securityData.getString("imme_algorithm");
+        GlobalVariable.SECURITY_TBA_ALGORITHM = securityData.getString("tba_algorithm");
+        GlobalVariable.SECURITY_CBA_ALGORITHM = securityData.getString("cba_algorithm");
+        GlobalVariable.SECURITY_CBA_COUNTER = securityData.getString("cba_counter");
+        GlobalVariable.SECURITY_SESSION_KEY = securityData.getString("session_key");
+        GlobalVariable.SECURITY_CSRF_TOKEN = securityData.getString("csrf_token");
+        GlobalVariable.SECURITY_USER_AGENT = securityData.getString("user_agent");
 
-        GlobalVariable.MAIN_BALANCE = Integer.parseInt(balanceData.getString("main_balance"));
-        GlobalVariable.GIFT_BALANCE = Integer.parseInt(balanceData.getString("gift_balance"));
+        // Customer Data
+        GlobalVariable.CUSTOMER_ACCOUNT_NUMBER = customerData.getString("account_number");
+        GlobalVariable.CUSTOMER_FULL_NAME = customerData.getString("full_name");
+        GlobalVariable.CUSTOMER_PICTURE_URL = customerData.getString("picture_url");
+        GlobalVariable.CUSTOMER_EMAIL = customerData.getString("email");
+        GlobalVariable.CUSTOMER_PHONE_NUMBER = customerData.getString("phone_number");
+        GlobalVariable.CUSTOMER_IDCARD_NUMBER = customerData.getString("idcard_number");
+        GlobalVariable.CUSTOMER_IDCARD_TYPE = customerData.getString("idcard_type");
+        GlobalVariable.CUSTOMER_IS_VERIFIED_EMAIL = customerData.getString("is_verified_email");
+        GlobalVariable.CUSTOMER_IS_VERIFIED_PHONE = customerData.getString("is_verified_phone");
 
-        GlobalVariable.ACCOUNT_NUMBER = accountData.getString("account_number");
-        GlobalVariable.FULL_NAME = accountData.getString("full_name");
-        GlobalVariable.PICTURE_URL = accountData.getString("picture_url");
-        GlobalVariable.EMAIL = accountData.getString("email");
-        GlobalVariable.PHONE_NUMBER = accountData.getString("phone_number");
-        GlobalVariable.IDCARD_NUMBER = accountData.getString("idcard_number");
-        GlobalVariable.IDCARD_TYPE = accountData.getString("idcard_type");
-        GlobalVariable.IS_VERIFIED_EMAIL = accountData.getString("is_verified_email");
-        GlobalVariable.IS_VERIFIED_PHONE = accountData.getString("is_verified_phone");
+        // Money Data
+        GlobalVariable.MONEY_MAIN_BALANCE = Integer.parseInt(moneyData.getString("main_balance"));
+        GlobalVariable.MONEY_SEND_AMOUNT = Integer.parseInt(moneyData.getString("send_ammount"));
+        GlobalVariable.MONEY_REQUEST_AMOUNT = Integer.parseInt(moneyData.getString("request_amount"));
+        GlobalVariable.MONEY_TRANSACTION_CODE = "TRANSACTION_CODE";
+
+        // Money Data
+        GlobalVariable.APP_FIRST_TIME_APP = appData.getString("first_time_app");
+        GlobalVariable.APP_LOGIN_STATUS = appData.getString("login_status");
+        GlobalVariable.APP_CLIENT_VERSION = appData.getString("client_version");
     }
 }

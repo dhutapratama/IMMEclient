@@ -116,21 +116,15 @@ public class ReceiveActivity extends AppCompatActivity {
                 try {
                     long unixTime = System.currentTimeMillis() / 1000L;
                     Integer answer = (int)(long) unixTime;
-                    postData = "request_code=1005"
-                            + "&csrf_token=" + URLEncoder.encode(GlobalVariable.CSRF_TOKEN, "UTF-8")
-                            + "&session_key=" + URLEncoder.encode(GlobalVariable.SESSION_KEY, "UTF-8")
-                            + "&cba_key=" + URLEncoder.encode(SecurityOTP.cba_key(), "UTF-8")
-                            + "&tba_key=" + URLEncoder.encode(SecurityOTP.tba_key(), "UTF-8")
-                            + "&amount=" + URLEncoder.encode(String.valueOf(GlobalVariable.REQUEST_AMOUNT), "UTF-8")
-                    +"&time="+Integer.toString(answer)+"&tba="+GlobalVariable.TBA_ALGORITHM;
+                    postData = "&session_key=" + URLEncoder.encode(GlobalVariable.SECURITY_SESSION_KEY, "UTF-8")
+                            + "&amount=" + URLEncoder.encode(String.valueOf(GlobalVariable.MONEY_REQUEST_AMOUNT), "UTF-8");
 
-
-                    JSONObject serviceResult = WebServiceClient.postRequest(GlobalVariable.DISTRIBUTOR_SERVER, postData);
+                    JSONObject serviceResult = WebServiceClient.postRequest(GlobalVariable.DISTRIBUTOR_SERVER + "receive", postData);
 
                     if (serviceResult.getString("error").equals("true")) {
                         Toast.makeText(ReceiveActivity.this, serviceResult.getString("message"), Toast.LENGTH_LONG).show();
                     } else {
-                        GlobalVariable.TRANSACTION_CODE = serviceResult.getString("transaction_code");
+                        GlobalVariable.MONEY_TRANSACTION_CODE = serviceResult.getString("transaction_code");
                         Intent intent = new Intent("com.imme.immeclient.ReceiveQRCodeActivity");
                         startActivity(intent);
                     }
@@ -226,8 +220,8 @@ public class ReceiveActivity extends AppCompatActivity {
                 requestAmount = requestAmount.substring(0, requestAmount.length()-1);
             }
 
-            GlobalVariable.REQUEST_AMOUNT = Integer.parseInt(requestAmount);
-            String formated_money = NumberFormat.getNumberInstance(Locale.GERMANY).format(GlobalVariable.REQUEST_AMOUNT);
+            GlobalVariable.MONEY_REQUEST_AMOUNT = Integer.parseInt(requestAmount);
+            String formated_money = NumberFormat.getNumberInstance(Locale.GERMANY).format(GlobalVariable.MONEY_REQUEST_AMOUNT);
             text_receive_balance_value.setText(formated_money);
             text_receive_balance_value.setLayoutParams(new TableRow.LayoutParams(
                     TableRow.LayoutParams.WRAP_CONTENT,
@@ -256,8 +250,8 @@ public class ReceiveActivity extends AppCompatActivity {
             requestAmount = requestAmount.substring(0, requestAmount.length()-1);
         }
 
-        GlobalVariable.REQUEST_AMOUNT = Integer.parseInt(requestAmount);
-        String formated_money = NumberFormat.getNumberInstance(Locale.GERMANY).format(GlobalVariable.REQUEST_AMOUNT);
+        GlobalVariable.MONEY_REQUEST_AMOUNT = Integer.parseInt(requestAmount);
+        String formated_money = NumberFormat.getNumberInstance(Locale.GERMANY).format(GlobalVariable.MONEY_REQUEST_AMOUNT);
         text_receive_balance_value.setText(formated_money);
     }
 }

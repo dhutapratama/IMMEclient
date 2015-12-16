@@ -131,10 +131,8 @@ public class MainActivity extends AppCompatActivity
         tintManager.setNavigationBarTintEnabled(true);
         tintManager.setTintColor(Color.parseColor("#FF03B0FF"));
 
-        // Balance
-        //String balance_value = readFromFile( "balance");
-        //String formated_money = NumberFormat.getNumberInstance(Locale.GERMANY).format(Integer.parseInt(balance_value));
-        //main_textview_balance_value.setText(formated_money);
+        String formated_money = NumberFormat.getNumberInstance(Locale.GERMANY).format(GlobalVariable.MONEY_MAIN_BALANCE);
+        main_textview_balance_value.setText(formated_money);
 
         // Button Action
         ImageButton main_button_send_pay = (ImageButton) findViewById(R.id.main_button_send_pay);
@@ -213,7 +211,10 @@ public class MainActivity extends AppCompatActivity
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
         } else {
-            super.onBackPressed();
+            moveTaskToBack(true);
+            android.os.Process.killProcess(android.os.Process.myPid());
+            System.exit(1);
+            //super.onBackPressed();
         }
     }
 
@@ -262,7 +263,12 @@ public class MainActivity extends AppCompatActivity
             return true;
         }
         else if (id == R.id.nav_sign_out) {
-            Intent intent = new Intent("com.imme.immeclient.SignOutActivity");
+            try {
+                signOut();
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+            Intent intent = new Intent("com.imme.immeclient.SignInActivity");
             startActivity(intent);
             return true;
         }
@@ -319,11 +325,9 @@ public class MainActivity extends AppCompatActivity
         return result;
     }
 
-
-    // Initial Commit
-    private void writeToFile(String varname, String data) {
+    public void writeFile(String varname, String data) {
         try {
-            OutputStreamWriter outputStreamWriter = new OutputStreamWriter(openFileOutput(varname + ".json", Context.MODE_PRIVATE));
+            OutputStreamWriter outputStreamWriter = new OutputStreamWriter(openFileOutput(varname, Context.MODE_PRIVATE));
             outputStreamWriter.write(data);
             outputStreamWriter.close();
         }
@@ -332,12 +336,10 @@ public class MainActivity extends AppCompatActivity
         }
     }
 
-    private String readFromFile(String varname) {
-
+    private String readFile(String varname) {
         String ret = "";
-
         try {
-            InputStream inputStream = openFileInput(varname + ".json");
+            InputStream inputStream = openFileInput(varname);
 
             if ( inputStream != null ) {
                 InputStreamReader inputStreamReader = new InputStreamReader(inputStream);
@@ -354,42 +356,105 @@ public class MainActivity extends AppCompatActivity
             }
         }
         catch (FileNotFoundException e) {
-            Log.e("MainActivity", "File not found: " + e.toString());
-            if (varname.equals("balance")) {
-                writeToFile("balance", "0");
-                ret = readFromFile("balance");
-            } else {
-
-            }
+            Log.e("SplashScreen", "File not found: " + e.toString());
         } catch (IOException e) {
-            Log.e("MainActivity", "Can not read file: " + e.toString());
+            Log.e("SplashScreen", "Can not read file: " + e.toString());
         }
-
         return ret;
     }
 
+    private void signOut() throws JSONException {
+        JSONObject serverData = new JSONObject();
+        JSONObject securityData = new JSONObject();
+        JSONObject moneyData = new JSONObject();
+        JSONObject customerData = new JSONObject();
+        JSONObject appData = new JSONObject();
+
+        // Server Data
+        serverData.put("distributor_server", "http://api.studiwidie.com/");
+        serverData.put("ack_code", "5GwcTzO0ODM6eSV3s66PJjeedlEvxWc9");
+        serverData.put("otp_key", "OTP_KEY");
+
+        // Security Data
+        securityData.put("tba_algorithm", "TBA_ALGORITHM");
+        securityData.put("cba_algorithm", "CBA_ALGORITHM");
+        securityData.put("cba_counter", "CBA_COUNTER");
+        securityData.put("session_key", "SESSION_KEY");
+        securityData.put("csrf_token", "CSRF_TOKEN");
+        securityData.put("user_agent","USER_AGENT");
+
+        // Customer Data
+        customerData.put("account_number", "ACCOUNT_NUMBER");
+        customerData.put("full_name", "FULL_NAME");
+        customerData.put("picture_url", "PICTURE_URL");
+        customerData.put("email", "EMAIL");
+        customerData.put("phone_number", "PHONE_NUMBER");
+        customerData.put("idcard_number", "IDCARD_NUMBER");
+        customerData.put("idcard_type", "IDCARD_TYPE");
+        customerData.put("is_verivied_email", "false");
+        customerData.put("is_verivied_phone", "false");
+
+        // Money Data
+        moneyData.put("main_balance", "0");
+        moneyData.put("send_ammount", "0");
+        moneyData.put("request_amount", "0");
+        moneyData.put("transaction_code", "0");
+
+        // App Data
+        appData.put("first_time_app", "true");
+        appData.put("login_status", "false");
+        appData.put("client_version","1.0.0");
+
+        writeFile(GlobalVariable.FILE_SERVER, serverData.toString());
+        writeFile(GlobalVariable.FILE_SECURITY, securityData.toString());
+        writeFile(GlobalVariable.FILE_CUSTOMER, customerData.toString());
+        writeFile(GlobalVariable.FILE_MONEY, moneyData.toString());
+        writeFile(GlobalVariable.FILE_APP, appData.toString());
+        initVariable();
+    }
+
+    private void initVariable() throws JSONException {
+        String securityContent = readFile(GlobalVariable.FILE_SECURITY);
+        JSONObject securityData = new JSONObject(securityContent);
+
+        String customerContent = readFile(GlobalVariable.FILE_CUSTOMER);
+        JSONObject customerData = new JSONObject(customerContent);
+
+        String moneyContent = readFile(GlobalVariable.FILE_MONEY);
+        JSONObject moneyData = new JSONObject(moneyContent);
+
+        String appContent = readFile(GlobalVariable.FILE_APP);
+        JSONObject appData = new JSONObject(appContent);
+
+        // Security Data
+        GlobalVariable.SECURITY_IMME_ALGORITHM = securityData.getString("imme_algorithm");
+        GlobalVariable.SECURITY_TBA_ALGORITHM = securityData.getString("tba_algorithm");
+        GlobalVariable.SECURITY_CBA_ALGORITHM = securityData.getString("cba_algorithm");
+        GlobalVariable.SECURITY_CBA_COUNTER = securityData.getString("cba_counter");
+        GlobalVariable.SECURITY_SESSION_KEY = securityData.getString("session_key");
+        GlobalVariable.SECURITY_CSRF_TOKEN = securityData.getString("csrf_token");
+        GlobalVariable.SECURITY_USER_AGENT = securityData.getString("user_agent");
+
+        // Customer Data
+        GlobalVariable.CUSTOMER_ACCOUNT_NUMBER = customerData.getString("account_number");
+        GlobalVariable.CUSTOMER_FULL_NAME = customerData.getString("full_name");
+        GlobalVariable.CUSTOMER_PICTURE_URL = customerData.getString("picture_url");
+        GlobalVariable.CUSTOMER_EMAIL = customerData.getString("email");
+        GlobalVariable.CUSTOMER_PHONE_NUMBER = customerData.getString("phone_number");
+        GlobalVariable.CUSTOMER_IDCARD_NUMBER = customerData.getString("idcard_number");
+        GlobalVariable.CUSTOMER_IDCARD_TYPE = customerData.getString("idcard_type");
+        GlobalVariable.CUSTOMER_IS_VERIFIED_EMAIL = customerData.getString("is_verified_email");
+        GlobalVariable.CUSTOMER_IS_VERIFIED_PHONE = customerData.getString("is_verified_phone");
+
+        // Money Data
+        GlobalVariable.MONEY_MAIN_BALANCE = Integer.parseInt(moneyData.getString("main_balance"));
+        GlobalVariable.MONEY_SEND_AMOUNT = Integer.parseInt(moneyData.getString("send_ammount"));
+        GlobalVariable.MONEY_REQUEST_AMOUNT = Integer.parseInt(moneyData.getString("request_amount"));
+        GlobalVariable.MONEY_TRANSACTION_CODE = customerData.getString("transaction_code");
+
+        // Money Data
+        GlobalVariable.APP_FIRST_TIME_APP = appData.getString("first_time_app");
+        GlobalVariable.APP_LOGIN_STATUS = appData.getString("login_status");
+        GlobalVariable.APP_CLIENT_VERSION = appData.getString("client_version");
+    }
 }
-
-/**
- AlertDialog.Builder alertDialog = new AlertDialog.Builder(this);
- alertDialog.setTitle("Reset...");
- alertDialog.setMessage("Are you sure?");
- alertDialog.setIcon(R.drawable.pay_icon);
- alertDialog.setPositiveButton("OK", new DialogInterface.OnClickListener() {
- public void onClick(DialogInterface dialog, int which) {
- // here you can add functions
- }
- });
- alertDialog.setNegativeButton("NO", new DialogInterface.OnClickListener() {
- public void onClick(DialogInterface dialog, int which) {
- // here you can add functions
- }
- });
-
- alertDialog.setNeutralButton("NETRAL", new DialogInterface.OnClickListener() {
- public void onClick(DialogInterface dialog, int which) {
- // here you can add functions
- }
- });
- alertDialog.show();
- */
