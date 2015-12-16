@@ -1,7 +1,10 @@
-<resources>
+<resources>>
 
-    <!-- Change color menu icon & nav icon. -->
-
+    <!-- Change color icon toolbar. -->
+    <style name="MyToolBarTheme" parent="ThemeOverlay.AppCompat.Light">
+        <item name="android:textColorPrimary">#000000</item>
+        <item name="android:textColorSecondary">#02afff</item>
+    </style>
 
     <style name="AppTheme" parent="Theme.AppCompat.Light">
         <!-- Customize your theme here. -->

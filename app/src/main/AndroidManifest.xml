@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.imme.immeclient">
 
     <!-- To auto-complete the email text field in the login form with the user's emails -->
@@ -162,22 +161,6 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".TransactionHistoryActivity"
-            android:label="@string/title_activity_transaction_history"
-            android:parentActivityName=".MainActivity"
-            android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.NoActionBar">
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.imme.immeclient.MainActivity" />
-
-            <intent-filter>
-                <action android:name="com.imme.immeclient.TransactionHistoryActivity" />
-
-                <category android:name="android.intent.category.DEFAULT" />
-            </intent-filter>
-        </activity>
-        <activity
             android:name=".UserAgreementActivity"
             android:label="@string/title_activity_user_agreement"
             android:parentActivityName=".MainActivity"
@@ -197,6 +180,7 @@
             android:name=".AccountActivity"
             android:label="@string/title_activity_account"
             android:parentActivityName=".MainActivity"
+            android:screenOrientation="portrait"
             android:theme="@style/AppThemeGreen.NoActionBar">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
@@ -228,6 +212,7 @@
             android:name=".Send_pay_details"
             android:label="@string/title_activity_send_pay_details"
             android:parentActivityName=".MainActivity"
+            android:screenOrientation="portrait"
             android:theme="@style/AppThemeBlue.NoActionBar">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
@@ -253,6 +238,7 @@
             android:name=".GiftActivity"
             android:label="@string/title_activity_gift"
             android:parentActivityName=".MainActivity"
+            android:screenOrientation="portrait"
             android:theme="@style/AppThemeBlue.NoActionBar">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
@@ -268,6 +254,7 @@
             android:name=".ReceiveQRCodeActivity"
             android:label="@string/title_activity_receive_qrcode"
             android:parentActivityName=".MainActivity"
+            android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
@@ -299,6 +286,7 @@
             android:name=".PaymentDetails"
             android:label="@string/title_activity_payment_details"
             android:parentActivityName=".MainActivity"
+            android:screenOrientation="portrait"
             android:theme="@style/AppThemeBlue.NoActionBar">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
@@ -313,6 +301,8 @@
         <activity
             android:name=".InviteGetMoneyActivity"
             android:label="@string/title_activity_invite_get_money"
+            android:parentActivityName=".MainActivity"
+            android:screenOrientation="portrait"
             android:theme="@style/AppThemeGreen.NoActionBar">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
@@ -328,6 +318,7 @@
             android:name=".PersonalSend"
             android:label="@string/title_activity_personal_send"
             android:parentActivityName=".MainActivity"
+            android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
@@ -343,6 +334,7 @@
             android:name=".SignUpActivity"
             android:label="@string/title_activity_sign_up"
             android:parentActivityName=".MainActivity"
+            android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
@@ -358,6 +350,7 @@
             android:name=".SignInActivity"
             android:label="@string/title_activity_sign_in"
             android:parentActivityName=".MainActivity"
+            android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
@@ -373,6 +366,7 @@
             android:name=".AccountVerifyPhoneNumberStep1Activity"
             android:label="@string/title_activity_account_verify_phone_number_step1"
             android:parentActivityName=".MainActivity"
+            android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
@@ -388,6 +382,7 @@
             android:name=".AccountVerifyPhoneNumberStep2Activity"
             android:label="@string/title_activity_account_verify_phone_number_step2"
             android:parentActivityName=".MainActivity"
+            android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
@@ -399,11 +394,11 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
-
         <activity
             android:name=".SignOutActivity"
             android:label="@string/title_activity_sign_out"
             android:parentActivityName=".MainActivity"
+            android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
@@ -411,6 +406,22 @@
 
             <intent-filter>
                 <action android:name="com.imme.immeclient.SignOutActivity" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".TransactionHistoryActivity"
+            android:label="@string/title_activity_transaction_history"
+            android:parentActivityName=".MainActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppThemeGreen.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.imme.immeclient.MainActivity" />
+
+            <intent-filter>
+                <action android:name="com.imme.immeclient.TransactionHistoryActivity" />
 
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
