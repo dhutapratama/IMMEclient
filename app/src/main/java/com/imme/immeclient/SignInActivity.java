@@ -1,5 +1,6 @@
 package com.imme.immeclient;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
@@ -100,29 +101,33 @@ public class SignInActivity extends AppCompatActivity {
         // Sign in button action
         sign_in_button_sign_in.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                try {
-                    email = sign_in_edittext_email.getText().toString();
-                    password = sign_in_edittext_password.getText().toString();
-                    doLogin();
-                } catch (JSONException e) {
-                    Log.e("JSONException", e.toString());
-                    e.printStackTrace();
-                } catch (IOException e) {
-                    Log.e("IOException", e.toString());
-                    e.printStackTrace();
-                }
+            ProgressDialog loading = ProgressDialog.show(SignInActivity.this, "",
+                "Sign in...", true);
+            loading.show();
+            try {
+                email = sign_in_edittext_email.getText().toString();
+                password = sign_in_edittext_password.getText().toString();
+                doLogin();
+            } catch (JSONException e) {
+                Log.e("JSONException", e.toString());
+                e.printStackTrace();
+            } catch (IOException e) {
+                Log.e("IOException", e.toString());
+                e.printStackTrace();
+            }
 
-                if (GlobalVariable.APP_LOGIN_STATUS.equals("true")) {
-                    Intent intent = new Intent(SignInActivity.this, MainActivity.class);
-                    startActivity(intent);
-                }
+
+            if (GlobalVariable.APP_LOGIN_STATUS.equals("true")) {
+                Intent intent = new Intent(SignInActivity.this, MainActivity.class);
+                startActivity(intent);
+            }
+                loading.hide();
             }
         });
     }
 
     @Override
     public void onBackPressed() {
-        moveTaskToBack(true);
         android.os.Process.killProcess(android.os.Process.myPid());
         System.exit(1);
     }

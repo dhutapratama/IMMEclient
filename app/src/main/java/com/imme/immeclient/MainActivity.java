@@ -268,7 +268,8 @@ public class MainActivity extends AppCompatActivity
             } catch (JSONException e) {
                 e.printStackTrace();
             }
-            Intent intent = new Intent("com.imme.immeclient.SignInActivity");
+            Intent intent = new Intent(MainActivity.this, SignInActivity.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
             startActivity(intent);
             return true;
         }
@@ -376,6 +377,7 @@ public class MainActivity extends AppCompatActivity
         serverData.put("otp_key", "OTP_KEY");
 
         // Security Data
+        securityData.put("imme_algorithm", "IMME_ALGORITHM");
         securityData.put("tba_algorithm", "TBA_ALGORITHM");
         securityData.put("cba_algorithm", "CBA_ALGORITHM");
         securityData.put("cba_counter", "CBA_COUNTER");
@@ -391,8 +393,8 @@ public class MainActivity extends AppCompatActivity
         customerData.put("phone_number", "PHONE_NUMBER");
         customerData.put("idcard_number", "IDCARD_NUMBER");
         customerData.put("idcard_type", "IDCARD_TYPE");
-        customerData.put("is_verivied_email", "false");
-        customerData.put("is_verivied_phone", "false");
+        customerData.put("is_verified_email", "false");
+        customerData.put("is_verified_phone", "false");
 
         // Money Data
         moneyData.put("main_balance", "0");
@@ -401,7 +403,8 @@ public class MainActivity extends AppCompatActivity
         moneyData.put("transaction_code", "0");
 
         // App Data
-        appData.put("first_time_app", "true");
+
+        appData.put("first_time_app", "false");
         appData.put("login_status", "false");
         appData.put("client_version","1.0.0");
 
@@ -450,7 +453,7 @@ public class MainActivity extends AppCompatActivity
         GlobalVariable.MONEY_MAIN_BALANCE = Integer.parseInt(moneyData.getString("main_balance"));
         GlobalVariable.MONEY_SEND_AMOUNT = Integer.parseInt(moneyData.getString("send_ammount"));
         GlobalVariable.MONEY_REQUEST_AMOUNT = Integer.parseInt(moneyData.getString("request_amount"));
-        GlobalVariable.MONEY_TRANSACTION_CODE = customerData.getString("transaction_code");
+        GlobalVariable.MONEY_TRANSACTION_CODE = moneyData.getString("transaction_code");
 
         // Money Data
         GlobalVariable.APP_FIRST_TIME_APP = appData.getString("first_time_app");
