@@ -22,8 +22,8 @@ import java.util.Scanner;
  * Created by santo on 23-Oct-15.
  */
 public class WebServiceClient {
-    public static final int CONNECTION_TIMEOUT = 5000;
-    public static final int DATARETRIEVAL_TIMEOUT = 5000;
+    public static final int CONNECTION_TIMEOUT = 65000;
+    public static final int DATARETRIEVAL_TIMEOUT = 65000;
 
     public static JSONObject getRequest(String serviceUrl) throws IOException {
         JSONObject result = new JSONObject();
