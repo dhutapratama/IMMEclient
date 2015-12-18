@@ -100,21 +100,7 @@
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
                     android:gravity="center"
-                    android:paddingTop="28dp">
-                    <TextView
-                        android:layout_width="fill_parent"
-                        android:layout_height="wrap_content"
-                        android:id="@+id/dont_have_account"
-                        android:text="Don't Have an Account?"
-                        android:textSize="16dp"
-                        android:gravity="center"/>
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="fill_parent"
-                    android:layout_height="wrap_content"
-                    android:gravity="center"
-                    android:paddingTop="5dp">
+                    android:paddingTop="20dp">
 
                     <TextView
                         android:layout_width="fill_parent"
