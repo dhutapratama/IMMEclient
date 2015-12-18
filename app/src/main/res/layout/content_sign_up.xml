@@ -28,14 +28,13 @@
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:paddingTop="24dp"
+            android:paddingTop="25dp"
             android:paddingLeft="45dp"
             android:paddingRight="45dp">
             <ImageView
                 android:src="@mipmap/sign_up_logo_text_imme3"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:paddingLeft="45dp"
                 android:layout_gravity="center_horizontal"/>
         </LinearLayout>
 
@@ -100,7 +99,7 @@
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
                     android:inputType="textPassword"
-                    android:hint="Confirm password"
+                    android:hint="Confirm Password"
                     android:textSize="15sp"/>
             </android.support.design.widget.TextInputLayout>
 
@@ -122,19 +121,20 @@
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
-                android:paddingTop="28dp">
+                android:paddingTop="20dp">
                 <TextView
-                    android:layout_width="wrap_content"
+                    android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
                     android:text="Sign up"
                     android:id="@+id/sign_up_button_sign_up"
                     android:textSize="18sp"
                     android:paddingBottom="5dp"
                     android:paddingTop="5dp"
-                    android:paddingLeft="105dp"
-                    android:paddingRight="105dp"
+                    android:paddingLeft="5dp"
+                    android:paddingRight="5dp"
                     android:textColor="#ffffff"
-                    android:background="@drawable/account_save_verify"/>
+                    android:background="@drawable/account_save_verify"
+                    android:textAlignment="center"/>
             </LinearLayout>
 
         </LinearLayout>
