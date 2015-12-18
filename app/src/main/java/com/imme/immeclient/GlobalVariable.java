@@ -73,4 +73,5 @@ public class GlobalVariable {
     public static String PAY_APPLY_CODE = "";
     public static String RECEIVE_SENDER_NAME = "";
     public static String RECEIVE_SENDER_PICTURE = "";
+    public static int DEPOSIT_AMOUNT = 0;
 }

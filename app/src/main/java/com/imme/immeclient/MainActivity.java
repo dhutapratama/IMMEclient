@@ -1,9 +1,11 @@
 package com.imme.immeclient;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.Typeface;
+import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.StrictMode;
@@ -26,6 +28,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.zxing.integration.android.IntentIntegrator;
+import com.google.zxing.integration.android.IntentResult;
 import com.readystatesoftware.systembartint.SystemBarTintManager;
 
 import java.io.BufferedReader;
@@ -34,6 +37,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
+import java.net.URLEncoder;
 import java.text.NumberFormat;
 import java.util.Locale;
 
@@ -45,7 +49,7 @@ public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
     Intent intents = new Intent("com.imme.immeclient.AccountActivity");
-
+    TextView main_textview_balance_value;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
@@ -74,7 +78,7 @@ public class MainActivity extends AppCompatActivity
         TextView main_textview_rp = (TextView) findViewById(R.id.main_textview_rp);
         main_textview_rp.setTypeface(hnLight);
 
-        TextView main_textview_balance_value = (TextView) findViewById(R.id.main_textview_balance_value);
+        main_textview_balance_value = (TextView) findViewById(R.id.main_textview_balance_value);
         main_textview_balance_value.setTypeface(hbqLight);
 
         TextView main_textview_last_transaction = (TextView) findViewById(R.id.main_textview_last_transaction);
@@ -148,7 +152,7 @@ public class MainActivity extends AppCompatActivity
         main_button_receive.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent("com.imme.immeclient.ReceiveActivity");
+                Intent intent = new Intent(MainActivity.this, Deposit.class);
                 startActivity(intent);
             }
         });
@@ -166,6 +170,7 @@ public class MainActivity extends AppCompatActivity
                 integrator.initiateScan();
             }
         });
+
 
         RelativeLayout last_transaction_1 = (RelativeLayout) findViewById(R.id.last_transaction_1);
         last_transaction_1.setOnClickListener(new View.OnClickListener() {
@@ -224,6 +229,7 @@ public class MainActivity extends AppCompatActivity
         getMenuInflater().inflate(R.menu.main, menu);
         return true;
     }
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle action bar item clicks here. The action bar will
@@ -324,6 +330,71 @@ public class MainActivity extends AppCompatActivity
             result = getResources().getDimensionPixelSize(resourceId);
         }
         return result;
+    }
+
+    String voucher_code = new String();
+    Boolean error_status = false;
+    String error_message = null;
+    private ProgressDialog loading = null;
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        IntentResult result = IntentIntegrator.parseActivityResult(requestCode, resultCode, data);
+        voucher_code = result.getContents();
+        if(result != null) {
+            if(resultCode != 0) {
+                loading = ProgressDialog.show(MainActivity.this, "", "Validating voucher...", true, true);
+                new voucher_check().execute();
+            }
+        } else {
+            // This is important, otherwise the result will not be passed to the fragment
+            super.onActivityResult(requestCode, resultCode, data);
+        }
+    }
+
+    private class voucher_check extends AsyncTask<String, Void, Object> {
+        protected Object doInBackground(String... args) {
+            try {
+                voucherCheck();
+            } catch (JSONException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            return null;
+        }
+
+        protected void onPostExecute(Object result) {
+            if (MainActivity.this.loading != null) {
+                MainActivity.this.loading.dismiss();
+            }
+            if (error_status) {
+                Toast.makeText(MainActivity.this, error_message, Toast.LENGTH_LONG).show();
+            } else {
+                String formated_money = NumberFormat.getNumberInstance(Locale.GERMANY).format(GlobalVariable.MONEY_MAIN_BALANCE);
+                main_textview_balance_value.setText(formated_money);
+
+                Intent intent = new Intent("com.imme.immeclient.Deposit");
+                startActivity(intent);
+            }
+        }
+    }
+
+    private boolean voucherCheck() throws IOException, JSONException {
+        String postData ="session_key=" + URLEncoder.encode(GlobalVariable.SECURITY_SESSION_KEY, "UTF-8")
+                + "&voucher_code=" + URLEncoder.encode(voucher_code, "UTF-8");
+        JSONObject serviceResult = WebServiceClient.postRequest(GlobalVariable.DISTRIBUTOR_SERVER + "deposit", postData);
+
+        if (serviceResult.getBoolean("error")){
+            error_status = true;
+            error_message = serviceResult.getString("message");
+        } else {
+            // VARIABLE SET
+            error_status = false;
+            GlobalVariable.DEPOSIT_AMOUNT = Integer.parseInt(serviceResult.getString("deposit_amount"));
+            GlobalVariable.MONEY_MAIN_BALANCE = Integer.parseInt(serviceResult.getString("balance"));
+            commit();
+        }
+        return serviceResult.getBoolean("error");
     }
 
     public void writeFile(String varname, String data) {
@@ -459,5 +530,15 @@ public class MainActivity extends AppCompatActivity
         GlobalVariable.APP_FIRST_TIME_APP = appData.getString("first_time_app");
         GlobalVariable.APP_LOGIN_STATUS = appData.getString("login_status");
         GlobalVariable.APP_CLIENT_VERSION = appData.getString("client_version");
+    }
+
+    private void commit() throws JSONException {
+        String moneyContent = readFile(GlobalVariable.FILE_MONEY);
+        JSONObject moneyData = new JSONObject(moneyContent);
+
+        // Money Data
+        moneyData.put("main_balance", Integer.toString(GlobalVariable.MONEY_MAIN_BALANCE));
+
+        writeFile(GlobalVariable.FILE_MONEY, moneyData.toString());
     }
 }

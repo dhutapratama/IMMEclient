@@ -419,8 +419,24 @@
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.imme.immeclient.MainActivity" />
+
             <intent-filter>
                 <action android:name="com.imme.immeclient.SendPayPersonalDetail" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".Deposit"
+            android:label="@string/title_activity_deposit"
+            android:parentActivityName=".MainActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppThemeBlue.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.imme.immeclient.MainActivity" />
+            <intent-filter>
+                <action android:name="com.imme.immeclient.Deposit" />
 
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
