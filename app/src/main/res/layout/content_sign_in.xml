@@ -80,18 +80,17 @@
                 <LinearLayout
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
+                    android:paddingTop="89dp"
                     android:gravity="center"
-                    android:paddingTop="89dp">
+                    android:layout_gravity="center">
                     <TextView
-                        android:layout_width="wrap_content"
+                        android:layout_width="fill_parent"
                         android:layout_height="wrap_content"
                         android:text="Sign in"
                         android:id="@+id/sign_in_button_sign_in"
                         android:textSize="18sp"
                         android:paddingBottom="5dp"
                         android:paddingTop="5dp"
-                        android:paddingLeft="107dp"
-                        android:paddingRight="107dp"
                         android:textColor="#ffffff"
                         android:background="@drawable/account_button_ractangle_blue"/>
                 </LinearLayout>
@@ -102,7 +101,7 @@
                     android:gravity="center"
                     android:paddingTop="28dp">
                     <TextView
-                        android:layout_width="wrap_content"
+                        android:layout_width="fill_parent"
                         android:layout_height="wrap_content"
                         android:id="@+id/dont_have_account"
                         android:text="Don't Have an Account?"
@@ -123,10 +122,10 @@
                         android:textSize="18sp"
                         android:paddingBottom="5dp"
                         android:paddingTop="5dp"
-                        android:paddingLeft="105dp"
-                        android:paddingRight="105dp"
+                        android:paddingLeft="5dp"
+                        android:paddingRight="5dp"
                         android:textColor="#ffffff"
-                        android:background="@drawable/account_save_verify"/>
+                        android:background="@drawable/account_save_verify" />
                 </LinearLayout>
 
             </LinearLayout>
