@@ -11,18 +11,18 @@
     tools:context="com.imme.immeclient.ReceiveQRCodeActivity"
     android:orientation="vertical">
 
-    <ImageView
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/qr_code"
-        android:layout_gravity="center"/>
-
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Scan it! 0 second"
         android:id="@+id/time_out"
         android:layout_gravity="center"/>
+
+    <ImageView
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/qr_code"/>
+
 
     <TextView
         android:layout_width="wrap_content"
