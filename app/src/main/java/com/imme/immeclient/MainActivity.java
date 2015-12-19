@@ -21,7 +21,9 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -64,7 +66,6 @@ public class MainActivity extends AppCompatActivity
             toolbar.setPadding(0, getStatusBarHeight(), 0, 0);
             toolbar.getLayoutParams().height = toolbar.getLayoutParams().height + getStatusBarHeight();
         }
-
         // Start Font
         Typeface hnLight = Typeface.createFromAsset(getAssets(),
                 "fonts/HelveticaNeue-Light.otf");

@@ -21,10 +21,10 @@
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
             android:src="@mipmap/main_nav_steve_jobs_image"
             android:id="@+id/imageView"
-            android:layout_gravity="center"/>
+            android:layout_gravity="center"
+            android:layout_marginTop="@dimen/user_image_margin_top"/>
     </RelativeLayout>
 
     <LinearLayout

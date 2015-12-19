@@ -35,11 +35,11 @@ import java.util.Enumeration;
 import java.util.Objects;
 
 public class SignInActivity extends AppCompatActivity {
-    private String email = new String();
-    private String password = new String();
+    private String email = null;
+    private String password = null;
     private ProgressDialog loading = null;
     Boolean login_error = false;
-    private String message = new String();
+    private String message = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -76,9 +76,6 @@ public class SignInActivity extends AppCompatActivity {
         final TextView sign_in_button_sign_up = (TextView) findViewById(R.id.sign_in_button_sign_up);
         sign_in_button_sign_up.setTypeface(hbqLight);
 
-        final TextView dont_have_account = (TextView) findViewById(R.id.dont_have_account);
-        dont_have_account.setTypeface(hbqLight);
-
         // sign up destination
         sign_in_button_sign_up.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -96,12 +93,12 @@ public class SignInActivity extends AppCompatActivity {
             loading = ProgressDialog.show(SignInActivity.this, "", "Sign in...", true, true);
             new loginTask().execute();
 
-            if (GlobalVariable.APP_LOGIN_STATUS.equals("true")) {
+            /*if (GlobalVariable.APP_LOGIN_STATUS.equals("true")) {
                 Intent intent = new Intent(SignInActivity.this, MainActivity.class);
                 startActivity(intent);
             } else {
                 //Toast.makeText(SignInActivity.this, message, Toast.LENGTH_LONG).show();
-            }
+            }*/
 
             }
         });
@@ -193,6 +190,7 @@ public class SignInActivity extends AppCompatActivity {
             GlobalVariable.MONEY_MAIN_BALANCE = Integer.parseInt(customerData.getString("balance"));
 
             commit();
+            login_error = false;
         } else {
             login_error = true;
             message = serviceResult.getString("message");
@@ -259,6 +257,9 @@ public class SignInActivity extends AppCompatActivity {
             }
             if (login_error) {
                 Toast.makeText(SignInActivity.this, message, Toast.LENGTH_LONG).show();
+            } else {
+                Intent intent = new Intent(SignInActivity.this, MainActivity.class);
+                startActivity(intent);
             }
         }
     }

@@ -34,58 +34,50 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:clickable="true"
-            android:id="@+id/last_transaction_1">
+            android:id="@+id/last_transaction_1"
+            android:paddingLeft="20dp"
+            android:paddingRight="20dp">
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/main_history_image_send_pay"
                 android:src="@mipmap/main_last_transaction_send_pay_icon"
-                android:paddingTop="@dimen/main_lastTransaction_padding"
-                android:paddingBottom="@dimen/main_lastTransaction_padding"
-                android:paddingLeft="@dimen/main_LastTransaction_paddingLeft"/>
+                android:paddingTop="@dimen/main_lastTransaction_padding"/>
             <TextView
                 android:text="PT. Lazada Indonesia"
                 android:id="@+id/main_textview_history_name1"
-                android:layout_width="wrap_content"
+                android:layout_width="185dp"
                 android:layout_height="wrap_content"
                 android:paddingTop="@dimen/main_lastTransaction_padding"
-                android:paddingBottom="@dimen/main_lastTransaction_padding"
-                android:layout_marginLeft="45dp"
-                android:layout_marginRight="88dp"
+                android:layout_marginLeft="10dp"
                 android:textColor="@color/textWhite"
                 android:textSize="15sp"
                 android:singleLine="true"
-                android:layout_alignLeft="@+id/main_history_image_send_pay" />
+                android:layout_toRightOf="@id/main_history_image_send_pay"/>
 
             <LinearLayout
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                android:paddingRight="20dp">
+                android:layout_alignParentRight="true">
                 <TextView
                     android:text="Rp 300.000"
                     android:id="@+id/main_textview_history_total1"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:paddingTop="5dp"
-                    android:paddingBottom="0dp"
                     android:textColor="@color/textWhite"
                     android:textSize="12sp"
-                    android:layout_gravity="right"
-                    android:gravity="right"
-                    android:width="120dp" />
+                    android:layout_gravity="right"/>
                 <TextView
                     android:text="20 OCT 2015"
                     android:id="@+id/main_textview_history_date1"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:paddingTop="0dp"
                     android:paddingBottom="5dp"
                     android:textColor="@color/textWhite"
                     android:textSize="10sp"
-                    android:layout_gravity="right"
-                    android:gravity="right"
-                    android:width="120dp" />
+                    android:layout_gravity="right"/>
             </LinearLayout>
 
         </RelativeLayout>
@@ -96,35 +88,33 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:clickable="true"
-            android:id="@+id/last_transaction_2">
+            android:id="@+id/last_transaction_2"
+            android:paddingLeft="20dp"
+            android:paddingRight="20dp">
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/main_history_image_receive"
                 android:src="@mipmap/main_last_transaction_receive_icon"
-                android:paddingTop="@dimen/main_lastTransaction_padding"
-                android:paddingBottom="@dimen/main_lastTransaction_padding"
-                android:paddingLeft="@dimen/main_LastTransaction_paddingLeft"/>
+                android:paddingTop="@dimen/main_lastTransaction_padding"/>
             <TextView
                 android:text="Dhuta Pratama"
                 android:id="@+id/main_textview_history_name2"
-                android:layout_width="wrap_content"
+                android:layout_width="185dp"
                 android:layout_height="wrap_content"
                 android:paddingTop="@dimen/main_lastTransaction_padding"
-                android:paddingBottom="@dimen/main_lastTransaction_padding"
                 android:textColor="@color/textWhite"
                 android:textSize="15sp"
                 android:width="160dp"
                 android:singleLine="true"
-                android:layout_alignLeft="@+id/main_history_image_receive"
-                android:layout_marginLeft="45dp"
-                android:layout_marginRight="88dp" />
+                android:layout_toRightOf="@+id/main_history_image_receive"
+                android:layout_marginLeft="10dp" />
 
             <LinearLayout
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                android:paddingRight="20dp">
+                android:layout_alignParentRight="true">
                 <TextView
                     android:text="Rp 240.000"
                     android:id="@+id/main_textview_history_total2"
@@ -134,21 +124,16 @@
                     android:paddingBottom="0dp"
                     android:textColor="@color/textWhite"
                     android:textSize="12sp"
-                    android:layout_gravity="right"
-                    android:gravity="right"
-                    android:width="120dp" />
+                    android:layout_gravity="right" />
                 <TextView
                     android:text="20 OCT 2015"
                     android:id="@+id/main_textview_history_date2"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:paddingTop="0dp"
                     android:paddingBottom="5dp"
                     android:textColor="@color/textWhite"
                     android:textSize="10sp"
-                    android:layout_gravity="right"
-                    android:gravity="right"
-                    android:width="120dp" />
+                    android:layout_gravity="right" />
             </LinearLayout>
 
         </RelativeLayout>
@@ -159,47 +144,42 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:clickable="true"
-            android:id="@+id/last_transaction_3">
+            android:id="@+id/last_transaction_3"
+            android:paddingLeft="20dp"
+            android:paddingRight="20dp">
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/main_history_image_topup"
                 android:src="@mipmap/main_last_transaction_topup_icon"
-                android:paddingTop="@dimen/main_lastTransaction_padding"
-                android:paddingBottom="@dimen/main_lastTransaction_padding"
-                android:paddingLeft="@dimen/main_LastTransaction_paddingLeft"/>
+                android:paddingTop="@dimen/main_lastTransaction_padding"/>
             <TextView
                 android:text="Indomaret"
                 android:id="@+id/main_textview_history_name3"
-                android:layout_width="wrap_content"
+                android:layout_width="185dp"
                 android:layout_height="wrap_content"
                 android:paddingTop="@dimen/main_lastTransaction_padding"
-                android:paddingBottom="@dimen/main_lastTransaction_padding"
                 android:textColor="@color/textWhite"
                 android:textSize="15sp"
                 android:width="160dp"
                 android:singleLine="true"
-                android:layout_alignLeft="@+id/main_history_image_topup"
-                android:layout_marginLeft="45dp"
-                android:layout_marginRight="88dp" />
+                android:layout_toRightOf="@+id/main_history_image_topup"
+                android:layout_marginLeft="10dp" />
 
             <LinearLayout
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                android:paddingRight="20dp">
+                android:layout_alignParentRight="true">
                 <TextView
                     android:text="Rp 27.400"
                     android:id="@+id/main_textview_history_total3"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:paddingTop="5dp"
-                    android:paddingBottom="0dp"
                     android:textColor="@color/textWhite"
                     android:textSize="12sp"
-                    android:layout_gravity="right"
-                    android:gravity="right"
-                    android:width="120dp" />
+                    android:layout_gravity="right" />
                 <TextView
                     android:text="20 OCT 2015"
                     android:id="@+id/main_textview_history_date3"
@@ -209,9 +189,7 @@
                     android:paddingBottom="5dp"
                     android:textColor="@color/textWhite"
                     android:textSize="10sp"
-                    android:layout_gravity="right"
-                    android:gravity="right"
-                    android:width="120dp" />
+                    android:layout_gravity="right"/>
             </LinearLayout>
 
         </RelativeLayout>

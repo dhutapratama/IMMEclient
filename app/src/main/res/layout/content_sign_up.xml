@@ -112,7 +112,7 @@
                     android:id="@+id/sign_up_edittext_phone_number"
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
-                    android:inputType="number"
+                    android:inputType="phone"
                     android:hint="Phone number"
                     android:textSize="15sp"/>
             </android.support.design.widget.TextInputLayout>
