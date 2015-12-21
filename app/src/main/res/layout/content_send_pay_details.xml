@@ -100,7 +100,10 @@
 
         </LinearLayout>
 
-        <include layout="@layout/last_transaction_payment" android:layout_width="fill_parent" android:layout_height="wrap_content"></include>
+        <include layout="@layout/last_transaction_payment"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent">
+        </include>
 
     </LinearLayout>
 

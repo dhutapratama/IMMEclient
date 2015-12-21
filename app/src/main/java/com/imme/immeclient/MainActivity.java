@@ -1,14 +1,17 @@
 package com.imme.immeclient;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.Typeface;
+import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.StrictMode;
 import android.support.v7.app.ActionBar;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -18,34 +21,37 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.AdapterView;
 import android.widget.ImageButton;
-import android.widget.ListView;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.zxing.integration.android.IntentIntegrator;
+import com.google.zxing.integration.android.IntentResult;
 import com.readystatesoftware.systembartint.SystemBarTintManager;
 
 import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
+import java.net.URLEncoder;
 import java.text.NumberFormat;
 import java.util.Locale;
 
 import org.json.JSONException;
 import org.json.JSONObject;
-import com.imme.immeclient.WriteReadFile;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
     Intent intents = new Intent("com.imme.immeclient.AccountActivity");
-
+    TextView main_textview_balance_value;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
@@ -56,11 +62,10 @@ public class MainActivity extends AppCompatActivity
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.KITKAT) {
+        if (Build.VERSION.SDK_INT == Build.VERSION_CODES.KITKAT) {
             toolbar.setPadding(0, getStatusBarHeight(), 0, 0);
             toolbar.getLayoutParams().height = toolbar.getLayoutParams().height + getStatusBarHeight();
         }
-
         // Start Font
         Typeface hnLight = Typeface.createFromAsset(getAssets(),
                 "fonts/HelveticaNeue-Light.otf");
@@ -74,7 +79,7 @@ public class MainActivity extends AppCompatActivity
         TextView main_textview_rp = (TextView) findViewById(R.id.main_textview_rp);
         main_textview_rp.setTypeface(hnLight);
 
-        TextView main_textview_balance_value = (TextView) findViewById(R.id.main_textview_balance_value);
+        main_textview_balance_value = (TextView) findViewById(R.id.main_textview_balance_value);
         main_textview_balance_value.setTypeface(hbqLight);
 
         TextView main_textview_last_transaction = (TextView) findViewById(R.id.main_textview_last_transaction);
@@ -134,6 +139,23 @@ public class MainActivity extends AppCompatActivity
         String formated_money = NumberFormat.getNumberInstance(Locale.GERMANY).format(GlobalVariable.MONEY_MAIN_BALANCE);
         main_textview_balance_value.setText(formated_money);
 
+        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        View header = LayoutInflater.from(this).inflate(R.layout.nav_header_main, null);
+        navigationView.addHeaderView(header);
+        TextView full_name = (TextView) header.findViewById(R.id.full_name);
+        TextView verified_status = (TextView) header.findViewById(R.id.verified_status);
+        ImageView verified_icon = (ImageView) header.findViewById(R.id.verified_icon);
+
+        full_name.setText(GlobalVariable.CUSTOMER_FULL_NAME);
+        //Toast.makeText(this, GlobalVariable.CUSTOMER_FULL_NAME, Toast.LENGTH_LONG).show();
+        if (GlobalVariable.CUSTOMER_IS_VERIFIED_EMAIL.equals("true") && GlobalVariable.CUSTOMER_IS_VERIFIED_PHONE.equals("true")) {
+            verified_status.setText("Verified");
+            verified_icon.setVisibility(View.VISIBLE);
+        } else {
+            verified_status.setText("Not Verified");
+            verified_icon.setVisibility(View.GONE);
+        }
+
         // Button Action
         ImageButton main_button_send_pay = (ImageButton) findViewById(R.id.main_button_send_pay);
         main_button_send_pay.setOnClickListener(new View.OnClickListener() {
@@ -148,7 +170,7 @@ public class MainActivity extends AppCompatActivity
         main_button_receive.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent("com.imme.immeclient.ReceiveActivity");
+                Intent intent = new Intent(MainActivity.this, ReceiveActivity.class);
                 startActivity(intent);
             }
         });
@@ -166,6 +188,7 @@ public class MainActivity extends AppCompatActivity
                 integrator.initiateScan();
             }
         });
+
 
         RelativeLayout last_transaction_1 = (RelativeLayout) findViewById(R.id.last_transaction_1);
         last_transaction_1.setOnClickListener(new View.OnClickListener() {
@@ -198,12 +221,14 @@ public class MainActivity extends AppCompatActivity
             }
         });
 
-
-
-        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
-        navigationView.setNavigationItemSelectedListener(this);
+        /*try {
+            GetImage.productLookup();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }*/
 
     }
+
 
     @Override
     public void onBackPressed() {
@@ -224,6 +249,7 @@ public class MainActivity extends AppCompatActivity
         getMenuInflater().inflate(R.menu.main, menu);
         return true;
     }
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle action bar item clicks here. The action bar will
@@ -232,6 +258,7 @@ public class MainActivity extends AppCompatActivity
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
+        /*
         if (id == R.id.nav_user_agreement) {
             Intent intent = new Intent("com.imme.immeclient.UserAgreementActivity");
             startActivity(intent);
@@ -242,17 +269,18 @@ public class MainActivity extends AppCompatActivity
             startActivity(intent);
             return true;
         }
-        //else if (id == R.id.nav_help_support) {
-          //  Intent intent = new Intent("com.imme.immeclient.HelpAndSupportActivity");
-            //startActivity(intent);
-            //return true;
-
+        else if (id == R.id.nav_help_support) {
+           Intent intent = new Intent("com.imme.immeclient.HelpAndSupportActivity");
+            startActivity(intent);
+            return true;
+        }
         else if (id == R.id.nav_help_support) {
             Intent intent = new Intent("com.imme.immeclient.HelpAndSupportActivity");
             startActivity(intent);
             return true;
         }
-        else if (id == R.id.nav_feedback) {
+        */
+        if (id == R.id.nav_feedback) {
             Intent intent = new Intent("com.imme.immeclient.FeedbackActivity");
             startActivity(intent);
             return true;
@@ -268,7 +296,8 @@ public class MainActivity extends AppCompatActivity
             } catch (JSONException e) {
                 e.printStackTrace();
             }
-            Intent intent = new Intent("com.imme.immeclient.SignInActivity");
+            Intent intent = new Intent(MainActivity.this, SignInActivity.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
             startActivity(intent);
             return true;
         }
@@ -325,6 +354,71 @@ public class MainActivity extends AppCompatActivity
         return result;
     }
 
+    String voucher_code = new String();
+    Boolean error_status = false;
+    String error_message = null;
+    private ProgressDialog loading = null;
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        IntentResult result = IntentIntegrator.parseActivityResult(requestCode, resultCode, data);
+        voucher_code = result.getContents();
+        if(result != null) {
+            if(resultCode != 0) {
+                loading = ProgressDialog.show(MainActivity.this, "", "Validating voucher...", true, true);
+                new voucher_check().execute();
+            }
+        } else {
+            // This is important, otherwise the result will not be passed to the fragment
+            super.onActivityResult(requestCode, resultCode, data);
+        }
+    }
+
+    private class voucher_check extends AsyncTask<String, Void, Object> {
+        protected Object doInBackground(String... args) {
+            try {
+                voucherCheck();
+            } catch (JSONException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            return null;
+        }
+
+        protected void onPostExecute(Object result) {
+            if (MainActivity.this.loading != null) {
+                MainActivity.this.loading.dismiss();
+            }
+            if (error_status) {
+                Toast.makeText(MainActivity.this, error_message, Toast.LENGTH_LONG).show();
+            } else {
+                String formated_money = NumberFormat.getNumberInstance(Locale.GERMANY).format(GlobalVariable.MONEY_MAIN_BALANCE);
+                main_textview_balance_value.setText(formated_money);
+
+                Intent intent = new Intent("com.imme.immeclient.Deposit");
+                startActivity(intent);
+            }
+        }
+    }
+
+    private boolean voucherCheck() throws IOException, JSONException {
+        String postData ="session_key=" + URLEncoder.encode(GlobalVariable.SECURITY_SESSION_KEY, "UTF-8")
+                + "&voucher_code=" + URLEncoder.encode(voucher_code, "UTF-8");
+        JSONObject serviceResult = WebServiceClient.postRequest(GlobalVariable.DISTRIBUTOR_SERVER + "deposit", postData);
+
+        if (serviceResult.getBoolean("error")){
+            error_status = true;
+            error_message = serviceResult.getString("message");
+        } else {
+            // VARIABLE SET
+            error_status = false;
+            GlobalVariable.DEPOSIT_AMOUNT = Integer.parseInt(serviceResult.getString("deposit_amount"));
+            GlobalVariable.MONEY_MAIN_BALANCE = Integer.parseInt(serviceResult.getString("balance"));
+            commit();
+        }
+        return serviceResult.getBoolean("error");
+    }
+
     public void writeFile(String varname, String data) {
         try {
             OutputStreamWriter outputStreamWriter = new OutputStreamWriter(openFileOutput(varname, Context.MODE_PRIVATE));
@@ -376,6 +470,7 @@ public class MainActivity extends AppCompatActivity
         serverData.put("otp_key", "OTP_KEY");
 
         // Security Data
+        securityData.put("imme_algorithm", "IMME_ALGORITHM");
         securityData.put("tba_algorithm", "TBA_ALGORITHM");
         securityData.put("cba_algorithm", "CBA_ALGORITHM");
         securityData.put("cba_counter", "CBA_COUNTER");
@@ -391,8 +486,8 @@ public class MainActivity extends AppCompatActivity
         customerData.put("phone_number", "PHONE_NUMBER");
         customerData.put("idcard_number", "IDCARD_NUMBER");
         customerData.put("idcard_type", "IDCARD_TYPE");
-        customerData.put("is_verivied_email", "false");
-        customerData.put("is_verivied_phone", "false");
+        customerData.put("is_verified_email", "false");
+        customerData.put("is_verified_phone", "false");
 
         // Money Data
         moneyData.put("main_balance", "0");
@@ -401,7 +496,8 @@ public class MainActivity extends AppCompatActivity
         moneyData.put("transaction_code", "0");
 
         // App Data
-        appData.put("first_time_app", "true");
+
+        appData.put("first_time_app", "false");
         appData.put("login_status", "false");
         appData.put("client_version","1.0.0");
 
@@ -450,11 +546,21 @@ public class MainActivity extends AppCompatActivity
         GlobalVariable.MONEY_MAIN_BALANCE = Integer.parseInt(moneyData.getString("main_balance"));
         GlobalVariable.MONEY_SEND_AMOUNT = Integer.parseInt(moneyData.getString("send_ammount"));
         GlobalVariable.MONEY_REQUEST_AMOUNT = Integer.parseInt(moneyData.getString("request_amount"));
-        GlobalVariable.MONEY_TRANSACTION_CODE = customerData.getString("transaction_code");
+        GlobalVariable.MONEY_TRANSACTION_CODE = moneyData.getString("transaction_code");
 
         // Money Data
         GlobalVariable.APP_FIRST_TIME_APP = appData.getString("first_time_app");
         GlobalVariable.APP_LOGIN_STATUS = appData.getString("login_status");
         GlobalVariable.APP_CLIENT_VERSION = appData.getString("client_version");
+    }
+
+    private void commit() throws JSONException {
+        String moneyContent = readFile(GlobalVariable.FILE_MONEY);
+        JSONObject moneyData = new JSONObject(moneyContent);
+
+        // Money Data
+        moneyData.put("main_balance", Integer.toString(GlobalVariable.MONEY_MAIN_BALANCE));
+
+        writeFile(GlobalVariable.FILE_MONEY, moneyData.toString());
     }
 }

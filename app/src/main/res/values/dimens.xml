@@ -45,5 +45,10 @@
     <dimen name="account_rp_paddingBottom">20dp</dimen>
     <dimen name="account_rp_paddingRight">5dp</dimen>
 
+    <!-- nav_header_main -->
+    <dimen name="user_image_margin_top">50dp</dimen>
+
+    <!-- Main Feature -->
+    <dimen name="hscroll_main_feature_padding">24dp</dimen>
 
 </resources>

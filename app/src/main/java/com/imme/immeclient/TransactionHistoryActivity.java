@@ -1,6 +1,7 @@
 package com.imme.immeclient;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -10,6 +11,8 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
+import com.readystatesoftware.systembartint.SystemBarTintManager;
+
 public class TransactionHistoryActivity extends AppCompatActivity {
 
     @Override
@@ -18,7 +21,10 @@ public class TransactionHistoryActivity extends AppCompatActivity {
         setContentView(R.layout.activity_transaction_history);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
+        SystemBarTintManager tintManager = new SystemBarTintManager(this);
+        tintManager.setStatusBarTintEnabled(true);
+        tintManager.setNavigationBarTintEnabled(true);
+        tintManager.setTintColor(Color.parseColor("#FF249962"));
     }
 
     @Override

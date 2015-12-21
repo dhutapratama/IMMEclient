@@ -4,12 +4,14 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.app.Activity;
+import android.os.CountDownTimer;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.readystatesoftware.systembartint.SystemBarTintManager;
@@ -17,6 +19,8 @@ import com.readystatesoftware.systembartint.SystemBarTintManager;
 import org.json.JSONException;
 
 import java.io.IOException;
+import java.text.NumberFormat;
+import java.util.Locale;
 
 public class SendPayPersonalDetail extends AppCompatActivity {
 
@@ -26,11 +30,7 @@ public class SendPayPersonalDetail extends AppCompatActivity {
         setContentView(R.layout.activity_send_pay_personal_detail);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setTitle("");
-        getSupportActionBar().setDisplayUseLogoEnabled(true);
-        getSupportActionBar().setLogo(R.mipmap.imme_logo);
         SystemBarTintManager tintManager = new SystemBarTintManager(this);
         tintManager.setStatusBarTintEnabled(true);
         tintManager.setNavigationBarTintEnabled(true);
@@ -38,13 +38,31 @@ public class SendPayPersonalDetail extends AppCompatActivity {
 
         TextView personal_name = (TextView) findViewById(R.id.personal_name);
         TextView personal_balance = (TextView) findViewById(R.id.personal_balance);
+        TextView main_balance = (TextView) findViewById(R.id.send_main_balance);
 
         personal_name.setText(GlobalVariable.PAY_RECIPIENT_NAME);
-        personal_balance.setText(GlobalVariable.PAY_AMOUNT);
+        String formated_money = NumberFormat.getNumberInstance(Locale.GERMANY).format(Integer.parseInt(GlobalVariable.PAY_AMOUNT));
+        personal_balance.setText("Rp " + formated_money);
+        formated_money = NumberFormat.getNumberInstance(Locale.GERMANY).format(GlobalVariable.MONEY_MAIN_BALANCE);
+        main_balance.setText(formated_money);
+
+        final TextView time_out = (TextView) findViewById(R.id.personal_time_out);
+        final CountDownTimer count_down_timer = new CountDownTimer(60000, 1000) {
+            public void onTick(long millisUntilFinished) {
+                time_out.setText("Cancel in " + millisUntilFinished / 1000L);
+            }
+
+            public void onFinish() {
+                Intent intent = new Intent(SendPayPersonalDetail.this, MainActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(intent);
+            }
+        }.start();
 
         Button btn_personal_send = (Button) findViewById(R.id.btn_personal_send);
         btn_personal_send.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
+                count_down_timer.cancel();
                 Intent intentView = new Intent("com.imme.immeclient.PinActivity");
                 startActivity(intentView);
             }

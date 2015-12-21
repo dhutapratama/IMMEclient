@@ -1,0 +1,7 @@
+<resources>
+    <!-- ALL PHONE -->
+    <dimen name="activity_horizontal_margin">16dp</dimen>
+
+    <!-- nav_header_main -->
+    <dimen name="user_image_margin_top">5dp</dimen>
+</resources>

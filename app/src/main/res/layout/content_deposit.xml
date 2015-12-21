@@ -9,8 +9,8 @@ android:paddingRight="@dimen/zero"
 android:paddingTop="@dimen/zero"
 android:paddingBottom="@dimen/zero"
 app:layout_behavior="@string/appbar_scrolling_view_behavior"
-tools:showIn="@layout/activity_personal_send"
-tools:context="com.imme.immeclient.SendPayPersonalDetail"
+tools:showIn="@layout/activity_deposit"
+tools:context="com.imme.immeclient.Deposit"
 android:id="@+id/sppd_layout">
 
 <LinearLayout
@@ -52,7 +52,7 @@ android:id="@+id/sppd_layout">
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:textColor="@color/textWhite"
-            android:id="@+id/send_main_balance"
+            android:id="@+id/deposit_main_balance"
             android:textSize="40sp"
             android:layout_gravity="center_horizontal"
             android:layout_marginBottom="15dp"/>
@@ -70,40 +70,21 @@ android:id="@+id/sppd_layout">
         <TextView
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:text="success transfer money to :"
-            android:id="@+id/send_anouncement"
-            android:layout_below="@+id/personal_name"
+            android:text="Deposit Success"
+            android:id="@+id/vouncher_anouncement"
             android:gravity="center"
             android:textColor="@color/textWhite"
             android:textSize="20dp"
-            android:paddingBottom="30dp"/>
-
-        <com.imme.immeclient.MLRoundedImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@mipmap/ic_launcher"
-            android:id="@+id/sender_pic"
-            />
+            android:paddingBottom="10dp"/>
 
         <TextView
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:text="[RECEIVER_NAME]"
-            android:id="@+id/personal_name"
-            android:textColor="@color/textWhite"
-            android:gravity="center"
-            android:textSize="25dp"
-            android:paddingTop="20dp"/>
-
-        <TextView
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:text="[SEND_AMOUNT]"
-            android:id="@+id/personal_balance"
+            android:text="[VOUCHER_AMOUNT]"
+            android:id="@+id/voucher_amount"
             android:gravity="center"
             android:textColor="@color/textWhite"
-            android:textSize="20dp"/>
-
+            android:textSize="30dp"/>
     </LinearLayout>
 
 </LinearLayout>

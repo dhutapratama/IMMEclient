@@ -11,7 +11,7 @@ import java.util.Enumeration;
  */
 public class GlobalVariable {
     // SERVER
-    public static final String DISTRIBUTOR_SERVER = "http://api1.imme.asia/";
+    public static final String DISTRIBUTOR_SERVER = "http://api3.imme.asia/";
     public static final String ACK_CODE = "5GwcTzO0ODM6eSV3s66PJjeedlEvxWc9";
     public static String otp_key_generator () {
         long unixTime = System.currentTimeMillis() / 1000L;
@@ -71,4 +71,7 @@ public class GlobalVariable {
     public static String PAY_RECIPIENT_NAME = "";
     public static String PAY_AMOUNT = "";
     public static String PAY_APPLY_CODE = "";
+    public static String RECEIVE_SENDER_NAME = "";
+    public static String RECEIVE_SENDER_PICTURE = "";
+    public static int DEPOSIT_AMOUNT = 0;
 }

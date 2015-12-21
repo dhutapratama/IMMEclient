@@ -12,13 +12,11 @@
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
         <item name="android:icon">@drawable/transparent_icon</item>
-        <item name="android:windowTranslucentStatus">true</item>
     </style>
 
     <style name="AppTheme.NoActionBar">
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
-        <item name="android:windowTranslucentStatus">true</item>
     </style>
 
     // The Blue
@@ -27,7 +25,6 @@
         <item name="colorPrimary">#00aeff</item>
         <item name="colorPrimaryDark">#0f84b9</item>
         <item name="colorAccent">@color/colorPrimaryDark</item>
-        <item name="android:windowTranslucentStatus">true</item>
     </style>
 
     <style name="AppThemeBlue.NoActionBar">
@@ -36,7 +33,6 @@
         <item name="windowNoTitle">true</item>
         <item name="android:textColorPrimary">@color/textWhite</item>
         <item name="android:textColorSecondary">@color/textWhite</item>
-        <item name="android:windowTranslucentStatus">true</item>
     </style>
 
     <style name="AppThemeBlue.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar">
@@ -50,7 +46,6 @@
         <item name="colorPrimary">#17b882</item>
         <item name="colorPrimaryDark">#0d8967</item>
         <item name="colorAccent">#2bb673</item>
-        <item name="android:windowTranslucentStatus">true</item>
     </style>
 
     <style name="AppThemeGreen.NoActionBar">
@@ -59,7 +54,6 @@
         <item name="windowNoTitle">true</item>
         <item name="android:textColorPrimary">@color/textWhite</item>
         <item name="android:textColorSecondary">#0d8967</item>
-        <item name="android:windowTranslucentStatus">true</item>
     </style>
 
     <style name="AppThemeGreen.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar">

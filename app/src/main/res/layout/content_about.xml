@@ -4,104 +4,56 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
-    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="5dp"
+    android:paddingRight="5dp"
+    android:paddingTop="5dp"
+    android:paddingBottom="5dp"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:showIn="@layout/activity_about"
     tools:context="com.imme.immeclient.AboutActivity"
     android:orientation="vertical"
-    android:background="@mipmap/about_bg">
+    android:background="#0099e4"
+    android:gravity="center">
 
-    <LinearLayout
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
-
-        <LinearLayout
-            android:layout_width="fill_parent"
+    <TextView
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/integrated_mobile"
-            android:paddingTop="170dp">
+            android:gravity="center_horizontal"
+            android:text="IMME Piggy Bank"
+            android:textColor="#ffffff"
+            android:textSize="9pt"
+            android:textStyle="bold"/>
 
-            <TextView
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center_horizontal"
-                android:text="Integrated Mobile Money Exchange"
-                android:textColor="#ffffff"
-                android:textSize="9pt"
-                android:textStyle="bold"
-                android:padding="4dp"/>
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="fill_parent"
+        <TextView
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/version"
-            android:gravity="center"
-            android:paddingTop="10dp">
+            android:text="Version 1.0"
+            android:textSize="8pt"
+            android:textColor="#ffffff"
+            android:layout_gravity="center_horizontal" />
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Version 1.1"
-                android:textSize="8pt"
-                android:textColor="#ffffff"
-                android:layout_gravity="center_horizontal" />
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="fill_parent"
+        <ImageView
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/logo_imme"
-            android:gravity="center"
-            android:paddingTop="20dp">
+            android:src="@mipmap/about_logo_imme"
+            android:paddingTop="20dp"
+            android:layout_gravity="center"/>
 
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@mipmap/about_logo_imme"/>
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="fill_parent"
+        <TextView
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/inc"
-            android:gravity="center"
-            android:paddingTop="20dp">
+            android:text="©2015 IMME Indonesia"
+            android:textSize="8pt"
+            android:textColor="#ffffff"
+            android:layout_gravity="center_horizontal"
+            android:paddingTop="20dp" />
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="© 2013-2015 IMME Inc."
-                android:textSize="8pt"
-                android:textColor="#ffffff"
-                android:layout_gravity="center_horizontal" />
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="fill_parent"
+        <TextView
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/reserved"
-            android:gravity="center"
-            android:paddingTop="10dp">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="All right reserved."
-                android:textSize="8pt"
-                android:textColor="#ffffff"
-                android:layout_gravity="center_horizontal" />
-
-        </LinearLayout>
-
-    </LinearLayout>
+            android:text="All right reserved"
+            android:textSize="13dp"
+            android:textColor="#ffffff"
+            android:layout_gravity="center_horizontal" />
 
 </LinearLayout>

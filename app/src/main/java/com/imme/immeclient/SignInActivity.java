@@ -1,9 +1,11 @@
 package com.imme.immeclient;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.Typeface;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.StrictMode;
 import android.support.v4.view.GravityCompat;
@@ -30,10 +32,14 @@ import java.net.InetAddress;
 import java.net.NetworkInterface;
 import java.net.URLEncoder;
 import java.util.Enumeration;
+import java.util.Objects;
 
 public class SignInActivity extends AppCompatActivity {
-    public String email = new String();
-    public String password = new String();
+    private String email = null;
+    private String password = null;
+    private ProgressDialog loading = null;
+    Boolean login_error = false;
+    private String message = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,29 +48,14 @@ public class SignInActivity extends AppCompatActivity {
             startActivity(new Intent(SignInActivity.this, WelcomeScreen.class));
             overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
         }
-
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
         StrictMode.setThreadPolicy(policy);
-
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign_in);
-
         SystemBarTintManager tintManager = new SystemBarTintManager(this);
-        // enable status bar tint
         tintManager.setStatusBarTintEnabled(true);
-        // enable navigation bar tint
         tintManager.setNavigationBarTintEnabled(true);
-        // set a custom tint color for all system bars
         tintManager.setTintColor(Color.parseColor("#ff0f99da"));
-
-        //TextView sign_in_textview_sign_up = (TextView) findViewById(R.id.sign_in_textview_sign_up);
-        //sign_in_textview_sign_up.setOnClickListener(new View.OnClickListener() {
-        //@Override
-        //public void onClick(View view) {
-        //   Intent intent = new Intent("com.imme.immeclient.SignUpActivity");
-        //    startActivity(intent);
-        // }
-        //});
 
         // Start Font
         Typeface hnLight = Typeface.createFromAsset(getAssets(),
@@ -85,9 +76,6 @@ public class SignInActivity extends AppCompatActivity {
         final TextView sign_in_button_sign_up = (TextView) findViewById(R.id.sign_in_button_sign_up);
         sign_in_button_sign_up.setTypeface(hbqLight);
 
-        final TextView dont_have_account = (TextView) findViewById(R.id.dont_have_account);
-        dont_have_account.setTypeface(hbqLight);
-
         // sign up destination
         sign_in_button_sign_up.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -100,29 +88,24 @@ public class SignInActivity extends AppCompatActivity {
         // Sign in button action
         sign_in_button_sign_in.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                try {
-                    email = sign_in_edittext_email.getText().toString();
-                    password = sign_in_edittext_password.getText().toString();
-                    doLogin();
-                } catch (JSONException e) {
-                    Log.e("JSONException", e.toString());
-                    e.printStackTrace();
-                } catch (IOException e) {
-                    Log.e("IOException", e.toString());
-                    e.printStackTrace();
-                }
+            email = sign_in_edittext_email.getText().toString();
+            password = sign_in_edittext_password.getText().toString();
+            loading = ProgressDialog.show(SignInActivity.this, "", "Sign in...", true, true);
+            new loginTask().execute();
 
-                if (GlobalVariable.APP_LOGIN_STATUS.equals("true")) {
-                    Intent intent = new Intent(SignInActivity.this, MainActivity.class);
-                    startActivity(intent);
-                }
+            /*if (GlobalVariable.APP_LOGIN_STATUS.equals("true")) {
+                Intent intent = new Intent(SignInActivity.this, MainActivity.class);
+                startActivity(intent);
+            } else {
+                //Toast.makeText(SignInActivity.this, message, Toast.LENGTH_LONG).show();
+            }*/
+
             }
         });
     }
 
     @Override
     public void onBackPressed() {
-        moveTaskToBack(true);
         android.os.Process.killProcess(android.os.Process.myPid());
         System.exit(1);
     }
@@ -170,9 +153,7 @@ public class SignInActivity extends AppCompatActivity {
                 + "&password=" + URLEncoder.encode(password, "UTF-8");
         JSONObject serviceResult = WebServiceClient.postRequest(GlobalVariable.DISTRIBUTOR_SERVER + "login", postData);
 
-        if (serviceResult.getBoolean("error")){
-            Toast.makeText(this, serviceResult.getString("message"), Toast.LENGTH_LONG).show();
-        } else {
+        if (!serviceResult.getBoolean("error")){
             // SECURITY GlobalVariable SET
             // Security
             GlobalVariable.SECURITY_IMME_ALGORITHM = serviceResult.getString("imme_algorithm");
@@ -209,6 +190,10 @@ public class SignInActivity extends AppCompatActivity {
             GlobalVariable.MONEY_MAIN_BALANCE = Integer.parseInt(customerData.getString("balance"));
 
             commit();
+            login_error = false;
+        } else {
+            login_error = true;
+            message = serviceResult.getString("message");
         }
     }
 
@@ -251,5 +236,31 @@ public class SignInActivity extends AppCompatActivity {
         writeFile(GlobalVariable.FILE_CUSTOMER, customerData.toString());
         writeFile(GlobalVariable.FILE_MONEY, moneyData.toString());
         writeFile(GlobalVariable.FILE_APP, appData.toString());
+    }
+
+    private class loginTask extends AsyncTask<String, Void, Object> {
+        protected Object doInBackground(String... args) {
+            Log.i("MyApp", "Background thread starting");
+            try {
+                doLogin();
+            } catch (JSONException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            return null;
+        }
+
+        protected void onPostExecute(Object result) {
+            if (SignInActivity.this.loading != null) {
+                SignInActivity.this.loading.dismiss();
+            }
+            if (login_error) {
+                Toast.makeText(SignInActivity.this, message, Toast.LENGTH_LONG).show();
+            } else {
+                Intent intent = new Intent(SignInActivity.this, MainActivity.class);
+                startActivity(intent);
+            }
+        }
     }
 }

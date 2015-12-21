@@ -5,10 +5,10 @@
     <color name="colorAccent">#03B0FF</color>
 
     <color name="colorPrimaryGreen">#18B982</color>
-    <color name="colorPrimaryBlue">#00aeff</color>
+    <color name="colorPrimaryBlue">#03B0FF</color>
 
     <color name="colorBlack">#000000</color>
-    <color name="colorWhite">#ffffff</color>
+    <color name="colorWhite">#FFFFFF</color>
 
     <color name="textWhite">#FFFFFF</color>
     <color name="textBlack">#000000</color>
@@ -21,7 +21,7 @@
     <color name="black_overlay">#66000000</color>
 
     <!-- Slide -->
-    <color name="text_selected">#888</color>
-    <color name="transparent_bg">#fff</color>
+    <color name="text_selected">#888888</color>
+    <color name="transparent_bg">#FFFFFF</color>
 
 </resources>

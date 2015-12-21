@@ -16,7 +16,8 @@
         android:layout_height="fill_parent"
         android:id="@+id/pin"
         android:background="#0E99DA"
-        android:layout_above="@+id/numPad">
+        android:layout_above="@+id/numPad"
+        android:gravity="center">
 
         <TextView
             android:layout_width="fill_parent"
@@ -25,8 +26,7 @@
             android:id="@+id/textView"
             android:gravity="center"
             android:textColor="@color/textWhite"
-            android:paddingTop="80dp"
-            android:paddingBottom="65dp"
+            android:paddingBottom="40dp"
             android:textSize="25dp"/>
 
         <LinearLayout
