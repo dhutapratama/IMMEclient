@@ -81,7 +81,7 @@
     <style name="AppThemeRed.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 
     <!-- Theme for Green Colour -->
-    <style name="AppThemeGreen" parent="Theme.AppCompat.Light">
+    <style name="AppThemeGreen" parent="Theme.AppCompat">
         <!-- Customize your theme here. -->
 
         <!-- Custom for Status Bar-->
@@ -96,10 +96,10 @@
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
         <item name="android:textColorPrimary">@color/textWhite</item>
-        <item name="android:textColorSecondary">@color/textWhite</item>
+        <item name="android:textColorSecondary">#0d8967</item>
     </style>
 
-    <style name="AppThemeGreen.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar"></style>
+    <style name="AppThemeGreen.AppBarOverlay" parent="ThemeOverlay.AppCompat.ActionBar"></style>
 
     <style name="AppThemeGreen.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 

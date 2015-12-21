@@ -1,10 +1,13 @@
 <resources>
     <!-- Xiaomi Redmi 2 API 19 -->
-    <dimen name="activity_horizontal_margin">64dp</dimen>
+    <dimen name="activity_horizontal_margin">16dp</dimen>
 
     <!-- Main Feature -->
     <dimen name="hscroll_main_feature_padding">24dp</dimen>
 
     <!-- nav_header_main -->
     <dimen name="user_image_margin_top">40dp</dimen>
+
+    <!-- Receive QR -->
+    <dimen name="receive_qr_wh">200dp</dimen>
 </resources>

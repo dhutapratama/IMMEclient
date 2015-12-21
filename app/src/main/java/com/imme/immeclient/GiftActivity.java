@@ -19,15 +19,10 @@ public class GiftActivity extends AppCompatActivity {
         setContentView(R.layout.activity_gift);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-
         SystemBarTintManager tintManager = new SystemBarTintManager(this);
-        // enable status bar tint
         tintManager.setStatusBarTintEnabled(true);
-        // enable navigation bar tint
         tintManager.setNavigationBarTintEnabled(true);
-        // set a custom tint color for all system bars
         tintManager.setTintColor(Color.parseColor("#FF03B0FF"));
     }
 

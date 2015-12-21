@@ -90,14 +90,7 @@ public class SendPayActivity extends AppCompatActivity {
         IntentResult result = IntentIntegrator.parseActivityResult(requestCode, resultCode, data);
         transaction_code = result.getContents();
         if(result != null) {
-            if(resultCode == 0) {
-                //Toast.makeText(this, "Cancelled", Toast.LENGTH_LONG).show();
-                Intent intentView = new Intent("com.imme.immeclient.Send_pay_details");
-                startActivity(intentView);
-            } else {
-                //Toast.makeText(this, transaction_code, Toast.LENGTH_LONG).show();
-                    //String formated_money = NumberFormat.getNumberInstance(Locale.GERMANY).format(balance_int);
-                    //main_balance_value.setText(formated_money);
+            if(resultCode != 0) {
                 try {
                     if (!payCheck()) {
                         Intent intentView = new Intent(SendPayActivity.this, SendPayPersonalDetail.class);

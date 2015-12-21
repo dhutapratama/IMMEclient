@@ -11,6 +11,7 @@ import android.os.Bundle;
 import android.os.StrictMode;
 import android.support.v7.app.ActionBar;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -20,11 +21,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.AdapterView;
-import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
-import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -34,7 +32,10 @@ import com.google.zxing.integration.android.IntentResult;
 import com.readystatesoftware.systembartint.SystemBarTintManager;
 
 import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -45,7 +46,6 @@ import java.util.Locale;
 
 import org.json.JSONException;
 import org.json.JSONObject;
-import com.imme.immeclient.WriteReadFile;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -139,6 +139,23 @@ public class MainActivity extends AppCompatActivity
         String formated_money = NumberFormat.getNumberInstance(Locale.GERMANY).format(GlobalVariable.MONEY_MAIN_BALANCE);
         main_textview_balance_value.setText(formated_money);
 
+        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        View header = LayoutInflater.from(this).inflate(R.layout.nav_header_main, null);
+        navigationView.addHeaderView(header);
+        TextView full_name = (TextView) header.findViewById(R.id.full_name);
+        TextView verified_status = (TextView) header.findViewById(R.id.verified_status);
+        ImageView verified_icon = (ImageView) header.findViewById(R.id.verified_icon);
+
+        full_name.setText(GlobalVariable.CUSTOMER_FULL_NAME);
+        //Toast.makeText(this, GlobalVariable.CUSTOMER_FULL_NAME, Toast.LENGTH_LONG).show();
+        if (GlobalVariable.CUSTOMER_IS_VERIFIED_EMAIL.equals("true") && GlobalVariable.CUSTOMER_IS_VERIFIED_PHONE.equals("true")) {
+            verified_status.setText("Verified");
+            verified_icon.setVisibility(View.VISIBLE);
+        } else {
+            verified_status.setText("Not Verified");
+            verified_icon.setVisibility(View.GONE);
+        }
+
         // Button Action
         ImageButton main_button_send_pay = (ImageButton) findViewById(R.id.main_button_send_pay);
         main_button_send_pay.setOnClickListener(new View.OnClickListener() {
@@ -204,12 +221,14 @@ public class MainActivity extends AppCompatActivity
             }
         });
 
-
-
-        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
-        navigationView.setNavigationItemSelectedListener(this);
+        /*try {
+            GetImage.productLookup();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }*/
 
     }
+
 
     @Override
     public void onBackPressed() {
@@ -239,6 +258,7 @@ public class MainActivity extends AppCompatActivity
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
+        /*
         if (id == R.id.nav_user_agreement) {
             Intent intent = new Intent("com.imme.immeclient.UserAgreementActivity");
             startActivity(intent);
@@ -249,17 +269,18 @@ public class MainActivity extends AppCompatActivity
             startActivity(intent);
             return true;
         }
-        //else if (id == R.id.nav_help_support) {
-          //  Intent intent = new Intent("com.imme.immeclient.HelpAndSupportActivity");
-            //startActivity(intent);
-            //return true;
-
+        else if (id == R.id.nav_help_support) {
+           Intent intent = new Intent("com.imme.immeclient.HelpAndSupportActivity");
+            startActivity(intent);
+            return true;
+        }
         else if (id == R.id.nav_help_support) {
             Intent intent = new Intent("com.imme.immeclient.HelpAndSupportActivity");
             startActivity(intent);
             return true;
         }
-        else if (id == R.id.nav_feedback) {
+        */
+        if (id == R.id.nav_feedback) {
             Intent intent = new Intent("com.imme.immeclient.FeedbackActivity");
             startActivity(intent);
             return true;
