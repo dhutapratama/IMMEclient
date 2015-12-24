@@ -1,9 +1,11 @@
 package com.imme.immeclient;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -37,7 +39,10 @@ public class PinActivity extends AppCompatActivity {
     Button button_0, button_1, button_2, button_3, button_4, button_5, button_6, button_7, button_8, button_9;
     ImageButton button_backspace;
     View pin_1, pin_2, pin_3, pin_4;
-
+    ProgressDialog loading;
+    Boolean error_status = false;
+    String error_message = null;
+    Integer error_code = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,18 +50,10 @@ public class PinActivity extends AppCompatActivity {
         setContentView(R.layout.activity_pin);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setTitle("");
-        getSupportActionBar().setDisplayUseLogoEnabled(true);
-        getSupportActionBar().setLogo(R.mipmap.imme_logo);
-
         SystemBarTintManager tintManager = new SystemBarTintManager(this);
-        // enable status bar tint
         tintManager.setStatusBarTintEnabled(true);
-        // enable navigation bar tint
         tintManager.setNavigationBarTintEnabled(true);
-        // set a custom tint color for all system bars
         tintManager.setTintColor(Color.parseColor("#FF03B0FF"));
 
         // Button Action
@@ -181,34 +178,20 @@ public class PinActivity extends AppCompatActivity {
         switch (item.getItemId()) {
             case android.R.id.home:
                 // app icon in action bar clicked; goto parent activity.
-                //this.finish();
-                Intent intent = new Intent(PinActivity.this, MainActivity.class);
-                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                startActivity(intent);
+                this.finish();
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
         }
     }
 
+
     private void text(String string) {
         pin = pin + string;
         if (pin.length() == 4) {
             // API Running
-            try {
-                if (paySend()) {
-                    Intent intent = new Intent(PinActivity.this, MainActivity.class);
-                    intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                    startActivity(intent);
-                }else {
-                    Intent intent = new Intent("com.imme.immeclient.PersonalSend");
-                    startActivity(intent);
-                }
-            } catch (JSONException e) {
-                e.printStackTrace();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+            loading = ProgressDialog.show(PinActivity.this, "", "Validating transfer", false, true);
+            new pin_check().execute();
         }
 
         switch (pin.length()) {
@@ -268,21 +251,59 @@ public class PinActivity extends AppCompatActivity {
         return ret;
     }
 
-    public Boolean paySend() throws JSONException, IOException {
+    private class pin_check extends AsyncTask<String, Void, Object> {
+        protected Object doInBackground(String... args) {
+            try {
+                paySend();
+            } catch (JSONException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            return null;
+        }
+
+        protected void onPostExecute(Object result) {
+            if (PinActivity.this.loading != null) {
+                PinActivity.this.loading.dismiss();
+            }
+            if (error_status) {
+                if (error_code == 113) {
+                    finish();
+                    Toast.makeText(PinActivity.this, error_message + " Please try again", Toast.LENGTH_LONG).show();
+                } else {
+                    Toast.makeText(PinActivity.this, error_message, Toast.LENGTH_LONG).show();
+                    finish();
+                    Intent intent = new Intent(PinActivity.this, MainActivity.class);
+                    intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                    startActivity(intent);
+                }
+
+            } else {
+                finish();
+                Intent intentView = new Intent(getApplicationContext(), PersonalSend.class);
+                startActivity(intentView);
+            }
+        }
+    }
+
+
+    public void paySend() throws JSONException, IOException {
         String postData ="session_key=" + URLEncoder.encode(GlobalVariable.SECURITY_SESSION_KEY, "UTF-8")
                 + "&apply_code=" + URLEncoder.encode(GlobalVariable.PAY_APPLY_CODE, "UTF-8")
                 + "&pin_1=" + URLEncoder.encode(pin, "UTF-8");
         JSONObject serviceResult = WebServiceClient.postRequest(GlobalVariable.DISTRIBUTOR_SERVER + "pay/send", postData);
 
         if (serviceResult.getBoolean("error")){
-            Toast.makeText(this, serviceResult.getString("message"), Toast.LENGTH_LONG).show();
+            error_status = true;
+            error_message = serviceResult.getString("message");
+            error_code = serviceResult.getInt("message");
         } else {
+            error_status = false;
             // Money
             GlobalVariable.MONEY_MAIN_BALANCE = Integer.parseInt(serviceResult.getString("balance"));
-
             commit();
         }
-        return serviceResult.getBoolean("error");
     }
 
     private void commit() throws JSONException {

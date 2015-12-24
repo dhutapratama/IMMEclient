@@ -1,5 +1,6 @@
 package com.imme.immeclient;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -151,13 +152,17 @@ public class WelcomeScreen extends AppCompatActivity {
 
     private void endTutorial() {
         finish();
-        overridePendingTransition(R.anim.abc_fade_in, R.anim.abc_fade_out);
+        Intent intent = new Intent(getApplicationContext(), SignInActivity.class);
+        startActivity(intent);
+        //overridePendingTransition(R.anim.abc_fade_in, R.anim.abc_fade_out);
     }
 
     @Override
     public void onBackPressed() {
         if (pager.getCurrentItem() == 0) {
-            super.onBackPressed();
+            finish();
+            Intent intent = new Intent(getApplicationContext(), SignInActivity.class);
+            startActivity(intent);
         } else {
             pager.setCurrentItem(pager.getCurrentItem() - 1);
         }

@@ -23,7 +23,7 @@
     <string name="main_lastTransaction_send">Send/Pay</string>
     <string name="main_lastTransaction_receive">Receive</string>
     <string name="main_lastTransaction_topup">TopUp</string>
-    <string name="title_activity_pin">PIN</string>
+    <string name="title_activity_pin">Enter PIN 1</string>
     <string name="title_activity_splash_screen">SplashScreen</string>
     <string name="title_activity_security_setting">Security Settings</string>
 
@@ -189,4 +189,5 @@ distribution media, documentation, registration cards, and insertions.</string>
     <string name="title_activity_sign_out">Sign Out</string>
     <string name="title_activity_send_pay_personal_detail">Send Money</string>
     <string name="title_activity_deposit">Deposit</string>
+    <string name="full_name">Full name</string>
 </resources>

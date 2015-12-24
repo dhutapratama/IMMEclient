@@ -11,6 +11,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -46,12 +47,14 @@ public class ReceiveQRCodeActivity extends AppCompatActivity {
     LinearLayout in_transaction;
     ImageView sender_pic;
     CountDownTimer count_down_timer;
+    AsyncTask myAsyncTask;
+    Toolbar toolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_receive_qrcode);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         SystemBarTintManager tintManager = new SystemBarTintManager(this);
@@ -93,15 +96,37 @@ public class ReceiveQRCodeActivity extends AppCompatActivity {
             }
         }.start();
 
-        new check_sender().execute();
-
+        new check_sender().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
     }
 
     @Override
     public void onBackPressed() {
-        Intent intent = new Intent(ReceiveQRCodeActivity.this, MainActivity.class);
-        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        startActivity(intent);
+        if (transfer_notification.getText().equals("Transaction Success")) {
+            finish();
+            Intent intent = new Intent(ReceiveQRCodeActivity.this, MainActivity.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            startActivity(intent);
+        } else {
+            new cancel_receive().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+        }
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                if (transfer_notification.getText().equals("Transaction Success")) {
+                    finish();
+                    Intent intent = new Intent(ReceiveQRCodeActivity.this, MainActivity.class);
+                    intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                    startActivity(intent);
+                } else {
+                    new cancel_receive().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+                }
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
     }
 
     public static Bitmap encodeToQrCode(String text, int width, int height){
@@ -121,47 +146,6 @@ public class ReceiveQRCodeActivity extends AppCompatActivity {
         return bmp;
     }
 
-    private void writeToFile(String varname, String data) {
-        try {
-            OutputStreamWriter outputStreamWriter = new OutputStreamWriter(openFileOutput(varname + ".txt", Context.MODE_PRIVATE));
-            outputStreamWriter.write(data);
-            outputStreamWriter.close();
-        }
-        catch (IOException e) {
-            Log.e("Exception", "File write failed: " + e.toString());
-        }
-    }
-
-    private String readFromFile(String varname) {
-
-        String ret = "";
-
-        try {
-            InputStream inputStream = openFileInput(varname + ".txt");
-
-            if ( inputStream != null ) {
-                InputStreamReader inputStreamReader = new InputStreamReader(inputStream);
-                BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
-                String receiveString = "";
-                StringBuilder stringBuilder = new StringBuilder();
-
-                while ( (receiveString = bufferedReader.readLine()) != null ) {
-                    stringBuilder.append(receiveString);
-                }
-
-                inputStream.close();
-                ret = stringBuilder.toString();
-            }
-        }
-        catch (FileNotFoundException e) {
-            Log.e("MainActivity", "File not found: " + e.toString());
-        } catch (IOException e) {
-            Log.e("MainActivity", "Can not read file: " + e.toString());
-        }
-
-        return ret;
-    }
-
     private class check_sender extends AsyncTask<String, Void, Object> {
         protected Object doInBackground(String... args) {
             try {
@@ -174,24 +158,35 @@ public class ReceiveQRCodeActivity extends AppCompatActivity {
             return null;
         }
 
+        Boolean cancel = false;
         protected void onPostExecute(Object result) {
             if (checkSender_error) {
-                Toast.makeText(ReceiveQRCodeActivity.this, message, Toast.LENGTH_LONG).show();
-                Intent intent = new Intent(ReceiveQRCodeActivity.this, MainActivity.class);
-                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                startActivity(intent);
+                if (!cancel) {
+                    finish();
+                    Toast.makeText(ReceiveQRCodeActivity.this, message, Toast.LENGTH_LONG).show();
+                    Intent intent = new Intent(ReceiveQRCodeActivity.this, MainActivity.class);
+                    intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                    startActivity(intent);
+                }
             } else {
                 count_down_timer.cancel();
                 qrcode.setVisibility(View.GONE);
                 time_out.setVisibility(View.GONE);
+                setSupportActionBar(toolbar);
+                getSupportActionBar().setDisplayHomeAsUpEnabled(false);
 
                 transfer_notification.setVisibility(View.VISIBLE);
                 in_transaction.setVisibility(View.VISIBLE);
                 sender_name.setText(GlobalVariable.RECEIVE_SENDER_NAME);
                 String formated_money = NumberFormat.getNumberInstance(Locale.GERMANY).format(GlobalVariable.MONEY_REQUEST_AMOUNT);
                 receive_amount.setText("Rp " + formated_money);
-                new check_transfered().execute();
+                myAsyncTask = new check_transfered().execute();
             }
+        }
+
+        @Override
+        protected void onCancelled() {
+            cancel = true;
         }
     }
 
@@ -206,21 +201,42 @@ public class ReceiveQRCodeActivity extends AppCompatActivity {
             }
             return null;
         }
-
+        Boolean cancel = false;
         protected void onPostExecute(Object result) {
             if (checkTransfer_error) {
-                Toast.makeText(ReceiveQRCodeActivity.this, message, Toast.LENGTH_LONG).show();
-                Intent intent = new Intent(ReceiveQRCodeActivity.this, MainActivity.class);
-                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                startActivity(intent);
+                if (!cancel) {
+                    Toast.makeText(ReceiveQRCodeActivity.this, message, Toast.LENGTH_LONG).show();
+                    Intent intent = new Intent(ReceiveQRCodeActivity.this, MainActivity.class);
+                    intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                    startActivity(intent);
+                }
             } else {
                 transfer_notification.setText("Transaction Success");
                 String formated_money = NumberFormat.getNumberInstance(Locale.GERMANY).format(GlobalVariable.MONEY_MAIN_BALANCE);
                 receive_main_balance.setText(formated_money);
+                setSupportActionBar(toolbar);
+                getSupportActionBar().setDisplayHomeAsUpEnabled(true);
             }
+        }
+
+        @Override
+        protected void onCancelled() {
+            cancel = true;
         }
     }
 
+    private class cancel_receive extends AsyncTask<String, Void, Object> {
+        protected Object doInBackground(String... args) {
+            try {
+                cancelReceive();
+            } catch (JSONException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            return null;
+        }
+    }
 
     public void writeFile(String varname, String data) {
         try {
@@ -260,21 +276,6 @@ public class ReceiveQRCodeActivity extends AppCompatActivity {
         return ret;
     }
 
-    public void checkTransfered() throws JSONException, IOException {
-        String postData ="session_key=" + URLEncoder.encode(GlobalVariable.SECURITY_SESSION_KEY, "UTF-8")
-                + "&transaction_code=" + URLEncoder.encode(GlobalVariable.MONEY_TRANSACTION_CODE, "UTF-8");
-        JSONObject serviceResult = WebServiceClient.postRequest(GlobalVariable.DISTRIBUTOR_SERVER + "receive/check_transfered", postData);
-
-        if (!serviceResult.getBoolean("error")){
-            // Variable
-            GlobalVariable.MONEY_MAIN_BALANCE = Integer.parseInt(serviceResult.getString("balance"));
-            commit();
-        } else {
-            checkTransfer_error = true;
-            message = serviceResult.getString("message");
-        }
-    }
-
     public void checkSender() throws JSONException, IOException {
         String postData ="session_key=" + URLEncoder.encode(GlobalVariable.SECURITY_SESSION_KEY, "UTF-8")
                 + "&transaction_code=" + URLEncoder.encode(GlobalVariable.MONEY_TRANSACTION_CODE, "UTF-8");
@@ -287,6 +288,31 @@ public class ReceiveQRCodeActivity extends AppCompatActivity {
         } else {
             checkSender_error = true;
             message = serviceResult.getString("message");
+        }
+    }
+
+    public void checkTransfered() throws JSONException, IOException {
+        String postData ="session_key=" + URLEncoder.encode(GlobalVariable.SECURITY_SESSION_KEY, "UTF-8")
+                + "&transaction_code=" + URLEncoder.encode(GlobalVariable.MONEY_TRANSACTION_CODE, "UTF-8");
+        JSONObject serviceResult = WebServiceClient.postRequest(GlobalVariable.DISTRIBUTOR_SERVER + "receive/check_transfered", postData);
+
+        if (!serviceResult.getBoolean("error")) {
+            // Variable
+            GlobalVariable.MONEY_MAIN_BALANCE = Integer.parseInt(serviceResult.getString("balance"));
+            commit();
+        } else {
+            checkTransfer_error = true;
+            message = serviceResult.getString("message");
+        }
+    }
+
+    public void cancelReceive() throws JSONException, IOException {
+        String postData ="session_key=" + URLEncoder.encode(GlobalVariable.SECURITY_SESSION_KEY, "UTF-8")
+                + "&transaction_code=" + URLEncoder.encode(GlobalVariable.MONEY_TRANSACTION_CODE, "UTF-8");
+        JSONObject serviceResult = WebServiceClient.postRequest(GlobalVariable.DISTRIBUTOR_SERVER + "receive/cancel", postData);
+
+        if (!serviceResult.getBoolean("error")){
+            checkSender_error = false;
         }
     }
 
