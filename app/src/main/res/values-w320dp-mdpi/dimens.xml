@@ -1,6 +1,6 @@
 <resources>
     <!-- TIPHONE API 17 -->
-    <dimen name="activity_horizontal_margin">16dp</dimen>
+    <dimen name="activity_horizontal_margin">6dp</dimen>
 
     <!-- Main Feature -->
     <dimen name="hscroll_main_feature_padding">3dp</dimen>

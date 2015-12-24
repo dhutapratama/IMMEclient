@@ -53,7 +53,7 @@
             android:label="@string/title_activity_pin"
             android:parentActivityName=".MainActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.NoActionBar">
+            android:theme="@style/AppThemeBlue.NoActionBar">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.imme.immeclient.MainActivity" />

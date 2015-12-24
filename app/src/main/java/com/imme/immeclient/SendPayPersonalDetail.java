@@ -1,28 +1,33 @@
 package com.imme.immeclient;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Color;
+import android.os.AsyncTask;
 import android.os.Bundle;
-import android.app.Activity;
 import android.os.CountDownTimer;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
-import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.readystatesoftware.systembartint.SystemBarTintManager;
 
 import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.io.IOException;
+import java.net.URLEncoder;
 import java.text.NumberFormat;
 import java.util.Locale;
 
 public class SendPayPersonalDetail extends AppCompatActivity {
+    Boolean error_status = false;
+    String error_message = null;
+    private ProgressDialog loading = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -73,11 +78,7 @@ public class SendPayPersonalDetail extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case android.R.id.home:
-                // app icon in action bar clicked; goto parent activity.
-                //this.finish();
-                Intent intent = new Intent(SendPayPersonalDetail.this, MainActivity.class);
-                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                startActivity(intent);
+                new cancel_pay().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
@@ -86,9 +87,40 @@ public class SendPayPersonalDetail extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        Intent intent = new Intent(SendPayPersonalDetail.this, MainActivity.class);
-        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        startActivity(intent);
+        new cancel_pay().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
     }
 
+    private class cancel_pay extends AsyncTask<String, Void, Object> {
+        protected Object doInBackground(String... args) {
+            try {
+                cancelPay();
+            } catch (JSONException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            return null;
+        }
+
+        protected void onPostExecute(Object result) {
+            if (SendPayPersonalDetail.this.loading != null) {
+                SendPayPersonalDetail.this.loading.dismiss();
+            }
+            Toast.makeText(getApplicationContext(), error_message, Toast.LENGTH_LONG).show();
+            finish();
+        }
+    }
+
+    private void cancelPay() throws IOException, JSONException {
+        String postData ="session_key=" + URLEncoder.encode(GlobalVariable.SECURITY_SESSION_KEY, "UTF-8")
+                + "&apply_code=" + URLEncoder.encode(GlobalVariable.PAY_APPLY_CODE, "UTF-8");
+        JSONObject serviceResult = WebServiceClient.postRequest(GlobalVariable.DISTRIBUTOR_SERVER + "pay/cancel", postData);
+
+        error_message = serviceResult.getString("message");
+        if (serviceResult.getBoolean("error")){
+            error_status = true;
+        } else {
+            error_status = false;
+        }
+    }
 }
