@@ -28,6 +28,7 @@ public class SendPayPersonalDetail extends AppCompatActivity {
     Boolean error_status = false;
     String error_message = null;
     private ProgressDialog loading = null;
+    CountDownTimer count_down_timer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,7 +53,7 @@ public class SendPayPersonalDetail extends AppCompatActivity {
         main_balance.setText(formated_money);
 
         final TextView time_out = (TextView) findViewById(R.id.personal_time_out);
-        final CountDownTimer count_down_timer = new CountDownTimer(60000, 1000) {
+        count_down_timer = new CountDownTimer(60000, 1000) {
             public void onTick(long millisUntilFinished) {
                 time_out.setText("Cancel in " + millisUntilFinished / 1000L);
             }
@@ -106,6 +107,7 @@ public class SendPayPersonalDetail extends AppCompatActivity {
             if (SendPayPersonalDetail.this.loading != null) {
                 SendPayPersonalDetail.this.loading.dismiss();
             }
+            count_down_timer.cancel();
             Toast.makeText(getApplicationContext(), error_message, Toast.LENGTH_LONG).show();
             finish();
         }

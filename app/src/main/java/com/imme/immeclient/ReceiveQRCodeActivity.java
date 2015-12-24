@@ -101,14 +101,28 @@ public class ReceiveQRCodeActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        new cancel_receive().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+        if (transfer_notification.getText().equals("Transaction Success")) {
+            finish();
+            Intent intent = new Intent(ReceiveQRCodeActivity.this, MainActivity.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            startActivity(intent);
+        } else {
+            new cancel_receive().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+        }
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case android.R.id.home:
-                new cancel_receive().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+                if (transfer_notification.getText().equals("Transaction Success")) {
+                    finish();
+                    Intent intent = new Intent(ReceiveQRCodeActivity.this, MainActivity.class);
+                    intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                    startActivity(intent);
+                } else {
+                    new cancel_receive().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+                }
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
@@ -200,6 +214,8 @@ public class ReceiveQRCodeActivity extends AppCompatActivity {
                 transfer_notification.setText("Transaction Success");
                 String formated_money = NumberFormat.getNumberInstance(Locale.GERMANY).format(GlobalVariable.MONEY_MAIN_BALANCE);
                 receive_main_balance.setText(formated_money);
+                setSupportActionBar(toolbar);
+                getSupportActionBar().setDisplayHomeAsUpEnabled(true);
             }
         }
 
@@ -260,21 +276,6 @@ public class ReceiveQRCodeActivity extends AppCompatActivity {
         return ret;
     }
 
-    public void checkTransfered() throws JSONException, IOException {
-        String postData ="session_key=" + URLEncoder.encode(GlobalVariable.SECURITY_SESSION_KEY, "UTF-8")
-                + "&transaction_code=" + URLEncoder.encode(GlobalVariable.MONEY_TRANSACTION_CODE, "UTF-8");
-        JSONObject serviceResult = WebServiceClient.postRequest(GlobalVariable.DISTRIBUTOR_SERVER + "receive/check_transfered", postData);
-
-        if (!serviceResult.getBoolean("error")){
-            // Variable
-            GlobalVariable.MONEY_MAIN_BALANCE = Integer.parseInt(serviceResult.getString("balance"));
-            commit();
-        } else {
-            checkTransfer_error = true;
-            message = serviceResult.getString("message");
-        }
-    }
-
     public void checkSender() throws JSONException, IOException {
         String postData ="session_key=" + URLEncoder.encode(GlobalVariable.SECURITY_SESSION_KEY, "UTF-8")
                 + "&transaction_code=" + URLEncoder.encode(GlobalVariable.MONEY_TRANSACTION_CODE, "UTF-8");
@@ -286,6 +287,21 @@ public class ReceiveQRCodeActivity extends AppCompatActivity {
             GlobalVariable.RECEIVE_SENDER_PICTURE = serviceResult.getString("sender_picture");
         } else {
             checkSender_error = true;
+            message = serviceResult.getString("message");
+        }
+    }
+
+    public void checkTransfered() throws JSONException, IOException {
+        String postData ="session_key=" + URLEncoder.encode(GlobalVariable.SECURITY_SESSION_KEY, "UTF-8")
+                + "&transaction_code=" + URLEncoder.encode(GlobalVariable.MONEY_TRANSACTION_CODE, "UTF-8");
+        JSONObject serviceResult = WebServiceClient.postRequest(GlobalVariable.DISTRIBUTOR_SERVER + "receive/check_transfered", postData);
+
+        if (!serviceResult.getBoolean("error")) {
+            // Variable
+            GlobalVariable.MONEY_MAIN_BALANCE = Integer.parseInt(serviceResult.getString("balance"));
+            commit();
+        } else {
+            checkTransfer_error = true;
             message = serviceResult.getString("message");
         }
     }

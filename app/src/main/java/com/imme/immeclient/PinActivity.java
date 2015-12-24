@@ -42,6 +42,7 @@ public class PinActivity extends AppCompatActivity {
     ProgressDialog loading;
     Boolean error_status = false;
     String error_message = null;
+    Integer error_code = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -267,8 +268,17 @@ public class PinActivity extends AppCompatActivity {
                 PinActivity.this.loading.dismiss();
             }
             if (error_status) {
-                finish();
-                Toast.makeText(PinActivity.this, error_message + " Please try again", Toast.LENGTH_LONG).show();
+                if (error_code == 113) {
+                    finish();
+                    Toast.makeText(PinActivity.this, error_message + " Please try again", Toast.LENGTH_LONG).show();
+                } else {
+                    Toast.makeText(PinActivity.this, error_message, Toast.LENGTH_LONG).show();
+                    finish();
+                    Intent intent = new Intent(PinActivity.this, MainActivity.class);
+                    intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                    startActivity(intent);
+                }
+
             } else {
                 finish();
                 Intent intentView = new Intent(getApplicationContext(), PersonalSend.class);
@@ -287,6 +297,7 @@ public class PinActivity extends AppCompatActivity {
         if (serviceResult.getBoolean("error")){
             error_status = true;
             error_message = serviceResult.getString("message");
+            error_code = serviceResult.getInt("message");
         } else {
             error_status = false;
             // Money
