@@ -24,4 +24,9 @@
     <color name="text_selected">#888888</color>
     <color name="transparent_bg">#FFFFFF</color>
 
+    <color name="zxing_viewfinder_laser">#FF03B0FF</color>
+    <color name="zxing_status_text">#18B982</color>
+
+
+
 </resources>

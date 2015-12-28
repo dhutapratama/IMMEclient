@@ -54,6 +54,7 @@ public class SendPayActivity extends AppCompatActivity {
                 integrator.setOrientationLocked(false);
                 integrator.setBeepEnabled(false);
                 integrator.setBarcodeImageEnabled(true);
+                integrator.setCaptureActivity(CustomLayout.class);
                 integrator.initiateScan();
             }
         });

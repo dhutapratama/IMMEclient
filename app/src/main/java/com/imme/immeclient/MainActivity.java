@@ -3,6 +3,7 @@ package com.imme.immeclient;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.AsyncTask;
@@ -32,10 +33,7 @@ import com.google.zxing.integration.android.IntentResult;
 import com.readystatesoftware.systembartint.SystemBarTintManager;
 
 import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -180,6 +178,7 @@ public class MainActivity extends AppCompatActivity
                 integrator.setCameraId(0);  // Use a specific camera of the device
                 integrator.setBeepEnabled(false);
                 integrator.setBarcodeImageEnabled(true);
+                integrator.setCaptureActivity(CustomLayout.class);
                 integrator.initiateScan();
             }
         });
@@ -204,6 +203,7 @@ public class MainActivity extends AppCompatActivity
                 integrator.setCameraId(0);  // Use a specific camera of the device
                 integrator.setBeepEnabled(false);
                 integrator.setBarcodeImageEnabled(true);
+                integrator.setCaptureActivity(CustomLayout.class);
                 integrator.initiateScan();
             }
         });
@@ -249,6 +249,8 @@ public class MainActivity extends AppCompatActivity
             e.printStackTrace();
         }*/
 
+        Intent intent = new Intent(this, ExampleService.class);
+        startService(intent);
     }
 
 
