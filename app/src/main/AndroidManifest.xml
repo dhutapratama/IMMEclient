@@ -26,7 +26,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
 
-        <service android:name=".ExampleService" />
+        <service android:name=".IMMEService" android:enabled="true" />
 
         <activity
             android:name=".SplashScreen"
