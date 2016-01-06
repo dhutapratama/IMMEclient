@@ -25,7 +25,6 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-
         <service android:name=".ExampleService" />
 
         <activity
@@ -438,21 +437,37 @@
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.imme.immeclient.MainActivity" />
+
             <intent-filter>
                 <action android:name="com.imme.immeclient.Deposit" />
 
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
-        <activity android:name=".CustomLayout"
+        <activity
+            android:name=".CustomLayout"
             android:clearTaskOnLaunch="true"
             android:screenOrientation="sensorPortrait"
             android:stateNotNeeded="true"
             android:theme="@style/AppThemeBlue"
             android:windowSoftInputMode="stateAlwaysHidden">
         </activity>
+        <activity
+            android:name=".PromotionActivity"
+            android:label="@string/title_activity_promotion"
+            android:parentActivityName=".MainActivity"
+            android:screenOrientation="sensorPortrait"
+            android:theme="@style/AppThemeRed.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.imme.immeclient.MainActivity" />
+
+            <intent-filter>
+                <action android:name="com.imme.immeclient.PromotionActivity" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
     </application>
-
-
 
 </manifest>

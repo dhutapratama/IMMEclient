@@ -190,4 +190,5 @@ distribution media, documentation, registration cards, and insertions.</string>
     <string name="title_activity_send_pay_personal_detail">Send Money</string>
     <string name="title_activity_deposit">Deposit</string>
     <string name="full_name">Full name</string>
+    <string name="title_activity_promotion">Promotion</string>
 </resources>
