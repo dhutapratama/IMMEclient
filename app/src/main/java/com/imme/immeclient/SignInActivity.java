@@ -77,6 +77,10 @@ public class SignInActivity extends AppCompatActivity {
         final TextView sign_in_button_sign_up = (TextView) findViewById(R.id.sign_in_button_sign_up);
         sign_in_button_sign_up.setTypeface(hbqLight);
 
+        //final TextView dont_have_account = (TextView) findViewById(R.id.dont_have_account);
+        //dont_have_account.setTypeface(hbqLight);
+
+        // sign up destination
         sign_in_button_sign_up.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
