@@ -29,8 +29,14 @@ public class SplashScreen extends Activity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        // Give permission to use internet
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
         StrictMode.setThreadPolicy(policy);
+
+        // Better quiting apps
+        if (getIntent().getBooleanExtra("EXIT", false)) {
+            finish();
+        }
 
         // TODO Auto-generated method stub
         super.onCreate(savedInstanceState);
@@ -51,11 +57,16 @@ public class SplashScreen extends Activity {
                     }
 
                     if (GlobalVariable.APP_LOGIN_STATUS.equals("true")) {
-                        Intent intent = new Intent(SplashScreen.this,MainActivity.class);
+                        Intent intent = new Intent(SplashScreen.this, MainActivity.class);
                         startActivity(intent);
                     } else {
-                        Intent intent = new Intent(SplashScreen.this,SignInActivity.class);
-                        startActivity(intent);
+                        if (GlobalVariable.APP_FIRST_TIME_APP.equals("true")) {
+                            Intent intent = new Intent(getApplicationContext(), WelcomeScreen.class);
+                            startActivity(intent);
+                        } else {
+                            Intent intent = new Intent(getApplicationContext(), SignInActivity.class);
+                            startActivity(intent);
+                        }
                     }
                 }
             }
@@ -69,6 +80,8 @@ public class SplashScreen extends Activity {
         super.onPause();
         finish();
     }
+
+
 
     public boolean initialProcedure() throws Exception {
         // Init to all variable
@@ -175,6 +188,7 @@ public class SplashScreen extends Activity {
         serverData.put("otp_key", "OTP_KEY");
 
         // Security Data
+        securityData.put("imme_algorithm", "IMME_ALGORITHM");
         securityData.put("tba_algorithm", "TBA_ALGORITHM");
         securityData.put("cba_algorithm", "CBA_ALGORITHM");
         securityData.put("cba_counter", "CBA_COUNTER");

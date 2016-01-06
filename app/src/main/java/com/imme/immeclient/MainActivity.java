@@ -3,6 +3,7 @@ package com.imme.immeclient;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.AsyncTask;
@@ -11,6 +12,7 @@ import android.os.Bundle;
 import android.os.StrictMode;
 import android.support.v7.app.ActionBar;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -20,9 +22,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.AdapterView;
 import android.widget.ImageButton;
-import android.widget.ListView;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -43,17 +44,28 @@ import java.util.Locale;
 
 import org.json.JSONException;
 import org.json.JSONObject;
-import com.imme.immeclient.WriteReadFile;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
-    Intent intents = new Intent("com.imme.immeclient.AccountActivity");
     TextView main_textview_balance_value;
+    NavigationView navigationView;
+    String intent_status = "";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
         StrictMode.setThreadPolicy(policy);
+
+        if (getIntent().getBooleanExtra("EXIT", false)) {
+            finish();
+        } else {
+            try {
+                initVariable();
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
@@ -64,7 +76,6 @@ public class MainActivity extends AppCompatActivity
             toolbar.setPadding(0, getStatusBarHeight(), 0, 0);
             toolbar.getLayoutParams().height = toolbar.getLayoutParams().height + getStatusBarHeight();
         }
-
         // Start Font
         Typeface hnLight = Typeface.createFromAsset(getAssets(),
                 "fonts/HelveticaNeue-Light.otf");
@@ -138,13 +149,37 @@ public class MainActivity extends AppCompatActivity
         String formated_money = NumberFormat.getNumberInstance(Locale.GERMANY).format(GlobalVariable.MONEY_MAIN_BALANCE);
         main_textview_balance_value.setText(formated_money);
 
+        // Set menu header so can edit text
+        navigationView = (NavigationView) findViewById(R.id.nav_view);
+        View header = LayoutInflater.from(this).inflate(R.layout.nav_header_main, null);
+        navigationView.addHeaderView(header);
+        TextView full_name = (TextView) header.findViewById(R.id.full_name);
+        TextView verified_status = (TextView) header.findViewById(R.id.verified_status);
+        ImageView verified_icon = (ImageView) header.findViewById(R.id.verified_icon);
+
+        full_name.setText(GlobalVariable.CUSTOMER_FULL_NAME);
+        if (GlobalVariable.CUSTOMER_IS_VERIFIED_EMAIL.equals("true") && GlobalVariable.CUSTOMER_IS_VERIFIED_PHONE.equals("true")) {
+            verified_status.setText("Verified");
+            verified_icon.setVisibility(View.VISIBLE);
+        } else {
+            verified_status.setText("Not Verified");
+            verified_icon.setVisibility(View.GONE);
+        }
+
         // Button Action
         ImageButton main_button_send_pay = (ImageButton) findViewById(R.id.main_button_send_pay);
         main_button_send_pay.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent("com.imme.immeclient.SendPayActivity");
-                startActivity(intent);
+                intent_status = "send";
+                IntentIntegrator integrator = new IntentIntegrator(MainActivity.this);
+                integrator.setDesiredBarcodeFormats(IntentIntegrator.QR_CODE_TYPES);
+                integrator.setPrompt("PRESS BACK TO OPEN RECIPIENT");
+                integrator.setCameraId(0);  // Use a specific camera of the device
+                integrator.setBeepEnabled(false);
+                integrator.setBarcodeImageEnabled(true);
+                integrator.setCaptureActivity(CustomLayout.class);
+                integrator.initiateScan();
             }
         });
 
@@ -161,12 +196,14 @@ public class MainActivity extends AppCompatActivity
         main_button_topup.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                intent_status = "deposit";
                 IntentIntegrator integrator = new IntentIntegrator(MainActivity.this);
                 integrator.setDesiredBarcodeFormats(IntentIntegrator.QR_CODE_TYPES);
-                integrator.setPrompt("Scan Merchant QRCode");
+                integrator.setPrompt("SCAN VOUCHER BARCODE");
                 integrator.setCameraId(0);  // Use a specific camera of the device
                 integrator.setBeepEnabled(false);
                 integrator.setBarcodeImageEnabled(true);
+                integrator.setCaptureActivity(CustomLayout.class);
                 integrator.initiateScan();
             }
         });
@@ -203,12 +240,19 @@ public class MainActivity extends AppCompatActivity
             }
         });
 
-
-
-        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
+        /*try {
+            GetImage.productLookup();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }*/
+
+        Intent intent = new Intent(this, ExampleService.class);
+        startService(intent);
     }
+
 
     @Override
     public void onBackPressed() {
@@ -216,10 +260,10 @@ public class MainActivity extends AppCompatActivity
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
         } else {
-            moveTaskToBack(true);
-            android.os.Process.killProcess(android.os.Process.myPid());
-            System.exit(1);
-            //super.onBackPressed();
+            Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            intent.putExtra("EXIT", true);
+            startActivity(intent);
         }
     }
 
@@ -230,7 +274,6 @@ public class MainActivity extends AppCompatActivity
         return true;
     }
 
-    @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle action bar item clicks here. The action bar will
         // automatically handle clicks on the Home/Up button, so long
@@ -238,6 +281,7 @@ public class MainActivity extends AppCompatActivity
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
+        /*
         if (id == R.id.nav_user_agreement) {
             Intent intent = new Intent("com.imme.immeclient.UserAgreementActivity");
             startActivity(intent);
@@ -248,17 +292,18 @@ public class MainActivity extends AppCompatActivity
             startActivity(intent);
             return true;
         }
-        //else if (id == R.id.nav_help_support) {
-          //  Intent intent = new Intent("com.imme.immeclient.HelpAndSupportActivity");
-            //startActivity(intent);
-            //return true;
-
+        else if (id == R.id.nav_help_support) {
+           Intent intent = new Intent("com.imme.immeclient.HelpAndSupportActivity");
+            startActivity(intent);
+            return true;
+        }
         else if (id == R.id.nav_help_support) {
             Intent intent = new Intent("com.imme.immeclient.HelpAndSupportActivity");
             startActivity(intent);
             return true;
         }
-        else if (id == R.id.nav_feedback) {
+        */
+        if (id == R.id.nav_feedback) {
             Intent intent = new Intent("com.imme.immeclient.FeedbackActivity");
             startActivity(intent);
             return true;
@@ -274,6 +319,7 @@ public class MainActivity extends AppCompatActivity
             } catch (JSONException e) {
                 e.printStackTrace();
             }
+            finish();
             Intent intent = new Intent(MainActivity.this, SignInActivity.class);
             intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
             startActivity(intent);
@@ -293,33 +339,65 @@ public class MainActivity extends AppCompatActivity
     public boolean onNavigationItemSelected(MenuItem item) {
         // Handle navigation view item clicks here.
         int id = item.getItemId();
-
-        if (id == R.id.nav_account) {
-            startActivity(this.intents);
-        }
-        else if (id == R.id.nav_transaction_history) {
-            Intent intent = new Intent("com.imme.immeclient.TransactionHistoryActivity");
-            startActivity(intent);
-        }
-        else if (id == R.id.nav_security_settings) {
-            Intent intent = new Intent("com.imme.immeclient.SecuritySettingsActivity");
-            startActivity(intent);
-        }
-        else if (id == R.id.nav_recipient_list) {
-            Intent intent = new Intent("com.imme.immeclient.RecipientListActivity");
-            startActivity(intent);
-        }
-        else if (id == R.id.nav_invite_get_money) {
-            Intent intent = new Intent("com.imme.immeclient.InviteGetMoneyActivity");
-            startActivity(intent);
-        }
-        else if (id == R.id.nav_exit) {
-            moveTaskToBack(true);
-            android.os.Process.killProcess(android.os.Process.myPid());
-            System.exit(1);
-        }
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
+
+        if (id == R.id.nav_account) {
+            drawer.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    Intent intent = new Intent(getApplicationContext(), AccountActivity.class);
+                    startActivity(intent);
+                }
+            }, 200);
+        }
+        else if (id == R.id.nav_transaction_history) {
+            drawer.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    Intent intent = new Intent(getApplicationContext(), TransactionHistoryActivity.class);
+                    startActivity(intent);
+                }
+            }, 200);
+        }
+        else if (id == R.id.nav_security_settings) {
+            drawer.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    Intent intent = new Intent(getApplicationContext(), SecuritySettingsActivity.class);
+                    startActivity(intent);
+                }
+            }, 200);
+        }
+        else if (id == R.id.nav_recipient_list) {
+            drawer.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    Intent intent = new Intent(getApplicationContext(), RecipientListActivity.class);
+                    startActivity(intent);
+                }
+            }, 200);
+        }
+        else if (id == R.id.nav_invite_get_money) {
+            drawer.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    Intent intent = new Intent(getApplicationContext(), InviteGetMoneyActivity.class);
+                    startActivity(intent);
+                }
+            }, 200);
+        }
+        else if (id == R.id.nav_exit) {
+            drawer.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                    intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                    intent.putExtra("EXIT", true);
+                    startActivity(intent);
+                }
+            }, 200);
+        }
         return true;
     }
 
@@ -333,22 +411,77 @@ public class MainActivity extends AppCompatActivity
     }
 
     String voucher_code = new String();
+    String transaction_code = new String();
     Boolean error_status = false;
     String error_message = null;
     private ProgressDialog loading = null;
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         IntentResult result = IntentIntegrator.parseActivityResult(requestCode, resultCode, data);
-        voucher_code = result.getContents();
         if(result != null) {
             if(resultCode != 0) {
-                loading = ProgressDialog.show(MainActivity.this, "", "Validating voucher...", true, true);
-                new voucher_check().execute();
+                if (intent_status.equals("deposit")) {
+                    voucher_code = result.getContents();
+                    loading = ProgressDialog.show(MainActivity.this, "", "Validating voucher", true, true);
+                    new voucher_check().execute();
+                } else if (intent_status.equals("send")){
+                    transaction_code = result.getContents();
+                    loading = ProgressDialog.show(MainActivity.this, "", "Checking recipient", true, true);
+                    new send_check().execute();
+                }
+            } else {
+                if (intent_status.equals("send")) {
+                    Intent intent = new Intent(getApplicationContext(), SendPayActivity.class);
+                    startActivity(intent);
+                }
             }
         } else {
             // This is important, otherwise the result will not be passed to the fragment
             super.onActivityResult(requestCode, resultCode, data);
         }
+    }
+
+    private class send_check extends AsyncTask<String, Void, Object> {
+        protected Object doInBackground(String... args) {
+            try {
+                sendCheck();
+            } catch (JSONException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            return null;
+        }
+
+        protected void onPostExecute(Object result) {
+            if (MainActivity.this.loading != null) {
+                MainActivity.this.loading.dismiss();
+            }
+            if (error_status) {
+                Toast.makeText(MainActivity.this, error_message, Toast.LENGTH_LONG).show();
+            } else {
+                Intent intentView = new Intent(getApplicationContext(), SendPayPersonalDetail.class);
+                startActivity(intentView);
+            }
+        }
+    }
+
+    private boolean sendCheck() throws IOException, JSONException {
+        String postData ="session_key=" + URLEncoder.encode(GlobalVariable.SECURITY_SESSION_KEY, "UTF-8")
+                + "&transaction_code=" + URLEncoder.encode(transaction_code, "UTF-8");
+        JSONObject serviceResult = WebServiceClient.postRequest(GlobalVariable.DISTRIBUTOR_SERVER + "pay/check", postData);
+
+        if (serviceResult.getBoolean("error")){
+            error_status = true;
+            error_message = serviceResult.getString("message");
+        } else {
+            error_status = false;
+            GlobalVariable.PAY_RECIPIENT_NAME = serviceResult.getString("recipient_name");
+            GlobalVariable.PAY_AMOUNT = serviceResult.getString("amount");
+            GlobalVariable.PAY_APPLY_CODE = serviceResult.getString("apply_code");
+        }
+        return serviceResult.getBoolean("error");
     }
 
     private class voucher_check extends AsyncTask<String, Void, Object> {

@@ -28,14 +28,14 @@ public class Deposit extends AppCompatActivity {
         tintManager.setNavigationBarTintEnabled(true);
         tintManager.setTintColor(Color.parseColor("#FF03B0FF"));
 
-        TextView deposit_amount = (TextView) findViewById(R.id.deposit_amount);
-        TextView deposit_balance = (TextView) findViewById(R.id.deposit_balance);
+        TextView deposit_amount = (TextView) findViewById(R.id.voucher_amount);
+        TextView deposit_balance = (TextView) findViewById(R.id.deposit_main_balance);
 
         String formated_money = NumberFormat.getNumberInstance(Locale.GERMANY).format(GlobalVariable.DEPOSIT_AMOUNT);
-        deposit_amount.setText("Deposit : Rp " + formated_money);
+        deposit_amount.setText("Rp " + formated_money);
 
         formated_money = NumberFormat.getNumberInstance(Locale.GERMANY).format(GlobalVariable.MONEY_MAIN_BALANCE);
-        deposit_balance.setText("Your Balance : Rp " + formated_money);
+        deposit_balance.setText(formated_money);
     }
 
 }

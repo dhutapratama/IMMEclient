@@ -53,7 +53,7 @@
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
         <item name="android:textColorPrimary">@color/textWhite</item>
-        <item name="android:textColorSecondary">@color/textWhite</item>
+        <item name="android:textColorSecondary">#0d8967</item>
     </style>
 
     <style name="AppThemeGreen.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar">

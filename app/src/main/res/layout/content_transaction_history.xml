@@ -139,7 +139,6 @@
                         android:paddingBottom="5dp"
                         android:src="@mipmap/transaction_history_button_send_icon"/>
                     <TextView
-                        android:id="@+id/transaction_history_send"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Send"
@@ -226,7 +225,6 @@
                         android:paddingBottom="5dp"
                         android:src="@mipmap/transaction_history_button_send_icon"/>
                     <TextView
-                        android:id="@+id/transaction_history_send"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Send"
@@ -313,7 +311,6 @@
                         android:paddingBottom="5dp"
                         android:src="@mipmap/transaction_history_button_send_icon"/>
                     <TextView
-                        android:id="@+id/transaction_history_send"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Send"
@@ -400,7 +397,6 @@
                         android:paddingBottom="5dp"
                         android:src="@mipmap/transaction_history_button_send_icon"/>
                     <TextView
-                        android:id="@+id/transaction_history_send"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Send"
@@ -487,7 +483,6 @@
                         android:paddingBottom="5dp"
                         android:src="@mipmap/transaction_history_button_send_icon"/>
                     <TextView
-                        android:id="@+id/transaction_history_send"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Send"
@@ -574,7 +569,6 @@
                         android:paddingBottom="5dp"
                         android:src="@mipmap/transaction_history_button_send_icon"/>
                     <TextView
-                        android:id="@+id/transaction_history_send"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Send"
@@ -657,60 +651,6 @@
             android:layout_height="wrap_content"
             android:orientation="vertical"
             android:background="#2cb674">
-
-            <RelativeLayout
-                android:layout_width="wrap_content"
-                android:layout_height="fill_parent"
-                android:orientation="horizontal">
-                <!-- one linear -->
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:paddingTop="10dp"
-                    android:paddingLeft="10dp">
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Beginning Balance"
-                        android:textColor="#ffffff"
-                        android:textSize="15sp"
-                        android:layout_gravity="center"/>
-                </LinearLayout>
-                <LinearLayout
-                    android:layout_width="fill_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:paddingRight="110dp"
-                    android:paddingTop="10dp"
-                    android:layout_gravity="right"
-                    android:gravity="right">
-                    <TextView
-                        android:text="Rp."
-                        android:textColor="#ffffff"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textSize="15sp"/>
-                </LinearLayout>
-                <LinearLayout
-                    android:layout_width="fill_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:paddingRight="10dp"
-                    android:paddingTop="10dp">
-                    <TextView
-                        android:text="100.000"
-                        android:textColor="#ffffff"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textSize="15sp"
-                        android:width="110dp"
-                        android:singleLine="true"
-                        android:layout_gravity="right"
-                        android:gravity="right"/>
-                </LinearLayout>
-            </RelativeLayout>
-
             <RelativeLayout
                 android:layout_width="wrap_content"
                 android:layout_height="fill_parent"
@@ -833,7 +773,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Total balance"
+                        android:text="Balance"
                         android:textColor="#ffffff"
                         android:textSize="15sp"
                         android:layout_gravity="center"/>

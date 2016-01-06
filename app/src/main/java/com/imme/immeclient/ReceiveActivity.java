@@ -1,13 +1,13 @@
 package com.imme.immeclient;
 
-import android.content.Context;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.Typeface;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
@@ -21,39 +21,27 @@ import com.readystatesoftware.systembartint.SystemBarTintManager;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.BufferedReader;
-import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.OutputStreamWriter;
-import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.text.NumberFormat;
 import java.util.Locale;
-
 
 public class ReceiveActivity extends AppCompatActivity {
     ImageButton button_backspace;
     String requestAmount = "0";
     TextView text_receive_balance_value;
+    ProgressDialog loading;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_receive);
-
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-
         SystemBarTintManager tintManager = new SystemBarTintManager(this);
-        // enable status bar tint
         tintManager.setStatusBarTintEnabled(true);
-        // enable navigation bar tint
         tintManager.setNavigationBarTintEnabled(true);
-        // set a custom tint color for all system bars
         tintManager.setTintColor(Color.parseColor("#FF03B0FF"));
 
         // Start Font
@@ -111,30 +99,8 @@ public class ReceiveActivity extends AppCompatActivity {
         final Button button = (Button) findViewById(R.id.receiver_continue);
         button.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                String postData = null;
-
-                try {
-                    long unixTime = System.currentTimeMillis() / 1000L;
-                    Integer answer = (int)(long) unixTime;
-                    postData = "&session_key=" + URLEncoder.encode(GlobalVariable.SECURITY_SESSION_KEY, "UTF-8")
-                            + "&amount=" + URLEncoder.encode(String.valueOf(GlobalVariable.MONEY_REQUEST_AMOUNT), "UTF-8");
-
-                    JSONObject serviceResult = WebServiceClient.postRequest(GlobalVariable.DISTRIBUTOR_SERVER + "receive", postData);
-
-                    if (serviceResult.getString("error").equals("true")) {
-                        Toast.makeText(ReceiveActivity.this, serviceResult.getString("message"), Toast.LENGTH_LONG).show();
-                    } else {
-                        GlobalVariable.MONEY_TRANSACTION_CODE = serviceResult.getString("transaction_code");
-                        Intent intent = new Intent("com.imme.immeclient.ReceiveQRCodeActivity");
-                        startActivity(intent);
-                    }
-                } catch (UnsupportedEncodingException e) {
-                    e.printStackTrace();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
+                loading = ProgressDialog.show(ReceiveActivity.this, "", "Securing transaction", true, true);
+                new request_transaction().execute();
             }
         });
 
@@ -253,5 +219,56 @@ public class ReceiveActivity extends AppCompatActivity {
         GlobalVariable.MONEY_REQUEST_AMOUNT = Integer.parseInt(requestAmount);
         String formated_money = NumberFormat.getNumberInstance(Locale.GERMANY).format(GlobalVariable.MONEY_REQUEST_AMOUNT);
         text_receive_balance_value.setText(formated_money);
+    }
+
+    private class request_transaction extends AsyncTask<String, Void, Object> {
+        protected Object doInBackground(String... args) {
+            try {
+                requestTransaction();
+            } catch (JSONException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            return null;
+        }
+
+        protected void onPostExecute(Object result) {
+            if (ReceiveActivity.this.loading != null) {
+                ReceiveActivity.this.loading.dismiss();
+            }
+            if (error_status) {
+                Toast.makeText(ReceiveActivity.this, error_message, Toast.LENGTH_LONG).show();
+                finish();
+                Intent intentView = new Intent(getApplicationContext(), MainActivity.class);
+                startActivity(intentView);
+            } else {
+                Intent intentView = new Intent(getApplicationContext(), ReceiveQRCodeActivity.class);
+                startActivity(intentView);
+            }
+        }
+    }
+
+    Boolean error_status = false;
+    String error_message = null;
+    public Boolean requestTransaction() throws JSONException, IOException {
+
+        String postData;
+        long unixTime = System.currentTimeMillis() / 1000L;
+        Integer answer = (int)(long) unixTime;
+        postData = "&session_key=" + URLEncoder.encode(GlobalVariable.SECURITY_SESSION_KEY, "UTF-8")
+                + "&amount=" + URLEncoder.encode(String.valueOf(GlobalVariable.MONEY_REQUEST_AMOUNT), "UTF-8");
+
+        JSONObject serviceResult = WebServiceClient.postRequest(GlobalVariable.DISTRIBUTOR_SERVER + "receive/create", postData);
+
+        if (serviceResult.getBoolean("error")){
+            error_status = true;
+            error_message = serviceResult.getString("message");
+        } else {
+            error_status = false;
+            // Set Transaction Code
+            GlobalVariable.MONEY_TRANSACTION_CODE = serviceResult.getString("transaction_code");
+        }
+        return serviceResult.getBoolean("error");
     }
 }

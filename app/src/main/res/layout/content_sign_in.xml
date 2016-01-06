@@ -11,8 +11,7 @@
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:showIn="@layout/activity_sign_in"
     tools:context="com.imme.immeclient.SignInActivity"
-    android:orientation="vertical"
-    android:background="@mipmap/sign_up_bg_white3">
+    android:orientation="vertical">
 
     <ScrollView
         xmlns:android="http://schemas.android.com/apk/res/android"
@@ -51,9 +50,7 @@
 
                 <android.support.design.widget.TextInputLayout
                     android:layout_width="fill_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="1dp"
-                    android:layout_marginBottom="1dp">
+                    android:layout_height="wrap_content">
                     <EditText
                         android:id="@+id/sign_in_edittext_email"
                         android:layout_width="fill_parent"
@@ -65,9 +62,7 @@
 
                 <android.support.design.widget.TextInputLayout
                     android:layout_width="fill_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="1dp"
-                    android:layout_marginBottom="1dp">
+                    android:layout_height="wrap_content">
                     <EditText
                         android:id="@+id/sign_in_edittext_password"
                         android:layout_width="fill_parent"
@@ -77,45 +72,24 @@
                         android:textSize="15sp"/>
                 </android.support.design.widget.TextInputLayout>
 
-                <LinearLayout
-                    android:layout_width="fill_parent"
+                <Button
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:paddingTop="20dp"
-                    android:gravity="center"
-                    android:layout_gravity="center">
-                    <TextView
-                        android:layout_width="fill_parent"
-                        android:layout_height="wrap_content"
-                        android:text="Sign in"
-                        android:id="@+id/sign_in_button_sign_in"
-                        android:textSize="18sp"
-                        android:paddingBottom="5dp"
-                        android:paddingTop="5dp"
-                        android:textColor="#ffffff"
-                        android:background="@drawable/account_button_ractangle_blue"
-                        android:textAlignment="center" />
-                </LinearLayout>
+                    android:id="@+id/sign_in_button_sign_in"
+                    android:layout_marginTop="20dp"
+                    android:textColor="#ffffff"
+                    android:background="@drawable/account_button_ractangle_blue"
+                    android:text="Sign in" />
 
-                <LinearLayout
-                    android:layout_width="fill_parent"
+                <EditText
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:gravity="center"
-                    android:paddingTop="20dp">
-
-                    <TextView
-                        android:layout_width="fill_parent"
-                        android:layout_height="wrap_content"
-                        android:text="Sign up"
-                        android:id="@+id/sign_in_button_sign_up"
-                        android:textSize="18sp"
-                        android:paddingBottom="5dp"
-                        android:paddingTop="5dp"
-                        android:paddingLeft="5dp"
-                        android:paddingRight="5dp"
-                        android:textColor="#ffffff"
-                        android:background="@drawable/account_save_verify"
-                        android:textAlignment="center"/>
-                </LinearLayout>
+                    android:text="No account yet? Create one"
+                    android:id="@+id/sign_in_button_sign_up"
+                    android:layout_gravity="center"
+                    android:textSize="16dp"
+                    android:layout_marginTop="15dp"
+                    android:editable="false"/>
 
             </LinearLayout>
 

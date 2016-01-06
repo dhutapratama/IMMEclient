@@ -1,0 +1,13 @@
+<resources>
+    <!-- TIPHONE API 17 -->
+    <dimen name="activity_horizontal_margin">6dp</dimen>
+
+    <!-- Main Feature -->
+    <dimen name="hscroll_main_feature_padding">3dp</dimen>
+
+    <!-- nav_header_main -->
+    <dimen name="user_image_margin_top">5dp</dimen>
+
+    <!-- Receive QR -->
+    <dimen name="receive_qr_wh">100dp</dimen>
+</resources>

@@ -2,43 +2,139 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     xmlns:app="http://schemas.android.com/apk/res-auto" android:layout_width="match_parent"
-    android:layout_height="match_parent" android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
-    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:layout_height="match_parent" android:paddingLeft="@dimen/zero"
+    android:paddingRight="@dimen/zero"
+    android:paddingTop="@dimen/zero"
+    android:paddingBottom="@dimen/zero"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:showIn="@layout/activity_receive_qrcode"
     tools:context="com.imme.immeclient.ReceiveQRCodeActivity"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:background="#0E99DA"
+    android:gravity="center">
 
-    <ImageView
+    <LinearLayout
+        android:orientation="vertical"
         android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/qr_code"
-        android:layout_gravity="center"/>
+        android:layout_height="fill_parent"
+        android:background="#02affe">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Scan it! 0 second"
-        android:id="@+id/time_out"
-        android:layout_gravity="center"/>
+        <TextView
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:text="My Balance:"
+            android:fontFamily="sans-serif-thin"
+            android:id="@+id/textView"
+            android:gravity="center"
+            android:textColor="@color/textWhite"
+            android:paddingTop="15dp"
+            android:paddingBottom="0dp"
+            android:textSize="20dp"/>
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Now You Are On Transaction!"
-        android:id="@+id/transfer_notificetion"
-        android:layout_gravity="center"
-        android:visibility="gone" />
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:paddingTop="0dp">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="[SENDER_NAME]"
-        android:id="@+id/sender_name"
-        android:layout_gravity="center"
-        android:visibility="gone" />
+            <TextView
+                android:text="Rp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/textWhite"
+                android:textSize="20sp"
+                android:paddingTop="@dimen/main_balance_rp_paddingTop"
+                android:paddingRight="@dimen/main_balance_rp_paddingRight"/>
 
+            <TextView
+                android:text="[BALANCE]"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:textColor="@color/textWhite"
+                android:id="@+id/receive_main_balance"
+                android:textSize="40sp"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginBottom="15dp"/>
 
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="fill_parent"
+            android:gravity="center"
+            android:background="#0E99DA"
+            android:clickable="true"
+            android:paddingTop="15dp">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/qr_code"
+                android:maxWidth="@dimen/receive_qr_wh"
+                android:maxHeight="@dimen/receive_qr_wh"
+                android:minWidth="@dimen/receive_qr_wh"
+                android:minHeight="@dimen/receive_qr_wh"/>
+
+            <TextView
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:text="[TIMER]"
+                android:id="@+id/time_out"
+                android:gravity="center"
+                android:textColor="@color/textWhite"
+                android:textSize="30dp"
+                android:paddingTop="10dp"/>
+
+            <TextView
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:text="you are on transaction with"
+                android:id="@+id/transfer_notification"
+                android:textColor="@color/textWhite"
+                android:textSize="20dp"
+                android:gravity="center_horizontal"
+                android:visibility="gone"/>
+
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:orientation="vertical"
+                android:gravity="center"
+                android:id="@+id/in_transaction"
+                android:visibility="gone">
+
+                <com.imme.immeclient.MLRoundedImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@mipmap/ic_launcher"
+                    android:id="@+id/sender_pic"
+                    />
+
+                <TextView
+                    android:layout_width="fill_parent"
+                    android:layout_height="30dp"
+                    android:text="[SENDER_NAME]"
+                    android:id="@+id/sender_name"
+                    android:layout_gravity="center"
+                    android:textColor="@color/textWhite"
+                    android:textSize="25dp"
+                    android:gravity="center"
+                    android:layout_marginTop="20dp"/>
+
+                <TextView
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:text="[AMOUNT]"
+                    android:id="@+id/receive_amount"
+                    android:textColor="@color/textWhite"
+                    android:textSize="20dp"
+                    android:gravity="center_horizontal"
+                    android:paddingTop="10dp"/>
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </LinearLayout>
 </LinearLayout>

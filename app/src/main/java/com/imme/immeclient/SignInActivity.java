@@ -13,6 +13,7 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -35,19 +36,19 @@ import java.util.Enumeration;
 import java.util.Objects;
 
 public class SignInActivity extends AppCompatActivity {
-    private String email = new String();
-    private String password = new String();
+    private String email = null;
+    private String password = null;
     private ProgressDialog loading = null;
     Boolean login_error = false;
-    private String message = new String();
+    private String message = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        if (GlobalVariable.APP_FIRST_TIME_APP.equals("true")) {
-            // Tutorial 3 Halaman
-            startActivity(new Intent(SignInActivity.this, WelcomeScreen.class));
-            overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
+        // Better quiting apps
+        if (getIntent().getBooleanExtra("EXIT", false)) {
+            finish();
         }
+
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
         StrictMode.setThreadPolicy(policy);
         super.onCreate(savedInstanceState);
@@ -70,7 +71,7 @@ public class SignInActivity extends AppCompatActivity {
         final EditText sign_in_edittext_password = (EditText) findViewById(R.id.sign_in_edittext_password);
         sign_in_edittext_password.setTypeface(hnLight);
 
-        final TextView sign_in_button_sign_in = (TextView) findViewById(R.id.sign_in_button_sign_in);
+        final Button sign_in_button_sign_in = (Button) findViewById(R.id.sign_in_button_sign_in);
         sign_in_button_sign_in.setTypeface(hbqLight);
 
         final TextView sign_in_button_sign_up = (TextView) findViewById(R.id.sign_in_button_sign_up);
@@ -80,11 +81,13 @@ public class SignInActivity extends AppCompatActivity {
         //dont_have_account.setTypeface(hbqLight);
 
         // sign up destination
-        sign_in_button_sign_up.setOnClickListener(new View.OnClickListener() {
+        sign_in_button_sign_up.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
-            public void onClick(View view) {
-                Intent intent = new Intent("com.imme.immeclient.SignUpActivity");
-                startActivity(intent);
+            public void onFocusChange(View v, boolean hasFocus) {
+                if (hasFocus) {
+                    Intent intent = new Intent("com.imme.immeclient.SignUpActivity");
+                    startActivity(intent);
+                }
             }
         });
 
@@ -96,12 +99,12 @@ public class SignInActivity extends AppCompatActivity {
             loading = ProgressDialog.show(SignInActivity.this, "", "Sign in...", true, true);
             new loginTask().execute();
 
-            if (GlobalVariable.APP_LOGIN_STATUS.equals("true")) {
+            /*if (GlobalVariable.APP_LOGIN_STATUS.equals("true")) {
                 Intent intent = new Intent(SignInActivity.this, MainActivity.class);
                 startActivity(intent);
             } else {
                 //Toast.makeText(SignInActivity.this, message, Toast.LENGTH_LONG).show();
-            }
+            }*/
 
             }
         });
@@ -109,8 +112,10 @@ public class SignInActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        android.os.Process.killProcess(android.os.Process.myPid());
-        System.exit(1);
+        Intent intent = new Intent(getApplicationContext(), SignInActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        intent.putExtra("EXIT", true);
+        startActivity(intent);
     }
 
     public void writeFile(String varname, String data) {
@@ -193,6 +198,7 @@ public class SignInActivity extends AppCompatActivity {
             GlobalVariable.MONEY_MAIN_BALANCE = Integer.parseInt(customerData.getString("balance"));
 
             commit();
+            login_error = false;
         } else {
             login_error = true;
             message = serviceResult.getString("message");
@@ -259,6 +265,10 @@ public class SignInActivity extends AppCompatActivity {
             }
             if (login_error) {
                 Toast.makeText(SignInActivity.this, message, Toast.LENGTH_LONG).show();
+            } else {
+                finish();
+                Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                startActivity(intent);
             }
         }
     }

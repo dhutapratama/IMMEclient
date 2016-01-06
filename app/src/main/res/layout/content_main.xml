@@ -74,7 +74,7 @@
                     android:paddingTop="@dimen/main_balance_text_paddingTop"
                     android:textSize="30sp"
                     android:layout_gravity="center" />
-                <TextView android:text="What Do You Need?"
+                <TextView android:text="What do you need?"
                     android:id="@+id/main_textview_what_do_you_need"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -84,9 +84,8 @@
             <HorizontalScrollView
                 android:layout_width="match_parent"
                 android:layout_height="fill_parent"
-                android:paddingRight="24dp"
-                android:paddingLeft="24dp"
-                android:touchscreenBlocksFocus="true">
+                android:paddingRight="@dimen/hscroll_main_feature_padding"
+                android:paddingLeft="@dimen/hscroll_main_feature_padding">
 
                 <LinearLayout
                     android:layout_width="wrap_content"
@@ -104,13 +103,12 @@
                             android:background="@null"
                             android:layout_marginTop="20dp"
                             android:layout_marginLeft="12dp"
-                            android:layout_marginRight="12dp"
-                            android:nestedScrollingEnabled="false" />
+                            android:layout_marginRight="12dp" />
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:textAppearance="?android:attr/textAppearanceSmall"
-                            android:text="Send/Pay"
+                            android:text="Transfer"
                             android:id="@+id/main_textview_sendpay"
                             android:layout_gravity="center_horizontal"
                             android:layout_marginTop="10dp"
@@ -129,8 +127,7 @@
                             android:background="@null"
                             android:layout_marginTop="20dp"
                             android:layout_marginLeft="12dp"
-                            android:layout_marginRight="12dp"
-                            android:nestedScrollingEnabled="false" />
+                            android:layout_marginRight="12dp" />
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
@@ -154,8 +151,7 @@
                             android:background="@null"
                             android:layout_marginTop="20dp"
                             android:layout_marginLeft="12dp"
-                            android:layout_marginRight="12dp"
-                            android:nestedScrollingEnabled="false" />
+                            android:layout_marginRight="12dp" />
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
@@ -166,7 +162,7 @@
                             android:layout_marginTop="10dp"
                             android:layout_marginBottom="20dp" />
                     </LinearLayout>
-
+<!--
                     <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -241,7 +237,7 @@
                             android:layout_marginTop="10dp"
                             android:layout_marginBottom="20dp" />
                     </LinearLayout>
-
+-->
                 </LinearLayout>
 
             </HorizontalScrollView>
