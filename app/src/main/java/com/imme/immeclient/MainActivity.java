@@ -249,8 +249,10 @@ public class MainActivity extends AppCompatActivity
             e.printStackTrace();
         }*/
 
+        /*
         Intent intent = new Intent(this, ExampleService.class);
         startService(intent);
+        */
     }
 
 
