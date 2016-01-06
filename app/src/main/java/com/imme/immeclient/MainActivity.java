@@ -1,15 +1,20 @@
 package com.imme.immeclient;
 
+import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.graphics.Color;
 import android.graphics.Typeface;
+import android.media.RingtoneManager;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.StrictMode;
+import android.support.v4.app.NotificationCompat;
 import android.support.v7.app.ActionBar;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -42,6 +47,7 @@ import java.net.URLEncoder;
 import java.text.NumberFormat;
 import java.util.Locale;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -250,9 +256,12 @@ public class MainActivity extends AppCompatActivity
         }*/
 
         /*
-        Intent intent = new Intent(this, ExampleService.class);
+        Intent intent = new Intent(this, IMMEService.class);
         startService(intent);
         */
+
+        new check_notification().execute();
+
     }
 
 
@@ -675,5 +684,104 @@ public class MainActivity extends AppCompatActivity
         moneyData.put("main_balance", Integer.toString(GlobalVariable.MONEY_MAIN_BALANCE));
 
         writeFile(GlobalVariable.FILE_MONEY, moneyData.toString());
+    }
+
+
+    private class check_notification extends AsyncTask<String, Void, Object> {
+        protected Object doInBackground(String... args) {
+            try {
+                if (!getNotification()) {
+                    if (available_notification) {
+                        for (int i = 0; i < notification.length(); i++) {
+                            JSONObject notif = notification.getJSONObject(i);
+                            createNotification(notif.getInt("id"), notif.getString("type"), notif.getString("text"));
+                        }
+                    }
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+
+            try {
+                Thread.sleep(10000);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            return null;
+        }
+        protected void onPostExecute(Object result) {
+            try {
+                Thread.sleep(10000);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            new check_notification().execute();
+        }
+    }
+
+    Boolean notif_status, available_notification;
+    String notif_message;
+    JSONArray notification;
+    private boolean getNotification() throws IOException, JSONException {
+        String postData ="session_key=" + URLEncoder.encode(GlobalVariable.SECURITY_SESSION_KEY, "UTF-8");
+        JSONObject serviceResult = WebServiceClient.postRequest(GlobalVariable.DISTRIBUTOR_SERVER + "notification", postData);
+
+        if (serviceResult.getBoolean("error")){
+            notif_status = true;
+            notif_message = serviceResult.getString("message");
+        } else {
+            // VARIABLE SET
+            notif_status = false;
+            available_notification = serviceResult.getBoolean("available_notification");
+            if (available_notification) {
+                notification = serviceResult.getJSONArray("notification");
+            }
+        }
+        return serviceResult.getBoolean("error");
+    }
+
+    public void createNotification(Integer id, String type, String text) {
+        if (type.equals("notification")) {
+            NotificationCompat.Builder mBuilder =
+                    (NotificationCompat.Builder) new NotificationCompat.Builder(this)
+                            .setSmallIcon(R.mipmap.ic_launcher)
+                            .setContentTitle("imme")
+                            .setContentText(text);
+            Intent resultIntent = new Intent(this, RecipientListActivity.class);
+            PendingIntent resultPendingIntent = PendingIntent.getActivity(this, 0, resultIntent,
+                    PendingIntent.FLAG_UPDATE_CURRENT);
+            mBuilder.setContentIntent(resultPendingIntent);
+
+            Uri alarmSound = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
+            mBuilder.setSound(alarmSound);
+            mBuilder.setAutoCancel(true);
+
+            int mNotificationId = id;
+            NotificationManager mNotifyMgr =
+                    (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
+            mNotifyMgr.notify(mNotificationId, mBuilder.build());
+        } else {
+            NotificationCompat.Builder mBuilder =
+                    (NotificationCompat.Builder) new NotificationCompat.Builder(this)
+                            .setSmallIcon(R.mipmap.ic_launcher)
+                            .setContentTitle("imme")
+                            .setContentText(text);
+
+            Intent resultIntent = new Intent(this, RecipientListActivity.class);
+            PendingIntent resultPendingIntent = PendingIntent.getActivity(this, 0, resultIntent,
+                    PendingIntent.FLAG_UPDATE_CURRENT);
+            mBuilder.setContentIntent(resultPendingIntent);
+
+            Uri alarmSound = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
+            mBuilder.setSound(alarmSound);
+            mBuilder.setAutoCancel(true);
+
+            int mNotificationId = id;
+            NotificationManager mNotifyMgr =
+                    (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
+            mNotifyMgr.notify(mNotificationId, mBuilder.build());
+        }
     }
 }
