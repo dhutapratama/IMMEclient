@@ -261,7 +261,7 @@ public class MainActivity extends AppCompatActivity
         startService(intent);
         */
 
-        new check_notification().execute();
+        /* new check_notification().execute(); */
 
     }
 
