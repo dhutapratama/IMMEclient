@@ -2,6 +2,7 @@ package com.imme.immeclient;
 
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -12,6 +13,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.readystatesoftware.systembartint.SystemBarTintManager;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -35,6 +38,10 @@ public class SignUpActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign_up);
+        SystemBarTintManager tintManager = new SystemBarTintManager(this);
+        tintManager.setStatusBarTintEnabled(true);
+        tintManager.setNavigationBarTintEnabled(true);
+        tintManager.setTintColor(Color.parseColor("#ff0f99da"));
 
         Typeface hnLight = Typeface.createFromAsset(getAssets(), "fonts/HelveticaNeue-Light.otf");
         Typeface hbqLight = Typeface.createFromAsset(getAssets(), "fonts/HelveticaBQ-Light.otf");
@@ -64,7 +71,7 @@ public class SignUpActivity extends AppCompatActivity {
                 password = sign_up_edittext_password.getText().toString();
                 confirmp = sign_up_edittext_confirm_password.getText().toString();
                 phone = sign_up_edittext_phone_number.getText().toString();
-                loading = ProgressDialog.show(SignUpActivity.this, "", "Registration Process", true, true);
+                loading = ProgressDialog.show(SignUpActivity.this, "", "Registration Process", true);
                 new registerTask().execute();
             }
         });

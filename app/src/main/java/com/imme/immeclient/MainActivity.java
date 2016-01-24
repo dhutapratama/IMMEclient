@@ -214,7 +214,6 @@ public class MainActivity extends AppCompatActivity
             }
         });
 
-
         RelativeLayout last_transaction_1 = (RelativeLayout) findViewById(R.id.last_transaction_1);
         last_transaction_1.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -434,11 +433,11 @@ public class MainActivity extends AppCompatActivity
             if(resultCode != 0) {
                 if (intent_status.equals("deposit")) {
                     voucher_code = result.getContents();
-                    loading = ProgressDialog.show(MainActivity.this, "", "Validating voucher", true, true);
+                    loading = ProgressDialog.show(MainActivity.this, "", "Validating voucher", true);
                     new voucher_check().execute();
                 } else if (intent_status.equals("send")){
                     transaction_code = result.getContents();
-                    loading = ProgressDialog.show(MainActivity.this, "", "Checking recipient", true, true);
+                    loading = ProgressDialog.show(MainActivity.this, "", "Checking recipient", true);
                     new send_check().execute();
                 }
             } else {
@@ -472,8 +471,14 @@ public class MainActivity extends AppCompatActivity
             if (error_status) {
                 Toast.makeText(MainActivity.this, error_message, Toast.LENGTH_LONG).show();
             } else {
-                Intent intentView = new Intent(getApplicationContext(), SendPayPersonalDetail.class);
-                startActivity(intentView);
+                if (GlobalVariable.TRANSACTION_TYPE.equals("1")) {
+                    Intent intentView = new Intent(getApplicationContext(), SendPayPersonalDetail.class);
+                    startActivity(intentView);
+                } else if (GlobalVariable.TRANSACTION_TYPE.equals("8")) {
+                    Intent intentView = new Intent(getApplicationContext(), Send_pay_details.class);
+                    startActivity(intentView);
+                }
+
             }
         }
     }
@@ -491,6 +496,7 @@ public class MainActivity extends AppCompatActivity
             GlobalVariable.PAY_RECIPIENT_NAME = serviceResult.getString("recipient_name");
             GlobalVariable.PAY_AMOUNT = serviceResult.getString("amount");
             GlobalVariable.PAY_APPLY_CODE = serviceResult.getString("apply_code");
+            GlobalVariable.TRANSACTION_TYPE = serviceResult.getString("transaction_type");
         }
         return serviceResult.getBoolean("error");
     }

@@ -281,24 +281,37 @@ public class PinActivity extends AppCompatActivity {
 
             } else {
                 finish();
-                Intent intentView = new Intent(getApplicationContext(), PersonalSend.class);
-                startActivity(intentView);
+                if (GlobalVariable.TRANSACTION_TYPE.equals("1"))
+                {
+                    Intent intentView = new Intent(getApplicationContext(), PersonalSend.class);
+                    startActivity(intentView);
+                } else {
+                    Intent intentView = new Intent(getApplicationContext(), PaymentDetails.class);
+                    startActivity(intentView);
+                }
             }
         }
     }
 
-
+    JSONObject serviceResult;
     public void paySend() throws JSONException, IOException {
         String postData ="session_key=" + URLEncoder.encode(GlobalVariable.SECURITY_SESSION_KEY, "UTF-8")
                 + "&apply_code=" + URLEncoder.encode(GlobalVariable.PAY_APPLY_CODE, "UTF-8")
                 + "&pin_1=" + URLEncoder.encode(pin, "UTF-8");
-        JSONObject serviceResult = WebServiceClient.postRequest(GlobalVariable.DISTRIBUTOR_SERVER + "pay/send", postData);
+
+        if (GlobalVariable.TRANSACTION_TYPE.equals("1")){
+            serviceResult = WebServiceClient.postRequest(GlobalVariable.DISTRIBUTOR_SERVER + "pay/send", postData);
+        } else if (GlobalVariable.TRANSACTION_TYPE.equals("8")) {
+            serviceResult = WebServiceClient.postRequest(GlobalVariable.DISTRIBUTOR_SERVER + "pay/payment", postData);
+        }
 
         if (serviceResult.getBoolean("error")){
             error_status = true;
             error_message = serviceResult.getString("message");
             error_code = serviceResult.getInt("message");
+            Log.v("Error","Yes");
         } else {
+            Log.v("Server","No");
             error_status = false;
             // Money
             GlobalVariable.MONEY_MAIN_BALANCE = Integer.parseInt(serviceResult.getString("balance"));

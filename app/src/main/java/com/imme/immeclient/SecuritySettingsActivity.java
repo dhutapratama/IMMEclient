@@ -63,8 +63,6 @@ public class SecuritySettingsActivity extends AppCompatActivity {
         }
     }
 
-    List<Map<String, String>> planetsList = new ArrayList<Map<String,String>>();
-
     private void initList() {
         int[] icon = new int[]{
                 R.mipmap.profile_camera,
