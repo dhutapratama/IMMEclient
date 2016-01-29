@@ -308,10 +308,8 @@ public class PinActivity extends AppCompatActivity {
         if (serviceResult.getBoolean("error")){
             error_status = true;
             error_message = serviceResult.getString("message");
-            error_code = serviceResult.getInt("message");
-            Log.v("Error","Yes");
+            error_code = serviceResult.getInt("code");
         } else {
-            Log.v("Server","No");
             error_status = false;
             // Money
             GlobalVariable.MONEY_MAIN_BALANCE = Integer.parseInt(serviceResult.getString("balance"));

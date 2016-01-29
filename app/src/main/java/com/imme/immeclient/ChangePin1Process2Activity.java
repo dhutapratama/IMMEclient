@@ -158,6 +158,7 @@ public class ChangePin1Process2Activity extends AppCompatActivity {
             case android.R.id.home:
                 // app icon in action bar clicked; goto parent activity.
                 Intent intent = new Intent(ChangePin1Process2Activity.this, SecuritySettingsActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(intent);
                 return true;
             default:
@@ -173,7 +174,8 @@ public class ChangePin1Process2Activity extends AppCompatActivity {
                 Intent intent = new Intent(ChangePin1Process2Activity.this, ChangePin1Process3Activity.class);
                 startActivity(intent);
             } else {
-                finish();
+                Intent intent = new Intent(ChangePin1Process2Activity.this, ChangePin1Process1Activity.class);
+                startActivity(intent);
                 Toast.makeText(ChangePin1Process2Activity.this, "Your New PIN is not match", Toast.LENGTH_LONG).show();
             }
 
