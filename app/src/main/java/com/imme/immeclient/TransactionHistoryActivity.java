@@ -105,28 +105,7 @@ public class TransactionHistoryActivity extends AppCompatActivity {
     private void initList() throws JSONException {
         List<HashMap<String, String>> aList = new ArrayList<HashMap<String, String>>();
 
-        for (int i = 0; i < transactions.length(); i++) {
-            HashMap<String, String> hm = new HashMap<String, String>();
-            JSONObject transaction = transactions.getJSONObject(i);
-
-            if (transaction.getString("type").equals("1")) {
-                hm.put("image_trans_type", Integer.toString(R.mipmap.transaction_history_button_receive_icon));
-                hm.put("text_trans_type", "Receive");
-            } else if (transaction.getString("type").equals("2")) {
-                hm.put("image_trans_type", Integer.toString(R.mipmap.transaction_history_button_send_icon));
-                hm.put("text_trans_type", "Transfer");
-            } else if (transaction.getString("type").equals("5")) {
-                hm.put("image_trans_type", Integer.toString(R.mipmap.transaction_history_button_topup_icon));
-                hm.put("text_trans_type", "Deposit");
-            }
-            hm.put("date", transaction.getString("date"));
-            hm.put("name", transaction.getString("name"));
-            hm.put("amount", transaction.getString("amount"));
-
-            aList.add(hm);
-        }
-
-        if(transactions.length() == 0) {
+        if(transactions == null) {
             HashMap<String, String> hm = new HashMap<String, String>();
             hm.put("image_trans_type", Integer.toString(R.mipmap.imme_logo));
             hm.put("text_trans_type", "-");
@@ -135,6 +114,28 @@ public class TransactionHistoryActivity extends AppCompatActivity {
             hm.put("amount", "-");
 
             aList.add(hm);
+        } else {
+            for (int i = 0; i < transactions.length(); i++) {
+                HashMap<String, String> hm = new HashMap<String, String>();
+                JSONObject transaction = transactions.getJSONObject(i);
+
+                if (transaction.getString("type").equals("1")) {
+                    hm.put("image_trans_type", Integer.toString(R.mipmap.transaction_history_button_receive_icon));
+                    hm.put("text_trans_type", "Receive");
+                } else if (transaction.getString("type").equals("2")) {
+                    hm.put("image_trans_type", Integer.toString(R.mipmap.transaction_history_button_send_icon));
+                    hm.put("text_trans_type", "Transfer");
+                } else if (transaction.getString("type").equals("5")) {
+                    hm.put("image_trans_type", Integer.toString(R.mipmap.transaction_history_button_topup_icon));
+                    hm.put("text_trans_type", "Deposit");
+                }
+                hm.put("date", transaction.getString("date"));
+                hm.put("name", transaction.getString("name"));
+                hm.put("amount", transaction.getString("amount"));
+
+                aList.add(hm);
+            }
+
         }
 
         String[] from = {"image_trans_type", "text_trans_type", "date", "name", "amount"};
