@@ -4,30 +4,37 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingLeft="@dimen/zero"
-    android:paddingRight="@dimen/zero"
-    android:paddingBottom="@dimen/zero"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/zero"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context="com.imme.immeclient.FeedbackActivity"
     android:orientation="vertical">
 
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Send feedback to IMME"
+        android:id="@+id/textView2"
+        android:layout_marginTop="10dp"/>
+
     <EditText
         android:id="@+id/EditTextFeedbackBody"
         android:layout_height="wrap_content"
-        android:hint="Enter you describe problem"
+        android:hint="Description"
         android:textColor="#000000"
+        android:layout_marginTop="10dp"
         android:inputType="textMultiLine"
-        android:lines="5"
         android:layout_width="fill_parent">
     </EditText>
 
     <Button
+        android:layout_marginTop="10dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="send"
-        android:paddingTop="5dp"
-        android:paddingBottom="5dp"
-        android:layout_gravity="center"
-        android:background="@drawable/account_balance_gift_bg"/>
+        android:layout_gravity="center_horizontal"
+        android:background="@drawable/account_balance_gift_bg"
+        android:id="@+id/btn_send_feedback"/>
 
 </LinearLayout>

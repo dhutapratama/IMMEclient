@@ -23,147 +23,10 @@
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
 
-                <RelativeLayout
-                    android:layout_width="fill_parent"
-                    android:background="@drawable/payment_details_list_bg"
+                <ListView
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:clickable="true"
-                    android:id="@+id/last_transaction_payment_1"
-                    android:paddingLeft="15dp"
-                    android:paddingRight="15dp">
-
-                    <TextView android:text="Marlboro"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:paddingTop="@dimen/main_lastTransaction_padding"
-                        android:paddingBottom="@dimen/main_lastTransaction_padding"
-                        android:textColor="#000000"
-                        android:textSize="13sp"
-                        android:fontFamily="sans-serif-thin"
-                        android:singleLine="true"
-                        android:layout_alignParentLeft="true"
-                        android:id="@+id/ltp_name"
-                        android:maxWidth="180dp"/>
-
-                    <TextView android:text="1"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:paddingTop="@dimen/main_lastTransaction_padding"
-                        android:paddingBottom="@dimen/main_lastTransaction_padding"
-                        android:textColor="#000000"
-                        android:textSize="15sp"
-                        android:fontFamily="sans-serif-thin"
-                        android:gravity="right"
-                        android:width="30dp"
-                        android:layout_toLeftOf="@+id/ltp_price"
-                        android:id="@+id/ltp_qty"/>
-
-
-                    <TextView android:text="Rp. 20.500"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:paddingTop="@dimen/main_lastTransaction_padding"
-                        android:paddingBottom="@dimen/main_lastTransaction_padding"
-                        android:textColor="#000000"
-                        android:textSize="15sp"
-                        android:fontFamily="sans-serif-thin"
-                        android:layout_alignParentRight="true"
-                        android:width="100dp"
-                        android:textAlignment="textEnd"
-                        android:id="@id/ltp_price" />
-
-                </RelativeLayout>
-
-                <RelativeLayout
-                    android:layout_width="fill_parent"
-                    android:background="@drawable/payment_details_list_bg"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:clickable="true"
-                    android:id="@+id/last_transaction_payment_1"
-                    android:paddingLeft="15dp"
-                    android:paddingRight="15dp">
-
-                    <TextView android:text="Surya 16 Filter"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:paddingTop="@dimen/main_lastTransaction_padding"
-                        android:paddingBottom="@dimen/main_lastTransaction_padding"
-                        android:textColor="#000000"
-                        android:textSize="13sp"
-                        android:fontFamily="sans-serif-thin"
-                        android:singleLine="true"
-                        android:layout_alignParentLeft="true"
-                        android:id="@+id/ltp_name"
-                        android:maxWidth="180dp"/>
-
-                    <TextView android:text="100"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:paddingTop="@dimen/main_lastTransaction_padding"
-                        android:paddingBottom="@dimen/main_lastTransaction_padding"
-                        android:textColor="#000000"
-                        android:textSize="15sp"
-                        android:fontFamily="sans-serif-thin"
-                        android:gravity="right"
-                        android:width="30dp"
-                        android:layout_toLeftOf="@+id/ltp_price"
-                        android:id="@+id/ltp_qty"/>
-
-
-                    <TextView android:text="Rp. 2.000.500"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:paddingTop="@dimen/main_lastTransaction_padding"
-                        android:paddingBottom="@dimen/main_lastTransaction_padding"
-                        android:textColor="#000000"
-                        android:textSize="15sp"
-                        android:fontFamily="sans-serif-thin"
-                        android:layout_alignParentRight="true"
-                        android:width="100dp"
-                        android:textAlignment="textEnd"
-                        android:id="@id/ltp_price" />
-
-                </RelativeLayout>
-
-                <RelativeLayout
-                    android:layout_width="fill_parent"
-                    android:background="#fafafa"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:clickable="true"
-                    android:id="@+id/last_transaction_payment_9"
-                    android:paddingLeft="15dp"
-                    android:paddingRight="15dp">
-
-                    <TextView android:text="Discount :"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:paddingTop="@dimen/main_lastTransaction_padding"
-                        android:paddingBottom="@dimen/main_lastTransaction_padding"
-                        android:textColor="#000000"
-                        android:textSize="15sp"
-                        android:fontFamily="sans-serif-thin"
-                        android:textAlignment="textEnd"
-                        android:width="100dp"
-                        android:layout_toLeftOf="@+id/ltp_discount_price" />
-
-
-                    <TextView android:text="Rp. 500"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:paddingTop="@dimen/main_lastTransaction_padding"
-                        android:paddingBottom="@dimen/main_lastTransaction_padding"
-                        android:textColor="#000000"
-                        android:textSize="15sp"
-                        android:fontFamily="sans-serif-thin"
-                        android:textAlignment="textEnd"
-                        android:layout_alignParentRight="true"
-                        android:width="130dp"
-                        android:id="@+id/ltp_discount_price"/>
-
-                </RelativeLayout>
+                    android:id="@+id/product_list" />
 
                 <RelativeLayout
                     android:layout_width="fill_parent"
@@ -185,10 +48,10 @@
                         android:fontFamily="sans-serif-thin"
                         android:width="100dp"
                         android:textAlignment="textEnd"
-                        android:layout_toLeftOf="@+id/ltp_discount_price" />
+                        android:gravity="end" />
 
 
-                    <TextView android:text="Rp. 50.000.000"
+                    <TextView android:text="Rp [AMOUNT]"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:paddingTop="@dimen/main_lastTransaction_padding"
@@ -197,9 +60,10 @@
                         android:textSize="15sp"
                         android:fontFamily="sans-serif-thin"
                         android:textAlignment="textEnd"
+                        android:gravity="end"
                         android:layout_alignParentRight="true"
                         android:width="130dp"
-                        android:id="@+id/ltp_discount_price"/>
+                        android:id="@+id/pd_total_price"/>
 
                 </RelativeLayout>
 

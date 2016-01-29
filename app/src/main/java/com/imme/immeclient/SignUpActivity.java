@@ -1,18 +1,16 @@
 package com.imme.immeclient;
 
+import android.app.ProgressDialog;
 import android.content.Context;
-import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.Typeface;
+import android.os.AsyncTask;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -32,25 +30,21 @@ import java.net.URLEncoder;
 public class SignUpActivity extends AppCompatActivity {
 
     String fullname, email, password, confirmp, phone;
+    private ProgressDialog loading = null;
+    Boolean login_error = false;
+    private String message = null;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign_up);
-
         SystemBarTintManager tintManager = new SystemBarTintManager(this);
-        // enable status bar tint
         tintManager.setStatusBarTintEnabled(true);
-        // enable navigation bar tint
         tintManager.setNavigationBarTintEnabled(true);
-        // set a custom tint color for all system bars
         tintManager.setTintColor(Color.parseColor("#ff0f99da"));
 
-        // Start Font
-        Typeface hnLight = Typeface.createFromAsset(getAssets(),
-                "fonts/HelveticaNeue-Light.otf");
-
-        Typeface hbqLight = Typeface.createFromAsset(getAssets(),
-                "fonts/HelveticaBQ-Light.otf");
+        Typeface hnLight = Typeface.createFromAsset(getAssets(), "fonts/HelveticaNeue-Light.otf");
+        Typeface hbqLight = Typeface.createFromAsset(getAssets(), "fonts/HelveticaBQ-Light.otf");
 
         final EditText sign_up_edittext_full_name = (EditText) findViewById(R.id.sign_up_edittext_full_name);
         sign_up_edittext_full_name.setTypeface(hnLight);
@@ -67,36 +61,47 @@ public class SignUpActivity extends AppCompatActivity {
         final TextView sign_up_edittext_phone_number = (EditText) findViewById(R.id.sign_up_edittext_phone_number);
         sign_up_edittext_phone_number.setTypeface(hnLight);
 
-        final TextView sign_up_button_sign_up = (TextView) findViewById(R.id.sign_up_button_sign_up);
+        final Button sign_up_button_sign_up = (Button) findViewById(R.id.sign_up_button_sign_up);
         sign_up_button_sign_up.setTypeface(hbqLight);
 
         sign_up_button_sign_up.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                Boolean signup_success = false;
-                try {
-                    fullname = sign_up_edittext_full_name.getText().toString();
-                    email = sign_up_edittext_email.getText().toString();
-                    password = sign_up_edittext_password.getText().toString();
-                    confirmp = sign_up_edittext_confirm_password.getText().toString();
-                    phone = sign_up_edittext_phone_number.getText().toString();
-                    signup_success = doSignup();
-                } catch (JSONException e) {
-                    Log.e("JSONException", e.toString());
-                    e.printStackTrace();
-                } catch (IOException e) {
-                    Log.e("IOException", e.toString());
-                    e.printStackTrace();
-                }
-
-                if (signup_success) {
-                    Intent intent = new Intent(SignUpActivity.this, SignInActivity.class);
-                    startActivity(intent);
-                }
+                fullname = sign_up_edittext_full_name.getText().toString();
+                email = sign_up_edittext_email.getText().toString();
+                password = sign_up_edittext_password.getText().toString();
+                confirmp = sign_up_edittext_confirm_password.getText().toString();
+                phone = sign_up_edittext_phone_number.getText().toString();
+                loading = ProgressDialog.show(SignUpActivity.this, "", "Registration Process", true);
+                new registerTask().execute();
             }
         });
     }
 
-    private Boolean doSignup() throws JSONException, IOException {
+    private class registerTask extends AsyncTask<String, Void, Object> {
+        protected Object doInBackground(String... args) {
+            try {
+                doSignup();
+            } catch (JSONException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            return null;
+        }
+
+        protected void onPostExecute(Object result) {
+            if (SignUpActivity.this.loading != null) {
+                SignUpActivity.this.loading.dismiss();
+            }
+            if (login_error) {
+                Toast.makeText(SignUpActivity.this, message, Toast.LENGTH_LONG).show();
+            } else {
+                finish();
+            }
+        }
+    }
+
+    private void doSignup() throws JSONException, IOException {
         String postData = "fullname=" + URLEncoder.encode(fullname, "UTF-8")
                 + "&email=" + URLEncoder.encode(email, "UTF-8")
                 + "&password=" + URLEncoder.encode(password, "UTF-8")
@@ -104,16 +109,13 @@ public class SignUpActivity extends AppCompatActivity {
                 + "&phone=" + URLEncoder.encode(phone, "UTF-8");
 
         JSONObject serviceResult = WebServiceClient.postRequest(GlobalVariable.DISTRIBUTOR_SERVER + "registration", postData);
-
-        Boolean signupstatus = false;
         if (!serviceResult.getBoolean("error")){
-            signupstatus = true;
             GlobalVariable.APP_FIRST_TIME_APP = "false";
             commit();
+            login_error = false;
+        } else {
+            message = serviceResult.getString("message");
         }
-
-        Toast.makeText(this, serviceResult.getString("message"), Toast.LENGTH_LONG).show();
-        return signupstatus;
     }
 
     public void writeFile(String varname, String data) {
