@@ -57,7 +57,7 @@ public class FeedbackActivity extends AppCompatActivity {
                 EditText text_feedback = (EditText) findViewById(R.id.EditTextFeedbackBody);
                 message = text_feedback.getText().toString();
                 loading = ProgressDialog.show(FeedbackActivity.this, "", "Sending Feedback", false, true);
-                new pin_check().execute();
+                new send_feedback().execute();
             }
         });
     }
@@ -74,10 +74,10 @@ public class FeedbackActivity extends AppCompatActivity {
         }
     }
 
-    private class pin_check extends AsyncTask<String, Void, Object> {
+    private class send_feedback extends AsyncTask<String, Void, Object> {
         protected Object doInBackground(String... args) {
             try {
-                paySend();
+                sendFeedback();
             } catch (JSONException e) {
                 e.printStackTrace();
             } catch (IOException e) {
@@ -99,13 +99,14 @@ public class FeedbackActivity extends AppCompatActivity {
             } else {
                 finish();
                 Intent intentView = new Intent(getApplicationContext(), MainActivity.class);
+                intentView.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(intentView);
                 Toast.makeText(FeedbackActivity.this, message, Toast.LENGTH_LONG).show();
             }
         }
     }
 
-    public void paySend() throws JSONException, IOException {
+    public void sendFeedback() throws JSONException, IOException {
         String postData ="session_key=" + URLEncoder.encode(GlobalVariable.SECURITY_SESSION_KEY, "UTF-8")
                 + "&message=" + URLEncoder.encode(message, "UTF-8");
 
@@ -114,7 +115,7 @@ public class FeedbackActivity extends AppCompatActivity {
         if (serviceResult.getBoolean("error")){
             error_status = true;
             error_message = serviceResult.getString("message");
-            error_code = serviceResult.getInt("message");
+            error_code = serviceResult.getInt("code");
         } else {
             error_status = false;
             message = serviceResult.getString("message");
