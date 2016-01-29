@@ -68,10 +68,10 @@ public class SecuritySettingsActivity extends AppCompatActivity {
 
     private void initList() {
         int[] icon = new int[]{
-                R.mipmap.profile_camera,
-                R.mipmap.profile_camera,
-                R.mipmap.profile_camera,
-                R.mipmap.profile_camera
+                R.mipmap.change_pin1,
+                R.mipmap.change_pin2,
+                R.mipmap.change_gps_location,
+                R.mipmap.change_using_color_pin
         };
 
         String[] menu_item = new String[]{
