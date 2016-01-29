@@ -9,8 +9,7 @@
     android:paddingTop="@dimen/zero"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context="com.imme.immeclient.FeedbackActivity"
-    android:orientation="vertical"
-    android:gravity="center">
+    android:orientation="vertical">
 
     <TextView
         android:layout_width="wrap_content"
@@ -35,6 +34,7 @@
         android:layout_height="wrap_content"
         android:text="send"
         android:layout_gravity="center_horizontal"
-        android:background="@drawable/account_balance_gift_bg"/>
+        android:background="@drawable/account_balance_gift_bg"
+        android:id="@+id/btn_send_feedback"/>
 
 </LinearLayout>
