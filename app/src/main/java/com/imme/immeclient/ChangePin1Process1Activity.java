@@ -156,7 +156,8 @@ public class ChangePin1Process1Activity extends AppCompatActivity {
         switch (item.getItemId()) {
             case android.R.id.home:
                 // app icon in action bar clicked; goto parent activity.
-                this.finish();
+                Intent intent = new Intent(ChangePin1Process1Activity.this, SecuritySettingsActivity.class);
+                startActivity(intent);
                 return true;
             default:
                 return super.onOptionsItemSelected(item);

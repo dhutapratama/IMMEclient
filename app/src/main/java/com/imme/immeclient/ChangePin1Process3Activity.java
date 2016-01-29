@@ -1,6 +1,7 @@
 package com.imme.immeclient;
 
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -19,7 +20,7 @@ public class ChangePin1Process3Activity extends AppCompatActivity {
     String pin = "";
     Button button_0, button_1, button_2, button_3, button_4, button_5, button_6, button_7, button_8, button_9;
     ImageButton button_backspace;
-    View pin_1, pin_2, pin_3, pin_4;
+    View pin_1, pin_2, pin_3, pin_4, pin_5, pin_6;
     ProgressDialog loading;
     Boolean error_status = false;
     String error_message = null;
@@ -53,6 +54,8 @@ public class ChangePin1Process3Activity extends AppCompatActivity {
         pin_2 = (View) findViewById(R.id.pin_2);
         pin_3 = (View) findViewById(R.id.pin_3);
         pin_4 = (View) findViewById(R.id.pin_4);
+        pin_5 = (View) findViewById(R.id.pin_5);
+        pin_6 = (View) findViewById(R.id.pin_6);
 
         button_0.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -146,6 +149,12 @@ public class ChangePin1Process3Activity extends AppCompatActivity {
                     case 3:
                         pin_4.setBackgroundColor(Color.WHITE);
                         break;
+                    case 4:
+                        pin_5.setBackgroundColor(Color.WHITE);
+                        break;
+                    case 5:
+                        pin_6.setBackgroundColor(Color.WHITE);
+                        break;
                     default:
                         break;
                 }
@@ -159,7 +168,8 @@ public class ChangePin1Process3Activity extends AppCompatActivity {
         switch (item.getItemId()) {
             case android.R.id.home:
                 // app icon in action bar clicked; goto parent activity.
-                this.finish();
+                Intent intent = new Intent(ChangePin1Process3Activity.this, SecuritySettingsActivity.class);
+                startActivity(intent);
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
@@ -184,6 +194,12 @@ public class ChangePin1Process3Activity extends AppCompatActivity {
                 break;
             case 4:
                 pin_4.setBackgroundColor(Color.GREEN);
+                break;
+            case 5:
+                pin_5.setBackgroundColor(Color.GREEN);
+                break;
+            case 6:
+                pin_6.setBackgroundColor(Color.GREEN);
                 break;
             default:
                 break;

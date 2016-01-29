@@ -41,31 +41,45 @@ android:orientation="vertical">
 
         <View
             android:layout_height="5dip"
-            android:layout_width="50dp"
+            android:layout_width="40dp"
             android:background="#FFFFFF"
             android:layout_margin="5dp"
             android:id="@+id/pin_1" />
 
         <View
             android:layout_height="5dip"
-            android:layout_width="50dp"
+            android:layout_width="40dp"
             android:background="#FFFFFF"
             android:layout_margin="5dp"
             android:id="@+id/pin_2" />
 
         <View
             android:layout_height="5dip"
-            android:layout_width="50dp"
+            android:layout_width="40dp"
             android:background="#FFFFFF"
             android:layout_margin="5dp"
             android:id="@+id/pin_3" />
 
         <View
             android:layout_height="5dip"
-            android:layout_width="50dp"
+            android:layout_width="40dp"
             android:background="#FFFFFF"
             android:layout_margin="5dp"
             android:id="@+id/pin_4" />
+
+        <View
+            android:layout_height="5dip"
+            android:layout_width="40dp"
+            android:background="#FFFFFF"
+            android:layout_margin="5dp"
+            android:id="@+id/pin_5" />
+
+        <View
+            android:layout_height="5dip"
+            android:layout_width="40dp"
+            android:background="#FFFFFF"
+            android:layout_margin="5dp"
+            android:id="@+id/pin_6" />
 
     </LinearLayout>
 
