@@ -56,7 +56,7 @@ public class FeedbackActivity extends AppCompatActivity {
             public void onClick(View view) {
                 EditText text_feedback = (EditText) findViewById(R.id.EditTextFeedbackBody);
                 message = text_feedback.getText().toString();
-                loading = ProgressDialog.show(FeedbackActivity.this, "", "Sending Feedback", false, true);
+                loading = ProgressDialog.show(FeedbackActivity.this, "", "Sending Feedback", false);
                 new send_feedback().execute();
             }
         });
