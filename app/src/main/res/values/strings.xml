@@ -194,4 +194,7 @@ distribution media, documentation, registration cards, and insertions.</string>
     <string name="title_activity_change_pin1_process1">Change Pin 1 Process 1 </string>
     <string name="title_activity_change_pin1_process2">Change Pin 1 Process 2 </string>
     <string name="title_activity_change_pin1_process3">Change Pin 1 Process 3 </string>
+    <string name="title_activity_change_pin2_process1">Change Pin 2 Process 1 </string>
+    <string name="title_activity_change_pin2_process2">Change Pin 2 Process 2 </string>
+    <string name="title_activity_change_pin2_process3">Change Pin 2 Process 3 </string>
 </resources>
