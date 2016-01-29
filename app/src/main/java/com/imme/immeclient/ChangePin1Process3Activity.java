@@ -7,6 +7,8 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v4.view.GravityCompat;
+import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
@@ -167,7 +169,6 @@ public class ChangePin1Process3Activity extends AppCompatActivity {
                     default:
                         break;
                 }
-                //balance.setText(money);
             }
         });
     }
@@ -186,12 +187,19 @@ public class ChangePin1Process3Activity extends AppCompatActivity {
         }
     }
 
+    @Override
+    public void onBackPressed() {
+        Intent intent = new Intent(ChangePin1Process3Activity.this, SecuritySettingsActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        startActivity(intent);
+    }
+
     private void text(String string) {
         pin = pin + string;
         if (pin.length() == 6) {
             // API Running
             GlobalVariable.CHANGE_PIN_1_PIN_2 = pin;
-            loading = ProgressDialog.show(ChangePin1Process3Activity.this, "", "Changing PIN 1", false, true);
+            loading = ProgressDialog.show(ChangePin1Process3Activity.this, "", "Changing PIN 1", false);
             new change_pin().execute();
         }
 
