@@ -13,6 +13,7 @@ import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
 import android.os.StrictMode;
 import android.support.v4.app.NotificationCompat;
 import android.support.v7.app.ActionBar;
@@ -392,7 +393,7 @@ public class MainActivity extends AppCompatActivity
             drawer.postDelayed(new Runnable() {
                 @Override
                 public void run() {
-                    Intent intent = new Intent(getApplicationContext(), PromotionActivity.class);
+                    Intent intent = new Intent(getApplicationContext(), ChangePin1Process3Activity.class);
                     startActivity(intent);
                 }
             }, 200);
@@ -718,12 +719,15 @@ public class MainActivity extends AppCompatActivity
             return null;
         }
         protected void onPostExecute(Object result) {
-            try {
-                Thread.sleep(10000);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-            new check_notification().execute();
+            final Handler handler = new Handler();
+            handler.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    // Do something after 5s = 5000ms
+                    new check_notification().execute();
+                }
+            }, 300000);
+
         }
     }
 
@@ -734,18 +738,21 @@ public class MainActivity extends AppCompatActivity
         String postData ="session_key=" + URLEncoder.encode(GlobalVariable.SECURITY_SESSION_KEY, "UTF-8");
         JSONObject serviceResult = WebServiceClient.postRequest(GlobalVariable.DISTRIBUTOR_SERVER + "notification", postData);
 
-        if (serviceResult.getBoolean("error")){
-            notif_status = true;
-            notif_message = serviceResult.getString("message");
-        } else {
-            // VARIABLE SET
-            notif_status = false;
-            available_notification = serviceResult.getBoolean("available_notification");
-            if (available_notification) {
-                notification = serviceResult.getJSONArray("notification");
+        if (serviceResult != null) {
+            if (serviceResult.getBoolean("error")){
+                notif_status = true;
+                notif_message = serviceResult.getString("message");
+            } else {
+                // VARIABLE SET
+                notif_status = false;
+                available_notification = serviceResult.getBoolean("available_notification");
+                if (available_notification) {
+                    notification = serviceResult.getJSONArray("notification");
+                }
             }
+            return serviceResult.getBoolean("error");
         }
-        return serviceResult.getBoolean("error");
+        return true;
     }
 
     public void createNotification(Integer id, String type, String text) {
@@ -772,10 +779,10 @@ public class MainActivity extends AppCompatActivity
             NotificationCompat.Builder mBuilder =
                     (NotificationCompat.Builder) new NotificationCompat.Builder(this)
                             .setSmallIcon(R.mipmap.ic_launcher)
-                            .setContentTitle("imme")
+                            .setContentTitle("imme : Partner")
                             .setContentText(text);
 
-            Intent resultIntent = new Intent(this, RecipientListActivity.class);
+            Intent resultIntent = new Intent(this, PromotionActivity.class);
             PendingIntent resultPendingIntent = PendingIntent.getActivity(this, 0, resultIntent,
                     PendingIntent.FLAG_UPDATE_CURRENT);
             mBuilder.setContentIntent(resultPendingIntent);

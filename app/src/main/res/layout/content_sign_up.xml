@@ -102,6 +102,6 @@
                 android:text="Sign up"
                 android:layout_marginTop="20dp"
                 />
-            </LinearLayout>
+        </LinearLayout>
     </ScrollView>
 </LinearLayout>
