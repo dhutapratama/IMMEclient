@@ -77,4 +77,10 @@ public class GlobalVariable {
     public static String RECEIVE_SENDER_PICTURE = "";
     public static int DEPOSIT_AMOUNT = 0;
     public static String TRANSACTION_TYPE = "";
+
+    // CACHE CHANGE PIN 1
+    public static String CHANGE_PIN_1_NEW;
+    public static String CHANGE_PIN_1_CONFIRM;
+    public static String CHANGE_PIN_1_PIN_2;
+
 }
