@@ -23,7 +23,7 @@ public class AboutActivity extends AppCompatActivity {
         SystemBarTintManager tintManager = new SystemBarTintManager(this);
         tintManager.setStatusBarTintEnabled(true);
         tintManager.setNavigationBarTintEnabled(true);
-        tintManager.setTintColor(Color.parseColor("#FF249962"));
+        tintManager.setTintColor(Color.parseColor("#FF03B0FF"));
     }
 
     @Override
