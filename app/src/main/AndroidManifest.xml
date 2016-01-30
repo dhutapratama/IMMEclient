@@ -371,29 +371,13 @@
             android:label="@string/title_activity_account_verify_phone_number_step1"
             android:parentActivityName=".MainActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.NoActionBar">
+            android:theme="@style/AppThemeBlue.NoActionBar">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.imme.immeclient.MainActivity" />
 
             <intent-filter>
                 <action android:name="com.imme.immeclient.AccountVerifyPhoneNumberStep1Activity" />
-
-                <category android:name="android.intent.category.DEFAULT" />
-            </intent-filter>
-        </activity>
-        <activity
-            android:name=".AccountVerifyPhoneNumberStep2Activity"
-            android:label="@string/title_activity_account_verify_phone_number_step2"
-            android:parentActivityName=".MainActivity"
-            android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.NoActionBar">
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.imme.immeclient.MainActivity" />
-
-            <intent-filter>
-                <action android:name="com.imme.immeclient.AccountVerifyPhoneNumberStep2Activity" />
 
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
