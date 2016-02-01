@@ -42,9 +42,7 @@ public class RecipientListAddAccountActivity extends AppCompatActivity {
         setContentView(R.layout.activity_recipient_list_add_account);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-
         SystemBarTintManager tintManager = new SystemBarTintManager(this);
         // enable status bar tint
         tintManager.setStatusBarTintEnabled(true);
