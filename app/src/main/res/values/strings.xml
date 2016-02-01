@@ -197,4 +197,5 @@ distribution media, documentation, registration cards, and insertions.</string>
     <string name="title_activity_change_pin2_process1">Change Pin 2</string>
     <string name="title_activity_change_pin2_process2">Change Pin 2</string>
     <string name="title_activity_change_pin2_process3">Change Pin 2</string>
+    <string name="title_activity_recipient_list_add_account">Add Account</string>
 </resources>
