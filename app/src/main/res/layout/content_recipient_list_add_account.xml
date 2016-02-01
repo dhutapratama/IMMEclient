@@ -26,7 +26,7 @@
             android:layout_marginTop="20dp"
             android:textSize="13dp"
             android:textColor="#FF03B0FF"
-            android:hint="Enter your friend's Email"
+            android:hint="Enter your friend's email"
             android:maxLength="30"
             android:singleLine="true" />
 
@@ -46,27 +46,39 @@
             android:layout_height="20dp"
             android:layout_marginRight="45dp"
             android:layout_gravity="right|center_vertical"
-            android:background="@drawable/delete" />
+            android:background="@drawable/delete"
+            android:visibility="invisible"/>
     </FrameLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:gravity="center"
         android:paddingTop="100dp"
+
         android:orientation="vertical">
+        <ProgressBar
+            android:id="@+id/Loading"
+            style="?android:attr/progressBarStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="gone"/>
 
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@mipmap/profile_picture"/>
+            android:src="@mipmap/ic_launcher"
+            android:visibility="gone"
+            android:id="@+id/RecipientPicture"/>
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Steve Job"
+            android:text="[FULL_NAME]"
             android:paddingTop="10dp"
-            android:paddingBottom="10dp"/>
+            android:paddingBottom="10dp"
+            android:visibility="gone"
+            android:id="@+id/RecipientName"/>
 
         <TextView
             android:layout_width="wrap_content"
@@ -77,8 +89,9 @@
             android:paddingLeft="40dp"
             android:paddingRight="40dp"
             android:paddingBottom="5dp"
-            android:paddingTop="5dp"/>
-
+            android:paddingTop="5dp"
+            android:visibility="gone"
+            android:id="@+id/ButtonAdd"/>
 
     </LinearLayout>
 
