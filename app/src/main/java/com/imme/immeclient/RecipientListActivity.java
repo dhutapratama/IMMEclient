@@ -9,12 +9,11 @@ import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
 import android.widget.Toast;
+import android.widget.TextView;
 
 import com.readystatesoftware.systembartint.SystemBarTintManager;
 
@@ -59,6 +58,14 @@ public class RecipientListActivity extends AppCompatActivity {
             }
         });
 
+        TextView recipient_list_add_account = (TextView) findViewById(R.id.recipient_list_add_account);
+        recipient_list_add_account.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent("com.imme.immeclient.RecipientListAddAccountActivity");
+                startActivity(intent);
+            }
+        });
     }
 
     @Override
