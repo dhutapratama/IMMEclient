@@ -1,53 +1,33 @@
 package com.imme.immeclient;
 
 import android.app.ProgressDialog;
-import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
-import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
-import android.widget.TableRow;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.readystatesoftware.systembartint.SystemBarTintManager;
 
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.io.BufferedReader;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.OutputStreamWriter;
-import java.net.URLEncoder;
-import java.text.NumberFormat;
-import java.util.Locale;
-
-public class PinActivity extends AppCompatActivity {
+public class ChangePin1Process2Activity extends AppCompatActivity {
 
     String pin = "";
     Button button_0, button_1, button_2, button_3, button_4, button_5, button_6, button_7, button_8, button_9;
     ImageButton button_backspace;
     View pin_1, pin_2, pin_3, pin_4;
     ProgressDialog loading;
-    Boolean error_status = false;
-    String error_message = null;
-    Integer error_code = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_pin);
+        setContentView(R.layout.activity_change_pin1_process2);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -168,7 +148,6 @@ public class PinActivity extends AppCompatActivity {
                     default:
                         break;
                 }
-                //balance.setText(money);
             }
         });
     }
@@ -178,20 +157,36 @@ public class PinActivity extends AppCompatActivity {
         switch (item.getItemId()) {
             case android.R.id.home:
                 // app icon in action bar clicked; goto parent activity.
-                this.finish();
+                Intent intent = new Intent(ChangePin1Process2Activity.this, SecuritySettingsActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(intent);
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
         }
     }
 
+    @Override
+    public void onBackPressed() {
+        Intent intent = new Intent(ChangePin1Process2Activity.this, SecuritySettingsActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        startActivity(intent);
+    }
 
     private void text(String string) {
         pin = pin + string;
         if (pin.length() == 4) {
-            // API Running
-            loading = ProgressDialog.show(PinActivity.this, "", "Validating transfer", false, true);
-            new pin_check().execute();
+            if (GlobalVariable.CHANGE_PIN_1_NEW.equals(pin)) {
+                GlobalVariable.CHANGE_PIN_1_CONFIRM = pin;
+                Intent intent = new Intent(ChangePin1Process2Activity.this, ChangePin1Process3Activity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(intent);
+            } else {
+                Intent intent = new Intent(ChangePin1Process2Activity.this, ChangePin1Process1Activity.class);
+                startActivity(intent);
+                Toast.makeText(ChangePin1Process2Activity.this, "Your New PIN is not match", Toast.LENGTH_LONG).show();
+            }
+
         }
 
         switch (pin.length()) {
@@ -211,120 +206,6 @@ public class PinActivity extends AppCompatActivity {
                 break;
         }
         //balance.setText(money);
-    }
-
-    public void writeFile(String varname, String data) {
-        try {
-            OutputStreamWriter outputStreamWriter = new OutputStreamWriter(openFileOutput(varname, Context.MODE_PRIVATE));
-            outputStreamWriter.write(data);
-            outputStreamWriter.close();
-        }
-        catch (IOException e) {
-            Log.e("Exception", "File write failed: " + e.toString());
-        }
-    }
-
-    private String readFile(String varname) {
-        String ret = "";
-        try {
-            InputStream inputStream = openFileInput(varname);
-
-            if ( inputStream != null ) {
-                InputStreamReader inputStreamReader = new InputStreamReader(inputStream);
-                BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
-                String receiveString = "";
-                StringBuilder stringBuilder = new StringBuilder();
-
-                while ( (receiveString = bufferedReader.readLine()) != null ) {
-                    stringBuilder.append(receiveString);
-                }
-
-                inputStream.close();
-                ret = stringBuilder.toString();
-            }
-        }
-        catch (FileNotFoundException e) {
-            Log.e("SplashScreen", "File not found: " + e.toString());
-        } catch (IOException e) {
-            Log.e("SplashScreen", "Can not read file: " + e.toString());
-        }
-        return ret;
-    }
-
-    private class pin_check extends AsyncTask<String, Void, Object> {
-        protected Object doInBackground(String... args) {
-            try {
-                paySend();
-            } catch (JSONException e) {
-                e.printStackTrace();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-            return null;
-        }
-
-        protected void onPostExecute(Object result) {
-            if (PinActivity.this.loading != null) {
-                PinActivity.this.loading.dismiss();
-            }
-            if (error_status) {
-                if (error_code == 113) {
-                    finish();
-                    Toast.makeText(PinActivity.this, error_message + " Please try again", Toast.LENGTH_LONG).show();
-                } else {
-                    Toast.makeText(PinActivity.this, error_message, Toast.LENGTH_LONG).show();
-                    finish();
-                    Intent intent = new Intent(PinActivity.this, MainActivity.class);
-                    intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                    startActivity(intent);
-                }
-
-            } else {
-                finish();
-                if (GlobalVariable.TRANSACTION_TYPE.equals("1"))
-                {
-                    Intent intentView = new Intent(getApplicationContext(), PersonalSend.class);
-                    startActivity(intentView);
-                } else {
-                    Intent intentView = new Intent(getApplicationContext(), PaymentDetails.class);
-                    startActivity(intentView);
-                }
-            }
-        }
-    }
-
-    JSONObject serviceResult;
-    public void paySend() throws JSONException, IOException {
-        String postData ="session_key=" + URLEncoder.encode(GlobalVariable.SECURITY_SESSION_KEY, "UTF-8")
-                + "&apply_code=" + URLEncoder.encode(GlobalVariable.PAY_APPLY_CODE, "UTF-8")
-                + "&pin_1=" + URLEncoder.encode(pin, "UTF-8");
-
-        if (GlobalVariable.TRANSACTION_TYPE.equals("1")){
-            serviceResult = WebServiceClient.postRequest(GlobalVariable.DISTRIBUTOR_SERVER + "pay/send", postData);
-        } else if (GlobalVariable.TRANSACTION_TYPE.equals("8")) {
-            serviceResult = WebServiceClient.postRequest(GlobalVariable.DISTRIBUTOR_SERVER + "pay/payment", postData);
-        }
-
-        if (serviceResult.getBoolean("error")){
-            error_status = true;
-            error_message = serviceResult.getString("message");
-            error_code = serviceResult.getInt("code");
-        } else {
-            error_status = false;
-            // Money
-            GlobalVariable.MONEY_MAIN_BALANCE = Integer.parseInt(serviceResult.getString("balance"));
-            commit();
-        }
-    }
-
-    private void commit() throws JSONException {
-        String moneyContent = readFile(GlobalVariable.FILE_MONEY);
-        JSONObject moneyData = new JSONObject(moneyContent);
-
-        // Money Data
-        moneyData.put("main_balance", Integer.toString(GlobalVariable.MONEY_MAIN_BALANCE));
-
-        writeFile(GlobalVariable.FILE_MONEY, moneyData.toString());
     }
 
 }

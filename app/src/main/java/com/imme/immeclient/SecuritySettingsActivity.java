@@ -1,12 +1,16 @@
 package com.imme.immeclient;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
+import android.widget.Toast;
 
 import com.readystatesoftware.systembartint.SystemBarTintManager;
 
@@ -31,25 +35,22 @@ public class SecuritySettingsActivity extends AppCompatActivity {
 
         initList();
 
-        //Get widgets reference from XML layout
-        //final TextView tView = (TextView) findViewById(R.id.tv);
-        //Switch sButton = (Switch) findViewById(R.id.switch_btn);
-
-        //Set a Click Listener for Switch Button
-        //sButton.setOnClickListener(new View.OnClickListener() {
-        //@Override
-        //public void onClick(View v) {
-                //Is the switch is on?
-        //  boolean on = ((Switch) v).isChecked();
-        //      if (on) {
-                    //Do something when switch is on/checked
-        //          tView.setText("Switch is on....");
-        //      } else {
-                    //Do something when switch is off/unchecked
-        //          tView.setText("Switch is off....");
-        //      }
-        //  }
-        //});
+        ListView myList = (ListView) findViewById(R.id.listView);
+        myList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                if (position == 0) {
+                    Intent intent = new Intent(SecuritySettingsActivity.this, ChangePin1Process1Activity.class);
+                    startActivity(intent);
+                } else if (position == 1) {
+                    Toast.makeText(SecuritySettingsActivity.this, "1", Toast.LENGTH_LONG).show();
+                } else if (position == 2) {
+                    Toast.makeText(SecuritySettingsActivity.this, "2", Toast.LENGTH_LONG).show();
+                } else if (position == 3) {
+                    Toast.makeText(SecuritySettingsActivity.this, "3", Toast.LENGTH_LONG).show();
+                }
+            }
+        });
     }
 
     @Override
@@ -63,14 +64,14 @@ public class SecuritySettingsActivity extends AppCompatActivity {
         }
     }
 
-    List<Map<String, String>> planetsList = new ArrayList<Map<String,String>>();
+    String a = "something";
 
     private void initList() {
         int[] icon = new int[]{
-                R.mipmap.profile_camera,
-                R.mipmap.profile_camera,
-                R.mipmap.profile_camera,
-                R.mipmap.profile_camera
+                R.mipmap.change_pin1,
+                R.mipmap.change_pin2,
+                R.mipmap.change_gps_location,
+                R.mipmap.change_using_color_pin
         };
 
         String[] menu_item = new String[]{
@@ -80,12 +81,18 @@ public class SecuritySettingsActivity extends AppCompatActivity {
                 "Using Color PIN"
         };
 
+        if (a.equals("something")) {
+            a = "New String Bro!";
+        }
+
         String[] menu_description = new String[]{
                 "Last change 10 Des 2015",
                 "Last change 3 Nov 2015",
-                "Always track transaction",
+                a,
                 "Off"
         };
+
+
 
         List<HashMap<String,String>> aList = new ArrayList<HashMap<String,String>>();
         for(int i=0;i<4;i++){

@@ -22,7 +22,7 @@
             android:background="#e0e0e0"
             android:paddingTop="15dp"
             android:paddingBottom="15dp">
-
+<!--
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -30,7 +30,7 @@
                 android:paddingRight="10dp"
                 android:paddingTop="3dp"
                 android:gravity="center"/>
-
+-->
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -38,9 +38,10 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Seven Eleven"
+                    android:text="[MERCHANT_NAME]"
                     android:gravity="center"
-                    android:textSize="18dp"/>
+                    android:textSize="18dp"
+                    android:id="@+id/cpd_merchant_name"/>
 
                 <TextView
                     android:layout_width="wrap_content"

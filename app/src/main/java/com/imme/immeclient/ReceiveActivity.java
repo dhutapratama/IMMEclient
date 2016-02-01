@@ -99,7 +99,7 @@ public class ReceiveActivity extends AppCompatActivity {
         final Button button = (Button) findViewById(R.id.receiver_continue);
         button.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                loading = ProgressDialog.show(ReceiveActivity.this, "", "Securing transaction", true, true);
+                loading = ProgressDialog.show(ReceiveActivity.this, "", "Securing transaction", true);
                 new request_transaction().execute();
             }
         });

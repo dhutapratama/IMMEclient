@@ -96,7 +96,7 @@ public class SignInActivity extends AppCompatActivity {
             public void onClick(View v) {
             email = sign_in_edittext_email.getText().toString();
             password = sign_in_edittext_password.getText().toString();
-            loading = ProgressDialog.show(SignInActivity.this, "", "Sign in...", true, true);
+            loading = ProgressDialog.show(SignInActivity.this, "", "Sign in...", true);
             new loginTask().execute();
 
             /*if (GlobalVariable.APP_LOGIN_STATUS.equals("true")) {

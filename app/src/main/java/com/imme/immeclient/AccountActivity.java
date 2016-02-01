@@ -39,23 +39,23 @@ public class AccountActivity extends AppCompatActivity {
         Typeface hbqLight = Typeface.createFromAsset(getAssets(),
                 "fonts/HelveticaBQ-Light.otf");
 
-        TextView account_textview_balance = (TextView) findViewById(R.id.account_textview_balance);
-        account_textview_balance.setTypeface(hnLight);
+        //TextView account_textview_balance = (TextView) findViewById(R.id.account_textview_balance);
+        //account_textview_balance.setTypeface(hnLight);
 
-        TextView account_textview_balance_rp = (TextView) findViewById(R.id.account_textview_balance_rp);
-        account_textview_balance_rp.setTypeface(hnLight);
+        //TextView account_textview_balance_rp = (TextView) findViewById(R.id.account_textview_balance_rp);
+        //account_textview_balance_rp.setTypeface(hnLight);
 
-        TextView account_textview_balance_value = (TextView) findViewById(R.id.account_textview_balance_value);
-        account_textview_balance_value.setTypeface(hbqLight);
+        //TextView account_textview_balance_value = (TextView) findViewById(R.id.account_textview_balance_value);
+        //account_textview_balance_value.setTypeface(hbqLight);
 
-        TextView account_textview_balance_gift = (TextView) findViewById(R.id.account_textview_balance_gift);
-        account_textview_balance_gift.setTypeface(hnLight);
+        //TextView account_textview_balance_gift = (TextView) findViewById(R.id.account_textview_balance_gift);
+        //account_textview_balance_gift.setTypeface(hnLight);
 
-        TextView account_textview_balance_gift_rp = (TextView) findViewById(R.id.account_textview_balance_gift_rp);
-        account_textview_balance_gift_rp.setTypeface(hnLight);
+        //TextView account_textview_balance_gift_rp = (TextView) findViewById(R.id.account_textview_balance_gift_rp);
+        //account_textview_balance_gift_rp.setTypeface(hnLight);
 
-        TextView account_textview_balance_gift_value = (TextView) findViewById(R.id.account_textview_balance_gift_value);
-        account_textview_balance_gift_value.setTypeface(hbqLight);
+        //TextView account_textview_balance_gift_value = (TextView) findViewById(R.id.account_textview_balance_gift_value);
+        //account_textview_balance_gift_value.setTypeface(hbqLight);
 
         TextView account_textview_account_number = (TextView) findViewById(R.id.account_textview_account_number);
         account_textview_account_number.setTypeface(hnLight);
