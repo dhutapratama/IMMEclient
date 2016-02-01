@@ -12,6 +12,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.Toast;
 
 import com.readystatesoftware.systembartint.SystemBarTintManager;
 
@@ -179,8 +180,17 @@ public class ChangePin2Process2Activity extends AppCompatActivity {
 
     private void text(String string) {
         pin = pin + string;
-        if (pin.length() == 4) {
-            // API Running
+        if (pin.length() == 6) {
+            if (GlobalVariable.CHANGE_PIN_2_NEW.equals(pin)) {
+                GlobalVariable.CHANGE_PIN_2_CONFIRM = pin;
+                Intent intent = new Intent(ChangePin2Process2Activity.this, ChangePin2Process3Activity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(intent);
+            } else {
+                Intent intent = new Intent(ChangePin2Process2Activity.this, ChangePin2Process1Activity.class);
+                startActivity(intent);
+                Toast.makeText(ChangePin2Process2Activity.this, "Your New PIN 2 is not match", Toast.LENGTH_LONG).show();
+            }
         }
 
         switch (pin.length()) {
@@ -205,7 +215,6 @@ public class ChangePin2Process2Activity extends AppCompatActivity {
             default:
                 break;
         }
-        //balance.setText(money);
     }
 
 }
