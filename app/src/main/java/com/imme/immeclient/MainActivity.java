@@ -425,7 +425,7 @@ public class MainActivity extends AppCompatActivity
             drawer.postDelayed(new Runnable() {
                 @Override
                 public void run() {
-                    Intent intent = new Intent(getApplicationContext(), ChangePin1Process3Activity.class);
+                    Intent intent = new Intent(getApplicationContext(), RecipientListProfileAccountActivity.class);
                     startActivity(intent);
                 }
             }, 200);
@@ -867,6 +867,8 @@ public class MainActivity extends AppCompatActivity
                             cmlt1_image.setVisibility(View.VISIBLE);
                             cmlt1_name.setVisibility(View.VISIBLE);
                             cmlt1_ll_amount.setVisibility(View.VISIBLE);
+
+                            cmlt1_no_trans.setVisibility(View.GONE);
                             cmlt2_no_trans.setVisibility(View.VISIBLE);
                         }
 
