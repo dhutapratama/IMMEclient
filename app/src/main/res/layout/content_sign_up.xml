@@ -97,7 +97,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:id="@+id/sign_up_button_sign_up"
-                android:background="@drawable/account_save_verify"
+                android:background="@drawable/button_ractangle_green"
                 android:textColor="#ffffff"
                 android:text="Sign up"
                 android:layout_marginTop="20dp"
