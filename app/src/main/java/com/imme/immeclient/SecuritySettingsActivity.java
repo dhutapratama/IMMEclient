@@ -43,7 +43,8 @@ public class SecuritySettingsActivity extends AppCompatActivity {
                     Intent intent = new Intent(SecuritySettingsActivity.this, ChangePin1Process1Activity.class);
                     startActivity(intent);
                 } else if (position == 1) {
-                    Toast.makeText(SecuritySettingsActivity.this, "1", Toast.LENGTH_LONG).show();
+                    Intent intent = new Intent(SecuritySettingsActivity.this, ChangePin2Process1Activity.class);
+                    startActivity(intent);
                 } else if (position == 2) {
                     Toast.makeText(SecuritySettingsActivity.this, "2", Toast.LENGTH_LONG).show();
                 } else if (position == 3) {
@@ -82,12 +83,12 @@ public class SecuritySettingsActivity extends AppCompatActivity {
         };
 
         if (a.equals("something")) {
-            a = "New String Bro!";
+            a = "Off";
         }
 
         String[] menu_description = new String[]{
-                "Last change 10 Des 2015",
-                "Last change 3 Nov 2015",
+                "Last change [DATE]",
+                "Last change [DATE]",
                 a,
                 "Off"
         };
