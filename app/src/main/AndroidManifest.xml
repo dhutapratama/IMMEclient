@@ -572,7 +572,22 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
+        <activity
+            android:name=".RecipientListProfileAccountActivity"
+            android:label="@string/title_activity_recipient_list_profile_account"
+            android:parentActivityName=".RecipientListActivity"
+            android:screenOrientation="sensorPortrait"
+            android:theme="@style/AppThemeBlue.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.imme.immeclient.SecuritySettingsActivity" />
 
+            <intent-filter>
+                <action android:name="com.imme.immeclient.RecipientListActivity" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
     </application>
 
 </manifest>
