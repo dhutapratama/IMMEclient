@@ -23,7 +23,7 @@
 
             <LinearLayout
                 android:layout_width="fill_parent"
-                android:background="@drawable/imme_home_balance_bg"
+                android:background="@drawable/imme_home_balance_bg_imlek"
                 android:layout_height="@dimen/main_balance_layout_height"
                 android:orientation="vertical">
                 <TextView

@@ -10,13 +10,15 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context="com.imme.immeclient.RecipientListAddAccountActivity"
+    android:background="#09a9ea"
     tools:showIn="@layout/activity_recipient_list_add_account">
-
 
     <FrameLayout
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:padding="5dp">
+        android:padding="5dp"
+        android:gravity="center"
+        android:id="@+id/framing">
 
         <EditText
             android:id="@+id/add_account_text"
@@ -25,10 +27,10 @@
             android:inputType="textEmailAddress"
             android:layout_marginTop="20dp"
             android:textSize="13dp"
-            android:textColor="#FF03B0FF"
+            android:textColor="#FFFFFF"
             android:hint="Enter your friend's Email"
             android:maxLength="30"
-            android:singleLine="true" />
+            android:singleLine="true"/>
 
         <Button
             android:id="@+id/add_account_search"
@@ -50,11 +52,14 @@
     </FrameLayout>
 
     <LinearLayout
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:gravity="center"
-        android:paddingTop="100dp"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:background="@drawable/recipient_list_profile_account"
+        android:padding="15dp"
+        android:layout_centerVertical="true"
+        android:layout_centerHorizontal="true">
 
         <ImageView
             android:layout_width="wrap_content"
@@ -64,7 +69,9 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Steve Job"
+            android:text="Steve Job Kusuma Pratama"
+            android:textColor="@color/textWhite"
+            android:textSize="18dp"
             android:paddingTop="10dp"
             android:paddingBottom="10dp"/>
 
@@ -72,14 +79,12 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Add"
-            android:background="@drawable/account_save_verify_blue"
+            android:background="@drawable/button_ractangle_blue"
             android:textColor="@color/textWhite"
             android:paddingLeft="40dp"
             android:paddingRight="40dp"
             android:paddingBottom="5dp"
             android:paddingTop="5dp"/>
-
-
     </LinearLayout>
 
 </RelativeLayout>
