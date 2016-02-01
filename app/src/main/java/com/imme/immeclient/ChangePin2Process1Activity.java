@@ -179,8 +179,10 @@ public class ChangePin2Process1Activity extends AppCompatActivity {
 
     private void text(String string) {
         pin = pin + string;
-        if (pin.length() == 4) {
-            // API Running
+        if (pin.length() == 6) {
+            GlobalVariable.CHANGE_PIN_2_NEW = pin;
+            Intent intent = new Intent(ChangePin2Process1Activity.this, ChangePin2Process2Activity.class);
+            startActivity(intent);
         }
 
         switch (pin.length()) {
@@ -205,7 +207,6 @@ public class ChangePin2Process1Activity extends AppCompatActivity {
             default:
                 break;
         }
-        //balance.setText(money);
     }
 
 }

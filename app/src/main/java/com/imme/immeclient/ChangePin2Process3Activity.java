@@ -3,6 +3,7 @@ package com.imme.immeclient;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Color;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -12,8 +13,15 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.Toast;
 
 import com.readystatesoftware.systembartint.SystemBarTintManager;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.IOException;
+import java.net.URLEncoder;
 
 public class ChangePin2Process3Activity extends AppCompatActivity {
 
@@ -23,7 +31,7 @@ public class ChangePin2Process3Activity extends AppCompatActivity {
     View pin_1, pin_2, pin_3, pin_4, pin_5, pin_6;
     ProgressDialog loading;
     Boolean error_status = false;
-    String error_message = null;
+    String error_message, message;
     Integer error_code = 0;
 
     @Override
@@ -159,7 +167,6 @@ public class ChangePin2Process3Activity extends AppCompatActivity {
                     default:
                         break;
                 }
-                //balance.setText(money);
             }
         });
     }
@@ -179,8 +186,10 @@ public class ChangePin2Process3Activity extends AppCompatActivity {
 
     private void text(String string) {
         pin = pin + string;
-        if (pin.length() == 4) {
-            // API Running
+        if (pin.length() == 6) {
+            GlobalVariable.CHANGE_PIN_2_PIN_2 = pin;
+            loading = ProgressDialog.show(ChangePin2Process3Activity.this, "", "Changing PIN 2", false);
+            new change_pin().execute();
         }
 
         switch (pin.length()) {
@@ -205,7 +214,51 @@ public class ChangePin2Process3Activity extends AppCompatActivity {
             default:
                 break;
         }
-        //balance.setText(money);
     }
 
+    private class change_pin extends AsyncTask<String, Void, Object> {
+        protected Object doInBackground(String... args) {
+            try {
+                changePin();
+            } catch (JSONException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            return null;
+        }
+
+        protected void onPostExecute(Object result) {
+            if (ChangePin2Process3Activity.this.loading != null) {
+                ChangePin2Process3Activity.this.loading.dismiss();
+            }
+            if (error_status) {
+                Toast.makeText(ChangePin2Process3Activity.this, error_message, Toast.LENGTH_LONG).show();
+                Intent intent = new Intent(ChangePin2Process3Activity.this, SecuritySettingsActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(intent);
+            } else {
+                Toast.makeText(ChangePin2Process3Activity.this, message, Toast.LENGTH_LONG).show();
+                Intent intent = new Intent(ChangePin2Process3Activity.this, SecuritySettingsActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(intent);
+            }
+        }
+    }
+
+    public void changePin() throws JSONException, IOException {
+        String postData ="session_key=" + URLEncoder.encode(GlobalVariable.SECURITY_SESSION_KEY, "UTF-8")
+                + "&pin_2_new=" + URLEncoder.encode(GlobalVariable.CHANGE_PIN_2_NEW, "UTF-8")
+                + "&pin_2=" + URLEncoder.encode(GlobalVariable.CHANGE_PIN_2_PIN_2, "UTF-8");
+
+        JSONObject serviceResult = WebServiceClient.postRequest(GlobalVariable.DISTRIBUTOR_SERVER + "setting/pin_2", postData);
+        if (serviceResult.getBoolean("error")){
+            error_status = true;
+            error_message = serviceResult.getString("message");
+            error_code = serviceResult.getInt("code");
+        } else {
+            error_status = false;
+            message = serviceResult.getString("message");
+        }
+    }
 }
