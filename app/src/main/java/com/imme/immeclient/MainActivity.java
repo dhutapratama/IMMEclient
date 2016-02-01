@@ -867,6 +867,8 @@ public class MainActivity extends AppCompatActivity
                             cmlt1_image.setVisibility(View.VISIBLE);
                             cmlt1_name.setVisibility(View.VISIBLE);
                             cmlt1_ll_amount.setVisibility(View.VISIBLE);
+
+                            cmlt1_no_trans.setVisibility(View.GONE);
                             cmlt2_no_trans.setVisibility(View.VISIBLE);
                         }
 
