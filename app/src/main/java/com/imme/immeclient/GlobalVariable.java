@@ -82,5 +82,7 @@ public class GlobalVariable {
     public static String CHANGE_PIN_1_NEW;
     public static String CHANGE_PIN_1_CONFIRM;
     public static String CHANGE_PIN_1_PIN_2;
-
+    public static String CHANGE_PIN_2_NEW;
+    public static String CHANGE_PIN_2_CONFIRM;
+    public static String CHANGE_PIN_2_PIN_2;
 }
