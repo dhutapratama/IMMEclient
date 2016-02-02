@@ -1,6 +1,7 @@
 package com.imme.immeclient;
 
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -44,14 +45,9 @@ public class RecipientListAddAccountActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         SystemBarTintManager tintManager = new SystemBarTintManager(this);
-        // enable status bar tint
         tintManager.setStatusBarTintEnabled(true);
-        // enable navigation bar tint
         tintManager.setNavigationBarTintEnabled(true);
-        // set a custom tint color for all system bars
         tintManager.setTintColor(Color.parseColor("#FF03B0FF"));
-
-
 
         add_account_text = (EditText) findViewById(R.id.add_account_text);
         final Button add_account_clear = (Button) findViewById(R.id.add_account_clear);
@@ -196,6 +192,9 @@ public class RecipientListAddAccountActivity extends AppCompatActivity {
                 Toast.makeText(RecipientListAddAccountActivity.this, error_message, Toast.LENGTH_LONG).show();
             } else {
                 Toast.makeText(RecipientListAddAccountActivity.this, message, Toast.LENGTH_LONG).show();
+                Intent intent = new Intent(RecipientListAddAccountActivity.this, RecipientListActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(intent);
             }
         }
     }
