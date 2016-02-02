@@ -27,9 +27,9 @@
             android:layout_marginTop="20dp"
             android:textSize="13dp"
             android:hint="Enter your friend's email"
-            android:textColor="#FFFFFF"
             android:maxLength="30"
-            android:singleLine="true"/>
+            android:singleLine="true"
+            android:textColor="@color/common_signin_btn_text_light"/>
 
         <Button
             android:id="@+id/add_account_search"
@@ -76,7 +76,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="[FULL_NAME]"
-            android:textColor="@color/textWhite"
             android:textSize="18dp"
             android:paddingTop="10dp"
             android:paddingBottom="10dp"
@@ -88,13 +87,13 @@
             android:layout_height="wrap_content"
             android:text="Add"
             android:background="@drawable/button_ractangle_blue"
-            android:textColor="@color/textWhite"
             android:paddingLeft="40dp"
             android:paddingRight="40dp"
             android:paddingBottom="5dp"
             android:paddingTop="5dp"
             android:visibility="gone"
-            android:id="@+id/ButtonAdd"/>
+            android:id="@+id/ButtonAdd"
+            android:textColor="@color/textWhite"/>
     </LinearLayout>
 
 </RelativeLayout>
