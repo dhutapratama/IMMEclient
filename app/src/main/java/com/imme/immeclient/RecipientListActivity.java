@@ -136,7 +136,7 @@ public class RecipientListActivity extends AppCompatActivity {
 
         if(!data_available) {
             HashMap<String, String> hm = new HashMap<String, String>();
-            hm.put("recipientName", "Empty recipient list");
+            hm.put("recipientName", "empty recipient list");
             aList.add(hm);
         } else {
             for (int i = 0; i < recipient_list.length(); i++) {
