@@ -178,11 +178,12 @@ public class ChangePin1Process2Activity extends AppCompatActivity {
         if (pin.length() == 4) {
             if (GlobalVariable.CHANGE_PIN_1_NEW.equals(pin)) {
                 GlobalVariable.CHANGE_PIN_1_CONFIRM = pin;
-                Intent intent = new Intent(ChangePin1Process2Activity.this, ChangePin1Process3Activity.class);
+                Intent intent = new Intent(ChangePin1Process2Activity.this, SecuritySettingsActivity.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(intent);
             } else {
-                Intent intent = new Intent(ChangePin1Process2Activity.this, ChangePin1Process1Activity.class);
+                Intent intent = new Intent(ChangePin1Process2Activity.this, SecuritySettingsActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(intent);
                 Toast.makeText(ChangePin1Process2Activity.this, "Your New PIN is not match", Toast.LENGTH_LONG).show();
             }
