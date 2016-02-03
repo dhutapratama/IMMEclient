@@ -1,5 +1,6 @@
 package com.imme.immeclient;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.Typeface;
@@ -29,7 +30,8 @@ public class AccountActivity extends AppCompatActivity {
 
     ScrollView AccountSettings;
     ProgressBar LoadingAnimation;
-    TextView AccountNumber, IDNumber, IDType;
+    ProgressDialog LoadingDialog;
+    TextView AccountNumber, IDNumber, IDType, BTN_Save;
     EditText FullName, Email, PhoneNumber;
     ImageView AccountPicture;
     LinearLayout EmailVerification, PhoneVerification;
@@ -57,6 +59,7 @@ public class AccountActivity extends AppCompatActivity {
         IDType = (TextView) findViewById(R.id.account_textview_id_type_value);
         EmailVerification = (LinearLayout) findViewById(R.id.EmailVerification);
         PhoneVerification = (LinearLayout) findViewById(R.id.PhoneVerification);
+        BTN_Save = (TextView) findViewById(R.id.account_button_save);
 
         // Start Font
         Typeface hnLight = Typeface.createFromAsset(getAssets(),
@@ -115,8 +118,7 @@ public class AccountActivity extends AppCompatActivity {
 
         //account_edittext_phone_number_value.setTypeface(hnLight);
 
-        TextView account_button_save = (TextView) findViewById(R.id.account_button_save);
-        account_button_save.setTypeface(hbqLight);
+        //account_button_save.setTypeface(hbqLight);
 
         TextView account_textview_account_details = (TextView) findViewById(R.id.account_textview_account_details);
         account_textview_account_details.setTypeface(hbqLight);
@@ -150,6 +152,13 @@ public class AccountActivity extends AppCompatActivity {
         });
 
         new get_account().execute();
+
+        BTN_Save.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                new save_account().execute();
+            }
+        });
 
     }
 
@@ -220,6 +229,61 @@ public class AccountActivity extends AppCompatActivity {
                     if (data.getBoolean("verified_phone")) {
                         PhoneVerification.setVisibility(View.GONE);
                     }
+                }
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    private class save_account extends AsyncTask<String, String, JSONObject> {
+        // Initialization global variable for private AsyncTask class
+        String full_name, email, phone_number;
+
+        protected JSONObject doInBackground(String... args) {
+            JSONObject serviceResult = null;
+            try {
+                String postData ="session_key=" + URLEncoder.encode(GlobalVariable.SECURITY_SESSION_KEY, "UTF-8")
+                        + "&full_name=" + URLEncoder.encode(full_name, "UTF-8")
+                        + "&email=" + URLEncoder.encode(email, "UTF-8")
+                        + "&phone_number=" + URLEncoder.encode(phone_number, "UTF-8");
+                serviceResult = WebServiceClient.postRequest(GlobalVariable.DISTRIBUTOR_SERVER + "setting/save_account_setting", postData);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+            return serviceResult;
+        }
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            LoadingDialog = ProgressDialog.show(AccountActivity.this, "", "Saving your account", false);
+            full_name = FullName.getText().toString();
+            email = Email.getText().toString();
+            phone_number = PhoneNumber.getText().toString();
+        }
+
+        protected void onPostExecute(JSONObject feedback_data) {
+            if (LoadingDialog != null) {
+                LoadingDialog.dismiss();
+            }
+            //if (AccountActivity.this.loading != null) {
+            //    AccountActivity.this.loading.dismiss();
+            //}
+            if (feedback_data.length() == 0) {
+                Toast.makeText(AccountActivity.this, "Server issue, please contact 081235404833", Toast.LENGTH_LONG).show();
+                //return;
+            }
+
+            // Error handling
+            try {
+                if (feedback_data.getBoolean("error")) {
+                    //feedback_data.getInt("code")
+                    Toast.makeText(AccountActivity.this, feedback_data.getString("message"), Toast.LENGTH_LONG).show();
+                } else {
+                    JSONObject data = feedback_data.getJSONObject("data");
+                    Toast.makeText(AccountActivity.this, data.getString("message"), Toast.LENGTH_LONG).show();
                 }
             } catch (JSONException e) {
                 e.printStackTrace();
