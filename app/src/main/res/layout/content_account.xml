@@ -128,7 +128,6 @@
                         android:textStyle="bold"
                         android:text="Account number"
                         android:paddingBottom="5dp"
-                        android:textSize="12sp"
                         android:textColor="#000000"/>
                     <TextView
                         android:id="@+id/account_textview_account_number_value"
@@ -137,9 +136,9 @@
                         android:paddingTop="10dp"
                         android:paddingBottom="10dp"
                         android:background="@drawable/account_account_number_bg"
-                        android:text="  1 2 3 4 5 6 7 8 9 0 9 8 7 6 5 4 3 2 1"
-                        android:textSize="12sp"
-                        android:textColor="#000000"/>
+                        android:text="1234567890098765"
+                        android:textColor="#000000"
+                        android:gravity="center_horizontal"/>
                 </LinearLayout>
 
                 <LinearLayout
@@ -154,7 +153,6 @@
                         android:textStyle="bold"
                         android:text="Account setting"
                         android:paddingBottom="5dp"
-                        android:textSize="12sp"
                         android:textColor="#000000"/>
                 </LinearLayout>
 
@@ -175,7 +173,6 @@
                             android:orientation="horizontal"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:textSize="12sp"
                             android:text="Full name"
                             android:paddingLeft="8dp"
                             android:paddingRight="50dp"
@@ -189,7 +186,7 @@
                             android:inputType="textPersonName"
                             android:text="Steve Job"
                             android:textColor="#000000"
-                            android:textSize="12sp"
+                            android:textSize="15dp"
                             android:ems="10"
                             android:background="@drawable/account_account_setting_name_list" />
                     </LinearLayout>
@@ -202,10 +199,9 @@
                             android:id="@+id/account_textview_profil_image"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:textSize="12sp"
-                            android:text="Profile Image"
+                            android:text="Profile image"
                             android:paddingLeft="8dp"
-                            android:paddingRight="31dp"
+                            android:paddingRight="29dp"
                             android:paddingTop="0.5dp"
                             android:paddingBottom="10dp"
                             android:textColor="#000000"/>
@@ -242,9 +238,9 @@
                                         android:src="@mipmap/profile_camera"/>
                                     <TextView
                                         android:id="@+id/account_textview_upload_image"
-                                        android:layout_width="fill_parent"
+                                        android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
-                                        android:textSize="8sp"
+                                        android:textSize="10sp"
                                         android:text="Upload image"
                                         android:paddingTop="9dp"
                                         android:paddingBottom="5dp"
@@ -255,7 +251,7 @@
                                 android:id="@+id/account_textview_max_size"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:textSize="8sp"
+                                android:textSize="10sp"
                                 android:gravity="center"
                                 android:layout_gravity="center"
                                 android:text="Max size 512 kb"
@@ -274,10 +270,9 @@
                             android:orientation="horizontal"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:textSize="12sp"
                             android:text="Email"
                             android:paddingLeft="8dp"
-                            android:paddingRight="74dp"
+                            android:paddingRight="78dp"
                             android:paddingTop="10dp"
                             android:paddingBottom="10dp"
                             android:textColor="#000000"/>
@@ -288,7 +283,7 @@
                             android:inputType="textEmailAddress"
                             android:text="stevejob@icloud.com"
                             android:textColor="#000000"
-                            android:textSize="12sp"
+                            android:textSize="15dp"
                             android:ems="10"
                             android:background="@drawable/account_account_setting_name_list" />
                     </LinearLayout>
@@ -302,10 +297,9 @@
                             android:orientation="horizontal"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:textSize="12sp"
                             android:text="Phone number"
                             android:paddingLeft="8dp"
-                            android:paddingRight="25dp"
+                            android:paddingRight="21dp"
                             android:paddingTop="10dp"
                             android:paddingBottom="10dp"
                             android:textColor="#000000"/>
@@ -316,7 +310,7 @@
                             android:inputType="phone"
                             android:text="+6281 22 220 6292"
                             android:textColor="#000000"
-                            android:textSize="12sp"
+                            android:textSize="15dp"
                             android:ems="10"
                             android:background="@drawable/account_account_setting_name_list" />
                     </LinearLayout>
@@ -332,16 +326,15 @@
                         android:id="@+id/account_button_save"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:background="@drawable/button_ractangle_green"
+                        android:background="@drawable/btn_green"
+                        android:textColor="@drawable/btn_text_color_green"
                         android:gravity="center"
                         android:layout_gravity="center"
                         android:text="Save"
                         android:paddingBottom="5dp"
                         android:paddingTop="5dp"
-                        android:paddingRight="147dp"
-                        android:paddingLeft="147dp"
-                        android:textSize="15sp"
-                        android:textColor="#ffffff"/>
+                        android:paddingRight="40dp"
+                        android:paddingLeft="40dp"/>
                 </LinearLayout>
 
                 <LinearLayout
@@ -356,7 +349,6 @@
                         android:text="Account details"
                         android:textStyle="bold"
                         android:paddingBottom="5dp"
-                        android:textSize="12sp"
                         android:textColor="#000000"/>
                 </LinearLayout>
 
@@ -375,7 +367,6 @@
                             android:orientation="horizontal"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:textSize="12sp"
                             android:text="ID number"
                             android:paddingLeft="8dp"
                             android:paddingRight="48dp"
@@ -388,7 +379,6 @@
                             android:layout_height="wrap_content"
                             android:text="642478 871209 4081"
                             android:textColor="#000000"
-                            android:textSize="12sp"
                             android:background="@drawable/account_account_number_bg" />
                     </LinearLayout>
 
@@ -401,7 +391,6 @@
                             android:orientation="horizontal"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:textSize="12sp"
                             android:text="ID type"
                             android:paddingLeft="8dp"
                             android:paddingRight="66dp"
@@ -414,7 +403,6 @@
                             android:layout_height="wrap_content"
                             android:text="KTP"
                             android:textColor="#000000"
-                            android:textSize="12sp"
                             android:background="@drawable/account_account_number_bg" />
                     </LinearLayout>
 
@@ -430,16 +418,15 @@
                         android:id="@+id/account_textview_resend_verification_email"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:background="@drawable/button_ractangle_green"
+                        android:background="@drawable/btn_green"
+                        android:textColor="@drawable/btn_text_color_green"
                         android:gravity="center"
                         android:layout_gravity="center"
-                        android:text="Resend verification email"
+                        android:text="Send"
                         android:paddingBottom="5dp"
                         android:paddingTop="5dp"
-                        android:paddingRight="79dp"
-                        android:paddingLeft="79dp"
-                        android:textSize="15sp"
-                        android:textColor="#ffffff"/>
+                        android:paddingRight="40dp"
+                        android:paddingLeft="40dp"/>
                 </LinearLayout>
 
                 <LinearLayout
@@ -457,7 +444,7 @@
                         android:layout_gravity="center"
                         android:text="We'll send a verification link to the email address you used to verification the account"
                         android:paddingBottom="5dp"
-                        android:textSize="8sp"
+                        android:textSize="10sp"
                         android:textColor="#000000"/>
                 </LinearLayout>
 
@@ -471,16 +458,15 @@
                         android:id="@+id/account_textview_verify_phone_number"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:background="@drawable/button_ractangle_green"
+                        android:background="@drawable/btn_green"
+                        android:textColor="@drawable/btn_text_color_green"
                         android:gravity="center"
                         android:layout_gravity="center"
-                        android:text="Verify phone number"
+                        android:text="Send"
                         android:paddingBottom="5dp"
                         android:paddingTop="5dp"
-                        android:paddingRight="92dp"
-                        android:paddingLeft="92dp"
-                        android:textSize="15sp"
-                        android:textColor="#ffffff"/>
+                        android:paddingRight="40dp"
+                        android:paddingLeft="40dp"/>
                 </LinearLayout>
 
                 <LinearLayout
@@ -499,7 +485,7 @@
                         android:layout_gravity="center"
                         android:text="We'll send a verification code to your phone you used to verification the account"
                         android:paddingBottom="5dp"
-                        android:textSize="8sp"
+                        android:textSize="10sp"
                         android:textColor="#000000"/>
                 </LinearLayout>
 

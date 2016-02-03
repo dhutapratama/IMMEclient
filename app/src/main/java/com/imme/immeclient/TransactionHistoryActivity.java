@@ -71,36 +71,37 @@ public class TransactionHistoryActivity extends AppCompatActivity {
         return true;
     }
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
+    //@Override
+    //public boolean onOptionsItemSelected(MenuItem item) {
         // Handle action bar item clicks here. The action bar will
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
+
+        //int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.home) {
-            finish();
-            return true;
-        } else if (id == R.id.nav_sort_by) {
-            Intent intent = new Intent("com.imme.immeclient.UserAgreementActivity");
-            startActivity(intent);
-            return true;
-        } else if (id == R.id.nav_refresh) {
-            Intent intent = new Intent("com.imme.immeclient.PrivacyPolicyActivity");
-            startActivity(intent);
-            return true;
-        } else if (id == R.id.nav_search) {
-            Intent intent = new Intent("com.imme.immeclient.HelpAndSupportActivity");
-            startActivity(intent);
-            return true;
-        } else if (id == R.id.nav_save_draft_to_mail) {
-            Intent intent = new Intent("com.imme.immeclient.FeedbackActivity");
-            startActivity(intent);
-            return true;
-        }
-        return super.onOptionsItemSelected(item);
-    }
+        //if (id == R.id.home) {
+        //    finish();
+        //    return true;
+        //} else if (id == R.id.nav_sort_by) {
+        //    Intent intent = new Intent("com.imme.immeclient.UserAgreementActivity");
+        //    startActivity(intent);
+        //    return true;
+        //} else if (id == R.id.nav_refresh) {
+        //    Intent intent = new Intent("com.imme.immeclient.PrivacyPolicyActivity");
+        //    startActivity(intent);
+        //    return true;
+        //} else if (id == R.id.nav_search) {
+        //    Intent intent = new Intent("com.imme.immeclient.HelpAndSupportActivity");
+        //    startActivity(intent);
+        //    return true;
+        //} else if (id == R.id.nav_save_draft_to_mail) {
+        //    Intent intent = new Intent("com.imme.immeclient.FeedbackActivity");
+        //    startActivity(intent);
+        //    return true;
+        //}
+        //return super.onOptionsItemSelected(item);
+    //}
 
     private void initList() throws JSONException {
         List<HashMap<String, String>> aList = new ArrayList<HashMap<String, String>>();
