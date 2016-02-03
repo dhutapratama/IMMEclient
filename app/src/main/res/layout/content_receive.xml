@@ -95,8 +95,8 @@
                 android:gravity="center"
                 android:textSize="25dp"
                 android:padding="10dp"
-                android:textColor="@color/textWhite"
-                android:background="#00aeff"
+                android:background="@drawable/btn_blue"
+                android:textColor="@drawable/btn_text_color_blue"
                 android:clickable="true" />
 
         </LinearLayout>

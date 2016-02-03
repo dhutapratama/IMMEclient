@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:context=".TransactionHistoryActivity">
 
+    <!--
     <item android:id="@+id/nav_sort_by"
         android:title="Sort by"
         android:orderInCategory="100"
@@ -19,4 +20,5 @@
         android:title="Save draft to Mail"
         android:orderInCategory="100"
         app:showAsAction="never" />
+    -->
 </menu>
