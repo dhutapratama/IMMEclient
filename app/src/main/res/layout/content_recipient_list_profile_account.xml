@@ -10,7 +10,6 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context="com.imme.immeclient.RecipientListProfileAccountActivity"
-    android:background="#09a9ea"
     tools:showIn="@layout/activity_recipient_list_profile_account"
     android:gravity="center">
 
@@ -18,34 +17,44 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:gravity="center"
-        android:background="@drawable/recipient_list_profile_account"
         android:orientation="vertical"
         android:padding="15dp">
+
+        <ProgressBar
+            android:id="@+id/Loading"
+            style="?android:attr/progressBarStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
 
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@mipmap/profile_picture"/>
+            android:src="@mipmap/ic_launcher"
+            android:id="@+id/RecipientPicture"
+            android:visibility="gone"/>
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Steve Job Kusuma Pratama"
-            android:textColor="@color/textWhite"
+            android:text="[FULL_NAME]"
             android:paddingTop="10dp"
             android:textSize="18dp"
-            android:paddingBottom="10dp"/>
+            android:paddingBottom="10dp"
+            android:id="@+id/RecipientName"
+            android:visibility="gone"/>
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Remove"
-            android:background="@drawable/button_ractangle_red"
+            android:background="@drawable/button_ractangle_blue"
             android:textColor="@color/textWhite"
             android:paddingLeft="40dp"
             android:paddingRight="40dp"
             android:paddingBottom="5dp"
-            android:paddingTop="5dp"/>
+            android:paddingTop="5dp"
+            android:id="@+id/ButtonRemove"
+            android:visibility="gone"/>
     </LinearLayout>
 
 </RelativeLayout>

@@ -34,6 +34,7 @@ public class RecipientListActivity extends AppCompatActivity {
     String error_message, message;
     Integer error_code = 0;
     JSONArray recipient_list;
+    String search_id;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,11 +51,25 @@ public class RecipientListActivity extends AppCompatActivity {
 
         new get_recipient_list().execute();
 
-        ListView RecipientList = (ListView) findViewById(R.id.RecipientList);
+        final ListView RecipientList = (ListView) findViewById(R.id.RecipientList);
         RecipientList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Toast.makeText(RecipientListActivity.this, "Number " + Integer.toString(position), Toast.LENGTH_LONG).show();
+                JSONObject recipient_data = null;
+                try {
+                    recipient_data = recipient_list.getJSONObject(position);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+                try {
+                    search_id = recipient_data.getString("search_id");
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+                Intent intent = new Intent(getApplicationContext(), RecipientListProfileAccountActivity.class);
+                intent.putExtra("search_id", search_id);
+                startActivity(intent);
             }
         });
 
@@ -62,7 +77,7 @@ public class RecipientListActivity extends AppCompatActivity {
         recipient_list_add_account.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent("com.imme.immeclient.RecipientListAddAccountActivity");
+                Intent intent = new Intent(RecipientListActivity.this, RecipientListAddAccountActivity.class);
                 startActivity(intent);
             }
         });
@@ -136,7 +151,7 @@ public class RecipientListActivity extends AppCompatActivity {
 
         if(!data_available) {
             HashMap<String, String> hm = new HashMap<String, String>();
-            hm.put("recipientName", "Empty recipient list");
+            hm.put("recipientName", "empty recipient list");
             aList.add(hm);
         } else {
             for (int i = 0; i < recipient_list.length(); i++) {
