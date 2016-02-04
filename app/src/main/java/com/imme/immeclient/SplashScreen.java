@@ -38,6 +38,12 @@ public class SplashScreen extends Activity {
             finish();
         }
 
+        if (getIntent().getStringExtra("apps_name") != null) {
+            Intent intent = new Intent(this, FastPaymentActivity.class);
+            intent.putExtra("apps_name", getIntent().getStringExtra("apps_name"));
+            startActivity(intent);
+        }
+
         // TODO Auto-generated method stub
         super.onCreate(savedInstanceState);
         setContentView(R.layout.splash);

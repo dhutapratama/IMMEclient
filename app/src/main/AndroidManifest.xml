@@ -556,6 +556,7 @@
         <meta-data
             android:name="com.google.android.gms.version"
             android:value="@integer/google_play_services_version" />
+
         <activity
             android:name=".RecipientListAddAccountActivity"
             android:label="@string/title_activity_recipient_list_add_account"
@@ -588,6 +589,10 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
+        <activity
+            android:name=".FastPaymentActivity"
+            android:label="@string/title_activity_fast_payment"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 
 </manifest>
