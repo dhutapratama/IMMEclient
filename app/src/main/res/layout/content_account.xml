@@ -433,6 +433,7 @@
                         android:paddingTop="5dp"
                         android:paddingRight="40dp"
                         android:paddingLeft="40dp"/>
+                </LinearLayout>
 
                     <TextView
                         android:id="@+id/account_textview_verification_email"
