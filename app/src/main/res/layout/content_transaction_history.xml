@@ -15,8 +15,7 @@
     <ListView
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/list_transaction"
-        android:layout_above="@+id/linearup">
+        android:id="@+id/list_transaction">
     </ListView>
 
     <!-- Credit Hidden

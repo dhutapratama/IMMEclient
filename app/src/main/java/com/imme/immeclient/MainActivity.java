@@ -28,10 +28,14 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.AdapterView;
+import android.widget.GridLayout;
+import android.widget.GridView;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
+import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -87,10 +91,60 @@ public class MainActivity extends AppCompatActivity
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+        ActionBar actionBar = getSupportActionBar();
+        assert actionBar != null;
+        actionBar.setTitle("");
+        actionBar.setDisplayUseLogoEnabled(true);
+        actionBar.setLogo(R.mipmap.imme_logo);
+
+        // Status Bar Coloring
+        SystemBarTintManager tintManager = new SystemBarTintManager(this);
+        tintManager.setStatusBarTintEnabled(true);
+        tintManager.setNavigationBarTintEnabled(true);
+        tintManager.setTintColor(Color.parseColor("#FF03B0FF"));
+
         if (Build.VERSION.SDK_INT == Build.VERSION_CODES.KITKAT) {
             toolbar.setPadding(0, getStatusBarHeight(), 0, 0);
             toolbar.getLayoutParams().height = toolbar.getLayoutParams().height + getStatusBarHeight();
         }
+
+        //----------------------------- Start Activity Programing -----------------------------//
+
+        ExpandableGridView MainMenu = (ExpandableGridView) findViewById(R.id.MainMenu);
+        MainMenu.setExpanded(true);
+        MainMenu.setAdapter(new MainMenuAdapter(this));
+
+        MainMenu.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            public void onItemClick(AdapterView<?> parent, View v,
+                                    int position, long id) {
+                if (position == 0) {
+                    intent_status = "send";
+                    IntentIntegrator integrator = new IntentIntegrator(MainActivity.this);
+                    integrator.setDesiredBarcodeFormats(IntentIntegrator.QR_CODE_TYPES);
+                    integrator.setPrompt("PRESS BACK TO OPEN RECIPIENT");
+                    integrator.setCameraId(0);  // Use a specific camera of the device
+                    integrator.setBeepEnabled(false);
+                    integrator.setBarcodeImageEnabled(true);
+                    integrator.setCaptureActivity(CustomLayout.class);
+                    integrator.initiateScan();
+                } else if (position == 1) {
+                    Intent intent = new Intent(MainActivity.this, ReceiveActivity.class);
+                    startActivity(intent);
+                } else if (position == 2) {
+                    intent_status = "deposit";
+                    IntentIntegrator integrator = new IntentIntegrator(MainActivity.this);
+                    integrator.setDesiredBarcodeFormats(IntentIntegrator.QR_CODE_TYPES);
+                    integrator.setPrompt("SCAN VOUCHER BARCODE");
+                    integrator.setCameraId(0);  // Use a specific camera of the device
+                    integrator.setBeepEnabled(false);
+                    integrator.setBarcodeImageEnabled(true);
+                    integrator.setCaptureActivity(CustomLayout.class);
+                    integrator.initiateScan();
+                }
+            }
+        });
+
+
         // Start Font
         Typeface hnLight = Typeface.createFromAsset(getAssets(),
                 "fonts/HelveticaNeue-Light.otf");
@@ -149,18 +203,6 @@ public class MainActivity extends AppCompatActivity
         drawer.setDrawerListener(toggle);
         toggle.syncState();
 
-        ActionBar actionBar = getSupportActionBar();
-        assert actionBar != null;
-        actionBar.setTitle("");
-        actionBar.setDisplayUseLogoEnabled(true);
-        actionBar.setLogo(R.mipmap.imme_logo);
-
-        // Status Bar Coloring
-        SystemBarTintManager tintManager = new SystemBarTintManager(this);
-        tintManager.setStatusBarTintEnabled(true);
-        tintManager.setNavigationBarTintEnabled(true);
-        tintManager.setTintColor(Color.parseColor("#FF03B0FF"));
-
         String formated_money = NumberFormat.getNumberInstance(Locale.GERMANY).format(GlobalVariable.MONEY_MAIN_BALANCE);
         main_textview_balance_value.setText(formated_money);
 
@@ -180,48 +222,6 @@ public class MainActivity extends AppCompatActivity
             verified_status.setText("Not Verified");
             verified_icon.setVisibility(View.GONE);
         }
-
-        // Button Action
-        ImageButton main_button_send_pay = (ImageButton) findViewById(R.id.main_button_send_pay);
-        main_button_send_pay.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                intent_status = "send";
-                IntentIntegrator integrator = new IntentIntegrator(MainActivity.this);
-                integrator.setDesiredBarcodeFormats(IntentIntegrator.QR_CODE_TYPES);
-                integrator.setPrompt("PRESS BACK TO OPEN RECIPIENT");
-                integrator.setCameraId(0);  // Use a specific camera of the device
-                integrator.setBeepEnabled(false);
-                integrator.setBarcodeImageEnabled(true);
-                integrator.setCaptureActivity(CustomLayout.class);
-                integrator.initiateScan();
-            }
-        });
-
-        ImageButton main_button_receive = (ImageButton) findViewById(R.id.main_button_receive);
-        main_button_receive.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(MainActivity.this, ReceiveActivity.class);
-                startActivity(intent);
-            }
-        });
-
-        ImageButton main_button_topup = (ImageButton) findViewById(R.id.main_button_topup);
-        main_button_topup.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                intent_status = "deposit";
-                IntentIntegrator integrator = new IntentIntegrator(MainActivity.this);
-                integrator.setDesiredBarcodeFormats(IntentIntegrator.QR_CODE_TYPES);
-                integrator.setPrompt("SCAN VOUCHER BARCODE");
-                integrator.setCameraId(0);  // Use a specific camera of the device
-                integrator.setBeepEnabled(false);
-                integrator.setBarcodeImageEnabled(true);
-                integrator.setCaptureActivity(CustomLayout.class);
-                integrator.initiateScan();
-            }
-        });
 
         RelativeLayout last_transaction_1 = (RelativeLayout) findViewById(R.id.last_transaction_1);
         last_transaction_1.setOnClickListener(new View.OnClickListener() {
