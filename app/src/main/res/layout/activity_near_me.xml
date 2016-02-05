@@ -13,11 +13,9 @@
         android:name="com.imme.immeclient.CustomMapFragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
-    <!--
     <include
         android:id="@+id/marker_view_incl"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         layout="@layout/marker_view" />
-        -->
 </RelativeLayout>

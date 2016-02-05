@@ -76,8 +76,8 @@ public class NearMeActivity extends AppCompatActivity {
         }
 
         //mLocationTextView = (TextView) findViewById(R.id.location_text_view);
-        mMarkerParentView = findViewById(R.id.marker_view_incl);
-        mMarkerImageView = (ImageView) findViewById(R.id.marker_icon_view);
+        //mMarkerParentView = findViewById(R.id.marker_view_incl);
+        //mMarkerImageView = (ImageView) findViewById(R.id.marker_icon_view);
     }
 
     @Override
@@ -97,7 +97,7 @@ public class NearMeActivity extends AppCompatActivity {
         if (googleMap == null) {
             mCustomMapFragment = ((CustomMapFragment) getFragmentManager()
                     .findFragmentById(R.id.map));
-            mCustomMapFragment.setOnDragListener(NearMeActivity.this);
+            //mCustomMapFragment.setOnDragListener(NearMeActivity.this);
             googleMap = mCustomMapFragment.getMap();
             // check if map is created successfully or not
             if (googleMap == null) {
@@ -136,7 +136,7 @@ public class NearMeActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
     }
-
+/*
     @Override
     public void onDrag(MotionEvent motionEvent) {
         if (motionEvent.getAction() == MotionEvent.ACTION_UP) {
@@ -191,9 +191,10 @@ public class NearMeActivity extends AppCompatActivity {
                             + " -- Long : " + centerLatLng.longitude + " )");
 
                     //googleMap.addMarker(new MarkerOptions().position(centerLatLng).title("Saya"));
-                    */
+
                 }
             }
         }
     }
+    */
 }
