@@ -1,6 +1,7 @@
 package com.imme.immeclient;
 
 import android.app.ProgressDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.AsyncTask;
@@ -9,19 +10,27 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.ListView;
+import android.widget.SimpleAdapter;
 import android.widget.Toast;
 
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
 import com.readystatesoftware.systembartint.SystemBarTintManager;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
 import java.net.URLEncoder;
 import java.text.NumberFormat;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 import java.util.Locale;
 
 public class SendPayActivity extends AppCompatActivity {
@@ -30,6 +39,9 @@ public class SendPayActivity extends AppCompatActivity {
     Boolean error_status = false;
     String error_message = null;
     private ProgressDialog loading = null;
+
+    ListView RecipientList;
+    JSONArray recipient_list;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,6 +70,28 @@ public class SendPayActivity extends AppCompatActivity {
                 integrator.initiateScan();
             }
         });
+
+        RecipientList = (ListView) findViewById(R.id.RecipientList);
+        RecipientList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                String search_id = null;
+                if (recipient_list.length() > 0) {
+                    try {
+                        JSONObject recipient = recipient_list.getJSONObject(position);
+                        search_id = recipient.getString("search_id");
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+
+                    Intent intent = new Intent(getApplicationContext(), RecipientListProfileAccountActivity.class);
+                    intent.putExtra("search_id", search_id);
+                    startActivity(intent);
+                }
+            }
+        });
+
+        new get_account().execute();
     }
 
     @Override
@@ -129,4 +163,65 @@ public class SendPayActivity extends AppCompatActivity {
         return serviceResult.getBoolean("error");
     }
 
+    private class get_account extends AsyncTask<String, String, JSONObject> {
+        protected JSONObject doInBackground(String... args) {
+            JSONObject serviceResult = null;
+            try {
+                String postData ="session_key=" + URLEncoder.encode(GlobalVariable.SECURITY_SESSION_KEY, "UTF-8");
+                serviceResult = WebServiceClient.postRequest(GlobalVariable.DISTRIBUTOR_SERVER + "recipient/get_list", postData);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+            return serviceResult;
+        }
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+        }
+
+        protected void onPostExecute(JSONObject feedback_data) {
+            if (feedback_data.length() == 0) {
+                Toast.makeText(SendPayActivity.this, "Server issue, please contact 081235404833", Toast.LENGTH_LONG).show();
+                finish();
+            }
+            try {
+                if (feedback_data.getBoolean("error")) {
+                    Toast.makeText(SendPayActivity.this, feedback_data.getString("message"), Toast.LENGTH_LONG).show();
+                    finish();
+                } else {
+                    recipient_list = feedback_data.getJSONArray("recipient_list");
+
+                    List<HashMap<String, String>> aList = new ArrayList<HashMap<String, String>>();
+                    SimpleAdapter adapter = null;
+                    String[] from = {"recipientName"};
+                    int[] to = {R.id.recipientName};
+
+                    if(!feedback_data.getBoolean("data_available")) {
+                        HashMap<String, String> hm = new HashMap<String, String>();
+                        hm.put("recipientName", "empty recipient list");
+                        aList.add(hm);
+                        adapter = new SimpleAdapter(getBaseContext(), aList, R.layout.list_recipient_empty, from, to);
+                    } else {
+                        for (int i = 0; i < recipient_list.length(); i++) {
+                            HashMap<String, String> hm = new HashMap<String, String>();
+                            JSONObject recipient = recipient_list.getJSONObject(i);
+                            hm.put("recipientName", recipient.getString("name"));
+                            aList.add(hm);
+                        }
+                        adapter = new SimpleAdapter(getBaseContext(), aList, R.layout.list_recipient, from, to){
+                            @Override
+                            public View getView(int position, View convertView, ViewGroup parent) {
+                                return super.getView(position, convertView, parent);
+                            }
+                        };
+                    }
+                    RecipientList.setAdapter(adapter);
+                }
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
+    }
 }
