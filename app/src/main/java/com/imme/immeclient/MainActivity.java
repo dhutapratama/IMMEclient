@@ -80,7 +80,7 @@ public class MainActivity extends AppCompatActivity
     LinearLayout cmlt1_ll_amount, cmlt2_ll_amount, cmlt3_ll_amount;
 
     TextView full_name, verified_status;
-    ImageView verified_icon;
+    ImageView verified_icon, user_image;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -151,6 +151,9 @@ public class MainActivity extends AppCompatActivity
                     integrator.setBarcodeImageEnabled(true);
                     integrator.setCaptureActivity(CustomLayout.class);
                     integrator.initiateScan();
+                } else if (position == 4) {
+                    Intent intent = new Intent(MainActivity.this, NearMeActivity.class);
+                    startActivity(intent);
                 }
             }
         });
@@ -224,6 +227,7 @@ public class MainActivity extends AppCompatActivity
         full_name = (TextView) header.findViewById(R.id.full_name);
         verified_status = (TextView) header.findViewById(R.id.verified_status);
         verified_icon = (ImageView) header.findViewById(R.id.verified_icon);
+        user_image = (ImageView) header.findViewById(R.id.profile_image);
 
         RelativeLayout last_transaction_1 = (RelativeLayout) findViewById(R.id.last_transaction_1);
         last_transaction_1.setOnClickListener(new View.OnClickListener() {
@@ -1004,7 +1008,7 @@ public class MainActivity extends AppCompatActivity
                         }
 
                         // Set Image
-                         
+                         ImageLoadPlease(MainActivity.this, data.getString("picture_url"), user_image);
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();

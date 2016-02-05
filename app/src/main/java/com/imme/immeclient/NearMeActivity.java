@@ -16,6 +16,12 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
+import com.google.android.gms.maps.CameraUpdate;
+import com.google.android.gms.maps.CameraUpdateFactory;
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.Projection;
+import com.google.android.gms.maps.model.LatLng;
+
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -47,7 +53,7 @@ public class NearMeActivity extends AppCompatActivity {
         String Intent_data = intent.getStringExtra("query");
 
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_maps);
+        setContentView(R.layout.activity_near_me);
 
         Toast.makeText(getApplicationContext(),
                 Intent_data, Toast.LENGTH_SHORT)
@@ -55,17 +61,6 @@ public class NearMeActivity extends AppCompatActivity {
 
         // InitializeUI
         initializeUI();
-
-        LinearLayout pilih_lokasi = (LinearLayout) findViewById(R.id.pilih_lokasi);
-        pilih_lokasi.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(Maps.this, Pembayaran.class);
-                startActivity(intent);
-                //Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                //.setAction("Action", null).show();
-            }
-        });
     }
 
     private void initializeUI() {
@@ -102,7 +97,7 @@ public class NearMeActivity extends AppCompatActivity {
         if (googleMap == null) {
             mCustomMapFragment = ((CustomMapFragment) getFragmentManager()
                     .findFragmentById(R.id.map));
-            mCustomMapFragment.setOnDragListener(Maps.this);
+            mCustomMapFragment.setOnDragListener(NearMeActivity.this);
             googleMap = mCustomMapFragment.getMap();
             // check if map is created successfully or not
             if (googleMap == null) {
@@ -116,9 +111,6 @@ public class NearMeActivity extends AppCompatActivity {
 
         latitude = gps.getLatitude();
         longitude = gps.getLongitude();
-
-        GData.LATITUDE = latitude;
-        GData.LONGITUDE = longitude;
 
         LatLng latLng = new LatLng(latitude + 0.0002, longitude);
         CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLngZoom(latLng, 18);
@@ -155,8 +147,6 @@ public class NearMeActivity extends AppCompatActivity {
             if (projection != null) {
                 LatLng centerLatLng = projection.fromScreenLocation(new Point(
                         centerX, centerY));
-                GData.LATITUDE = centerLatLng.latitude;
-                GData.LONGITUDE = centerLatLng.longitude;
 
                 //updateLocation(centerLatLng);
             }
@@ -165,7 +155,7 @@ public class NearMeActivity extends AppCompatActivity {
 
     private void updateLocation(LatLng centerLatLng) {
         if (centerLatLng != null) {
-            Geocoder geocoder = new Geocoder(Maps.this,
+            Geocoder geocoder = new Geocoder(NearMeActivity.this,
                     Locale.getDefault());
 
             List<Address> addresses = new ArrayList<Address>();

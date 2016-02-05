@@ -20,12 +20,12 @@
         android:background="@drawable/white_circle_bg">
 
         <com.imme.immeclient.MLRoundedImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="70dp"
+            android:layout_height="70dp"
             android:src="@mipmap/ic_launcher"
             android:id="@+id/profile_image"
             android:layout_marginTop="@dimen/user_image_margin_top"
-            />
+            android:scaleType="centerCrop" />
 
     </RelativeLayout>
 
