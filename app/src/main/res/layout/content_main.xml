@@ -98,7 +98,8 @@
                 android:numColumns="auto_fit"
                 android:columnWidth="100dp"
                 android:horizontalSpacing="3dp"
-                android:layout_margin="15dp" />
+                android:layout_margin="15dp"
+                android:layout_gravity="center"/>
 
         </LinearLayout>
 

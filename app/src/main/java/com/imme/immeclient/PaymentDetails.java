@@ -1,27 +1,42 @@
 package com.imme.immeclient;
 
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
+import android.os.AsyncTask;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 import android.widget.SimpleAdapter;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.nostra13.universalimageloader.cache.disc.naming.Md5FileNameGenerator;
+import com.nostra13.universalimageloader.core.DisplayImageOptions;
+import com.nostra13.universalimageloader.core.ImageLoader;
+import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 import com.readystatesoftware.systembartint.SystemBarTintManager;
 
-import java.text.NumberFormat;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.IOException;
+import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Locale;
 
 public class PaymentDetails extends AppCompatActivity {
+
+    MLRoundedImageView DetailImage;
+    TextView DetailName, DetailDate, total_price;
+    String[] products_name, quantity, price;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,24 +44,22 @@ public class PaymentDetails extends AppCompatActivity {
         setContentView(R.layout.activity_payment_details);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-
         SystemBarTintManager tintManager = new SystemBarTintManager(this);
-        // enable status bar tint
         tintManager.setStatusBarTintEnabled(true);
-        // enable navigation bar tint
         tintManager.setNavigationBarTintEnabled(true);
-        // set a custom tint color for all system bars
         tintManager.setTintColor(Color.parseColor("#FF0093d9"));
 
-        initList();
+        DetailImage = (MLRoundedImageView) findViewById(R.id.DetailImage);
+        DetailName = (TextView) findViewById(R.id.DetailName);
+        DetailDate = (TextView) findViewById(R.id.DetailDate);
+        total_price = (TextView) findViewById(R.id.pd_total_price);
 
-        TextView cspd_merchant_name = (TextView) findViewById(R.id.cpd_merchant_name);
-        cspd_merchant_name.setText(GlobalVariable.PAY_RECIPIENT_NAME);
-
-        TextView total_price = (TextView) findViewById(R.id.pd_total_price);
-        total_price.setText("Rp " + GlobalVariable.PAY_AMOUNT);
+        if (getIntent().getStringExtra("reference") == null) {
+            finish();
+        } else {
+            new get_main_data().execute();
+        }
     }
 
     @Override
@@ -72,18 +85,6 @@ public class PaymentDetails extends AppCompatActivity {
     }
 
     private void initList() {
-        String[] products_name = new String[]{
-                "Payment"
-        };
-
-        String[] quantity = new String[]{
-                "1"
-        };
-
-        String[] price = new String[]{
-                "Rp " + GlobalVariable.PAY_AMOUNT
-        };
-
         List<HashMap<String,String>> aList = new ArrayList<HashMap<String,String>>();
         for(int i=0;i<1;i++){
             HashMap<String, String> hm = new HashMap<String,String>();
@@ -102,5 +103,94 @@ public class PaymentDetails extends AppCompatActivity {
 
         // Setting the adapter to the listView
         listView.setAdapter(adapter);
+    }
+
+    private class get_main_data extends AsyncTask<String, String, JSONObject> {
+        LinearLayout LLDetail;
+        ProgressBar LoadingAnimation;
+
+        protected JSONObject doInBackground(String... args) {
+            JSONObject serviceResult = null;
+            try {
+                String postData = "session_key=" + URLEncoder.encode(GlobalVariable.SECURITY_SESSION_KEY, "UTF-8")
+                        + "&reference=" + URLEncoder.encode(getIntent().getStringExtra("reference"), "UTF-8");
+                serviceResult = WebServiceClient.postRequest(GlobalVariable.DISTRIBUTOR_SERVER + "history/transaction_detail", postData);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+            return serviceResult;
+        }
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            LoadingAnimation = (ProgressBar) findViewById(R.id.LoadingAnimation);
+            LLDetail = (LinearLayout) findViewById(R.id.LLDetail);
+            LoadingAnimation.setVisibility(View.VISIBLE);
+            LLDetail.setVisibility(View.GONE);
+        }
+
+        protected void onPostExecute(JSONObject feedback_data) {
+            LLDetail.setVisibility(View.VISIBLE);
+            LoadingAnimation.setVisibility(View.GONE);
+
+            if (feedback_data.length() == 0) {
+                Toast.makeText(PaymentDetails.this, "Server issue, please contact 081235404833", Toast.LENGTH_LONG).show();
+                finish();
+            } else {
+                try {
+                    if (feedback_data.getBoolean("error")) {
+                        Toast.makeText(PaymentDetails.this, feedback_data.getString("message"), Toast.LENGTH_LONG).show();
+                        finish();
+                    } else {
+                        JSONObject data = feedback_data.getJSONObject("data");
+
+                        ImageLoadPlease(PaymentDetails.this, data.getString("picture_url"), DetailImage);
+                        DetailName.setText(data.getString("name"));
+                        DetailDate.setText(data.getString("date"));
+                        total_price.setText(data.getString("amount"));
+
+                        products_name = new String[]{
+                                data.getString("type")
+                        };
+                        quantity = new String[]{
+                                "1"
+                        };
+                        price = new String[]{
+                                data.getString("amount")
+                        };
+
+                        initList();
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+    }
+
+    public ImageLoader ImageLoadPlease(Context context, String imageURI, ImageView target) {
+        ImageLoaderConfiguration.Builder config = new ImageLoaderConfiguration.Builder(context);
+        config.threadPriority(Thread.NORM_PRIORITY - 2);
+        config.denyCacheImageMultipleSizesInMemory();
+        config.diskCacheFileNameGenerator(new Md5FileNameGenerator());
+        config.diskCacheSize(500 * 1024 * 1024);
+
+        ImageLoader.getInstance().init(config.build());
+
+        DisplayImageOptions options = new DisplayImageOptions.Builder()
+                .showImageOnLoading(R.mipmap.ic_launcher)
+                .showImageForEmptyUri(R.mipmap.ic_launcher)
+                .showImageOnFail(R.mipmap.ic_launcher)
+                .resetViewBeforeLoading(false)
+                .delayBeforeLoading(100)
+                .cacheInMemory(true)
+                .cacheOnDisk(true)
+                .build();
+
+        ImageLoader imageLoader = ImageLoader.getInstance();
+        imageLoader.displayImage(imageURI, target, options);
+        return imageLoader;
     }
 }
