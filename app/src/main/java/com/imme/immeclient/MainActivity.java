@@ -89,12 +89,6 @@ public class MainActivity extends AppCompatActivity
 
         if (getIntent().getBooleanExtra("EXIT", false)) {
             finish();
-        } else {
-            try {
-                initVariable();
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
         }
 
         super.onCreate(savedInstanceState);
@@ -151,7 +145,7 @@ public class MainActivity extends AppCompatActivity
                     integrator.setBarcodeImageEnabled(true);
                     integrator.setCaptureActivity(CustomLayout.class);
                     integrator.initiateScan();
-                } else if (position == 4) {
+                } else if (position == 3) {
                     Intent intent = new Intent(MainActivity.this, NearMeActivity.class);
                     startActivity(intent);
                 }
