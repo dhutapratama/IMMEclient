@@ -6,7 +6,6 @@ import android.app.ProgressDialog;
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
-import android.content.pm.ActivityInfo;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Color;
@@ -20,7 +19,6 @@ import android.os.Handler;
 import android.os.StrictMode;
 import android.support.v4.app.NotificationCompat;
 import android.support.v7.app.ActionBar;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.support.design.widget.NavigationView;
@@ -32,14 +30,10 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.AdapterView;
-import android.widget.GridLayout;
-import android.widget.GridView;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
-import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -49,18 +43,12 @@ import com.nostra13.universalimageloader.cache.disc.naming.Md5FileNameGenerator;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
-import com.nostra13.universalimageloader.core.assist.QueueProcessingType;
 import com.readystatesoftware.systembartint.SystemBarTintManager;
 
-import java.io.BufferedReader;
-import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.OutputStreamWriter;
 import java.net.URLEncoder;
 import java.text.NumberFormat;
-import java.util.HashMap;
+import java.util.ArrayList;
 import java.util.Locale;
 
 import org.json.JSONArray;
@@ -81,6 +69,8 @@ public class MainActivity extends AppCompatActivity
 
     TextView full_name, verified_status;
     ImageView verified_icon, user_image;
+
+    ArrayList<String> reference = new ArrayList<String>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -227,12 +217,11 @@ public class MainActivity extends AppCompatActivity
         last_transaction_1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                /*
-                Snackbar.make(view, "PT. Lazada E-Commerce (-Rp300.000)", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-                       */
-                Intent intent = new Intent("com.imme.immeclient.PaymentDetails");
-                startActivity(intent);
+                if (reference.get(0) != null) {
+                    Intent intent = new Intent("com.imme.immeclient.PaymentDetails");
+                    intent.putExtra("reference", reference.get(0));
+                    startActivity(intent);
+                }
             }
         });
 
@@ -240,8 +229,11 @@ public class MainActivity extends AppCompatActivity
         last_transaction_2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent("com.imme.immeclient.PaymentDetails");
-                startActivity(intent);
+                if (reference.get(1) != null) {
+                    Intent intent = new Intent("com.imme.immeclient.PaymentDetails");
+                    intent.putExtra("reference", reference.get(1));
+                    startActivity(intent);
+                }
             }
         });
 
@@ -249,8 +241,11 @@ public class MainActivity extends AppCompatActivity
         last_transaction_3.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent("com.imme.immeclient.PaymentDetails");
-                startActivity(intent);
+                if (reference.get(2) != null) {
+                    Intent intent = new Intent("com.imme.immeclient.PaymentDetails");
+                    intent.putExtra("reference", reference.get(2));
+                    startActivity(intent);
+                }
             }
         });
 
@@ -278,19 +273,6 @@ public class MainActivity extends AppCompatActivity
         cmlt3_date = (TextView) findViewById(R.id.cmlt3_date);
         cmlt3_ll_amount = (LinearLayout) findViewById(R.id.cmlt3_ll_amount);
         cmlt3_no_trans = (TextView) findViewById(R.id.cmlt3_no_trans);
-
-        /*try {
-            GetImage.productLookup();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }*/
-
-        /*
-        Intent intent = new Intent(this, IMMEService.class);
-        startService(intent);
-        */
-
-        /* new check_notification().execute(); */
 
         SecurityData mDbHelper = new SecurityData(this);
         SQLiteDatabase db =  mDbHelper.getReadableDatabase();
@@ -365,15 +347,18 @@ public class MainActivity extends AppCompatActivity
             return true;
         }
         else if (id == R.id.nav_sign_out) {
-            try {
-                signOut();
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
-            finish();
+            SecurityData mDbHelper = new SecurityData(MainActivity.this);
+            SQLiteDatabase db = mDbHelper.getReadableDatabase();
+            ContentValues values = new ContentValues();
+            values.put(SecurityData.SESSION_KEY, "");
+            values.put(SecurityData.FIRST_TIME, 0);
+            db.update(SecurityData.TABLE_LOGIN_DATA, values, null, null);
+            db.close();
+
             Intent intent = new Intent(MainActivity.this, SignInActivity.class);
             intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
             startActivity(intent);
+            finish();
             return true;
         }
         // Gift page hide
@@ -583,156 +568,9 @@ public class MainActivity extends AppCompatActivity
             error_status = false;
             GlobalVariable.DEPOSIT_AMOUNT = Integer.parseInt(serviceResult.getString("deposit_amount"));
             GlobalVariable.MONEY_MAIN_BALANCE = Integer.parseInt(serviceResult.getString("balance"));
-            commit();
         }
         return serviceResult.getBoolean("error");
     }
-
-    public void writeFile(String varname, String data) {
-        try {
-            OutputStreamWriter outputStreamWriter = new OutputStreamWriter(openFileOutput(varname, Context.MODE_PRIVATE));
-            outputStreamWriter.write(data);
-            outputStreamWriter.close();
-        }
-        catch (IOException e) {
-            Log.e("Exception", "File write failed: " + e.toString());
-        }
-    }
-
-    private String readFile(String varname) {
-        String ret = "";
-        try {
-            InputStream inputStream = openFileInput(varname);
-
-            if ( inputStream != null ) {
-                InputStreamReader inputStreamReader = new InputStreamReader(inputStream);
-                BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
-                String receiveString = "";
-                StringBuilder stringBuilder = new StringBuilder();
-
-                while ( (receiveString = bufferedReader.readLine()) != null ) {
-                    stringBuilder.append(receiveString);
-                }
-
-                inputStream.close();
-                ret = stringBuilder.toString();
-            }
-        }
-        catch (FileNotFoundException e) {
-            Log.e("SplashScreen", "File not found: " + e.toString());
-        } catch (IOException e) {
-            Log.e("SplashScreen", "Can not read file: " + e.toString());
-        }
-        return ret;
-    }
-
-    private void signOut() throws JSONException {
-        JSONObject serverData = new JSONObject();
-        JSONObject securityData = new JSONObject();
-        JSONObject moneyData = new JSONObject();
-        JSONObject customerData = new JSONObject();
-        JSONObject appData = new JSONObject();
-
-        // Server Data
-        serverData.put("distributor_server", "http://api.studiwidie.com/");
-        serverData.put("ack_code", "5GwcTzO0ODM6eSV3s66PJjeedlEvxWc9");
-        serverData.put("otp_key", "OTP_KEY");
-
-        // Security Data
-        securityData.put("imme_algorithm", "IMME_ALGORITHM");
-        securityData.put("tba_algorithm", "TBA_ALGORITHM");
-        securityData.put("cba_algorithm", "CBA_ALGORITHM");
-        securityData.put("cba_counter", "CBA_COUNTER");
-        securityData.put("session_key", "SESSION_KEY");
-        securityData.put("csrf_token", "CSRF_TOKEN");
-        securityData.put("user_agent","USER_AGENT");
-
-        // Customer Data
-        customerData.put("account_number", "ACCOUNT_NUMBER");
-        customerData.put("full_name", "FULL_NAME");
-        customerData.put("picture_url", "PICTURE_URL");
-        customerData.put("email", "EMAIL");
-        customerData.put("phone_number", "PHONE_NUMBER");
-        customerData.put("idcard_number", "IDCARD_NUMBER");
-        customerData.put("idcard_type", "IDCARD_TYPE");
-        customerData.put("is_verified_email", "false");
-        customerData.put("is_verified_phone", "false");
-
-        // Money Data
-        moneyData.put("main_balance", "0");
-        moneyData.put("send_ammount", "0");
-        moneyData.put("request_amount", "0");
-        moneyData.put("transaction_code", "0");
-
-        // App Data
-
-        appData.put("first_time_app", "false");
-        appData.put("login_status", "false");
-        appData.put("client_version","1.0.0");
-
-        writeFile(GlobalVariable.FILE_SERVER, serverData.toString());
-        writeFile(GlobalVariable.FILE_SECURITY, securityData.toString());
-        writeFile(GlobalVariable.FILE_CUSTOMER, customerData.toString());
-        writeFile(GlobalVariable.FILE_MONEY, moneyData.toString());
-        writeFile(GlobalVariable.FILE_APP, appData.toString());
-        initVariable();
-    }
-
-    private void initVariable() throws JSONException {
-        String securityContent = readFile(GlobalVariable.FILE_SECURITY);
-        JSONObject securityData = new JSONObject(securityContent);
-
-        String customerContent = readFile(GlobalVariable.FILE_CUSTOMER);
-        JSONObject customerData = new JSONObject(customerContent);
-
-        String moneyContent = readFile(GlobalVariable.FILE_MONEY);
-        JSONObject moneyData = new JSONObject(moneyContent);
-
-        String appContent = readFile(GlobalVariable.FILE_APP);
-        JSONObject appData = new JSONObject(appContent);
-
-        // Security Data
-        GlobalVariable.SECURITY_IMME_ALGORITHM = securityData.getString("imme_algorithm");
-        GlobalVariable.SECURITY_TBA_ALGORITHM = securityData.getString("tba_algorithm");
-        GlobalVariable.SECURITY_CBA_ALGORITHM = securityData.getString("cba_algorithm");
-        GlobalVariable.SECURITY_CBA_COUNTER = securityData.getString("cba_counter");
-        GlobalVariable.SECURITY_SESSION_KEY = securityData.getString("session_key");
-        GlobalVariable.SECURITY_CSRF_TOKEN = securityData.getString("csrf_token");
-        GlobalVariable.SECURITY_USER_AGENT = securityData.getString("user_agent");
-
-        // Customer Data
-        GlobalVariable.CUSTOMER_ACCOUNT_NUMBER = customerData.getString("account_number");
-        GlobalVariable.CUSTOMER_FULL_NAME = customerData.getString("full_name");
-        GlobalVariable.CUSTOMER_PICTURE_URL = customerData.getString("picture_url");
-        GlobalVariable.CUSTOMER_EMAIL = customerData.getString("email");
-        GlobalVariable.CUSTOMER_PHONE_NUMBER = customerData.getString("phone_number");
-        GlobalVariable.CUSTOMER_IDCARD_NUMBER = customerData.getString("idcard_number");
-        GlobalVariable.CUSTOMER_IDCARD_TYPE = customerData.getString("idcard_type");
-        GlobalVariable.CUSTOMER_IS_VERIFIED_EMAIL = customerData.getString("is_verified_email");
-        GlobalVariable.CUSTOMER_IS_VERIFIED_PHONE = customerData.getString("is_verified_phone");
-
-        // Money Data
-        GlobalVariable.MONEY_MAIN_BALANCE = Integer.parseInt(moneyData.getString("main_balance"));
-        GlobalVariable.MONEY_SEND_AMOUNT = Integer.parseInt(moneyData.getString("send_ammount"));
-        GlobalVariable.MONEY_REQUEST_AMOUNT = Integer.parseInt(moneyData.getString("request_amount"));
-        GlobalVariable.MONEY_TRANSACTION_CODE = moneyData.getString("transaction_code");
-
-        // Money Data
-        GlobalVariable.APP_FIRST_TIME_APP = appData.getString("first_time_app");
-        GlobalVariable.APP_LOGIN_STATUS = appData.getString("login_status");
-        GlobalVariable.APP_CLIENT_VERSION = appData.getString("client_version");
-    }
-
-    private void commit() throws JSONException {
-        String moneyContent = readFile(GlobalVariable.FILE_MONEY);
-        JSONObject moneyData = new JSONObject(moneyContent);
-
-        // Money Data
-        moneyData.put("main_balance", Integer.toString(GlobalVariable.MONEY_MAIN_BALANCE));
-
-        writeFile(GlobalVariable.FILE_MONEY, moneyData.toString());
-    }
-
 
     private class check_notification extends AsyncTask<String, Void, Object> {
         protected Object doInBackground(String... args) {
@@ -932,7 +770,7 @@ public class MainActivity extends AppCompatActivity
 
                         for (int i = 0; i < loops; i++) {
                             JSONObject transaction_data = transaction.getJSONObject(i);
-
+                            reference.add(transaction_data.getString("reference"));
                             if (i == 0) {
                                 try {
                                     if (transaction_data.getString("type").equals("1")) {
@@ -1009,31 +847,22 @@ public class MainActivity extends AppCompatActivity
                 }
             }
         }
-
-
     }
 
     public ImageLoader ImageLoadPlease(Context context, String imageURI, ImageView target) {
-        // This configuration tuning is custom. You can tune every option, you may tune some of them,
-        // or you can create default configuration by
-        //  ImageLoaderConfiguration.createDefault(this);
-        // method.
         ImageLoaderConfiguration.Builder config = new ImageLoaderConfiguration.Builder(context);
         config.threadPriority(Thread.NORM_PRIORITY - 2);
         config.denyCacheImageMultipleSizesInMemory();
         config.diskCacheFileNameGenerator(new Md5FileNameGenerator());
-        config.diskCacheSize(500 * 1024 * 1024); // 50 MiB
-        config.tasksProcessingOrder(QueueProcessingType.LIFO);
-        config.writeDebugLogs(); // Remove for release app
+        config.diskCacheSize(500 * 1024 * 1024);
 
-        // Initialize ImageLoader with configuration.
         ImageLoader.getInstance().init(config.build());
 
         DisplayImageOptions options = new DisplayImageOptions.Builder()
-                .showImageOnLoading(R.mipmap.ic_launcher) // resource or drawable
-                .showImageForEmptyUri(R.mipmap.ic_launcher) // resource or drawable
-                .showImageOnFail(R.mipmap.ic_launcher) // resource or drawable
-                .resetViewBeforeLoading(false)  // default
+                .showImageOnLoading(R.mipmap.ic_launcher)
+                .showImageForEmptyUri(R.mipmap.ic_launcher)
+                .showImageOnFail(R.mipmap.ic_launcher)
+                .resetViewBeforeLoading(false)
                 .delayBeforeLoading(100)
                 .cacheInMemory(true)
                 .cacheOnDisk(true)
