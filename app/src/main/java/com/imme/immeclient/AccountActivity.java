@@ -61,6 +61,87 @@ public class AccountActivity extends AppCompatActivity {
         PhoneVerification = (LinearLayout) findViewById(R.id.PhoneVerification);
         BTN_Save = (TextView) findViewById(R.id.account_button_save);
 
+        // Start Font
+        Typeface hnLight = Typeface.createFromAsset(getAssets(),
+                "fonts/HelveticaNeue-Light.otf");
+
+        Typeface hbqLight = Typeface.createFromAsset(getAssets(),
+                "fonts/HelveticaBQ-Light.otf");
+
+        //TextView account_textview_balance = (TextView) findViewById(R.id.account_textview_balance);
+        //account_textview_balance.setTypeface(hnLight);
+
+        //TextView account_textview_balance_rp = (TextView) findViewById(R.id.account_textview_balance_rp);
+        //account_textview_balance_rp.setTypeface(hnLight);
+
+        //TextView account_textview_balance_value = (TextView) findViewById(R.id.account_textview_balance_value);
+        //account_textview_balance_value.setTypeface(hbqLight);
+
+        //TextView account_textview_balance_gift = (TextView) findViewById(R.id.account_textview_balance_gift);
+        //account_textview_balance_gift.setTypeface(hnLight);
+
+        //TextView account_textview_balance_gift_rp = (TextView) findViewById(R.id.account_textview_balance_gift_rp);
+        //account_textview_balance_gift_rp.setTypeface(hnLight);
+
+        //TextView account_textview_balance_gift_value = (TextView) findViewById(R.id.account_textview_balance_gift_value);
+        //account_textview_balance_gift_value.setTypeface(hbqLight);
+
+        //TextView account_textview_account_number = (TextView) findViewById(R.id.account_textview_account_number);
+        //account_textview_account_number.setTypeface(hnLight);
+
+        //account_textview_account_number_value.setTypeface(hnLight);
+
+        //TextView account_textview_account_setting = (TextView) findViewById(R.id.account_textview_account_setting);
+        //account_textview_account_setting.setTypeface(hbqLight);
+
+        //TextView account_textview_full_name = (TextView) findViewById(R.id.account_textview_full_name);
+        //account_textview_full_name.setTypeface(hnLight);
+
+        //account_edittext_full_name_value.setTypeface(hnLight);
+
+        //TextView account_textview_profil_image = (TextView) findViewById(R.id.account_textview_profil_image);
+        //account_textview_profil_image.setTypeface(hnLight);
+
+        //TextView account_textview_upload_image = (TextView) findViewById(R.id.account_textview_upload_image);
+        //account_textview_upload_image.setTypeface(hnLight);
+
+        //TextView account_textview_max_size = (TextView) findViewById(R.id.account_textview_max_size);
+        //account_textview_max_size.setTypeface(hnLight);
+
+        //TextView account_textview_email = (TextView) findViewById(R.id.account_textview_email);
+        //account_textview_email.setTypeface(hnLight);
+
+        //account_edittext_email_value.setTypeface(hnLight);
+
+        //TextView account_textview_phone_number = (TextView) findViewById(R.id.account_textview_phone_number);
+        //account_textview_phone_number.setTypeface(hnLight);
+
+        //account_edittext_phone_number_value.setTypeface(hnLight);
+
+        //account_button_save.setTypeface(hbqLight);
+
+        //TextView account_textview_account_details = (TextView) findViewById(R.id.account_textview_account_details);
+        //account_textview_account_details.setTypeface(hbqLight);
+
+        //TextView account_textview_id_number = (TextView) findViewById(R.id.account_textview_id_number);
+        //account_textview_id_number.setTypeface(hnLight);
+
+        //account_textview_id_number_value.setTypeface(hnLight);
+
+        //TextView account_textview_id_type = (TextView) findViewById(R.id.account_textview_id_type);
+        //account_textview_id_type.setTypeface(hnLight);
+
+        //account_textview_id_type_value.setTypeface(hnLight);
+
+        //TextView account_textview_resend_verification_email = (TextView) findViewById(R.id.account_textview_resend_verification_email);
+        //account_textview_resend_verification_email.setTypeface(hnLight);
+
+        //TextView account_textview_verification_email = (TextView) findViewById(R.id.account_textview_verification_email);
+        //account_textview_verification_email.setTypeface(hbqLight);
+
+        //TextView account_textview_verification_phone_number = (TextView) findViewById(R.id.account_textview_verification_phone_number);
+        //account_textview_verification_phone_number.setTypeface(hbqLight);
+
         TextView account_textview_verify_phone_number = (TextView) findViewById(R.id.account_textview_verify_phone_number);
         account_textview_verify_phone_number.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -75,11 +156,7 @@ public class AccountActivity extends AppCompatActivity {
         BTN_Save.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(AccountActivity.this, Pin2Activity.class);
-                intent.putExtra("full_name", FullName.getText().toString());
-                intent.putExtra("email", Email.getText().toString());
-                intent.putExtra("phone_number", PhoneNumber.getText().toString());
-                startActivity(intent);
+                new save_account().execute();
             }
         });
 
@@ -152,6 +229,61 @@ public class AccountActivity extends AppCompatActivity {
                     if (data.getBoolean("verified_phone")) {
                         PhoneVerification.setVisibility(View.GONE);
                     }
+                }
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    private class save_account extends AsyncTask<String, String, JSONObject> {
+        // Initialization global variable for private AsyncTask class
+        String full_name, email, phone_number;
+
+        protected JSONObject doInBackground(String... args) {
+            JSONObject serviceResult = null;
+            try {
+                String postData ="session_key=" + URLEncoder.encode(GlobalVariable.SECURITY_SESSION_KEY, "UTF-8")
+                        + "&full_name=" + URLEncoder.encode(full_name, "UTF-8")
+                        + "&email=" + URLEncoder.encode(email, "UTF-8")
+                        + "&phone_number=" + URLEncoder.encode(phone_number, "UTF-8");
+                serviceResult = WebServiceClient.postRequest(GlobalVariable.DISTRIBUTOR_SERVER + "setting/save_account_setting", postData);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+            return serviceResult;
+        }
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            LoadingDialog = ProgressDialog.show(AccountActivity.this, "", "Saving your account", false);
+            full_name = FullName.getText().toString();
+            email = Email.getText().toString();
+            phone_number = PhoneNumber.getText().toString();
+        }
+
+        protected void onPostExecute(JSONObject feedback_data) {
+            if (LoadingDialog != null) {
+                LoadingDialog.dismiss();
+            }
+            //if (AccountActivity.this.loading != null) {
+            //    AccountActivity.this.loading.dismiss();
+            //}
+            if (feedback_data.length() == 0) {
+                Toast.makeText(AccountActivity.this, "Server issue, please contact 081235404833", Toast.LENGTH_LONG).show();
+                //return;
+            }
+
+            // Error handling
+            try {
+                if (feedback_data.getBoolean("error")) {
+                    //feedback_data.getInt("code")
+                    Toast.makeText(AccountActivity.this, feedback_data.getString("message"), Toast.LENGTH_LONG).show();
+                } else {
+                    JSONObject data = feedback_data.getJSONObject("data");
+                    Toast.makeText(AccountActivity.this, data.getString("message"), Toast.LENGTH_LONG).show();
                 }
             } catch (JSONException e) {
                 e.printStackTrace();

@@ -9,20 +9,11 @@
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:showIn="@layout/activity_payment_details"
     tools:context="com.imme.immeclient.PaymentDetails">
-
-    <ProgressBar
-        android:id="@+id/LoadingAnimation"
-        style="?android:attr/progressBarStyle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerInParent="true"/>
-
     <LinearLayout
         android:orientation="vertical"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
-        android:background="#ffffff"
-        android:id="@+id/LLDetail">
+        android:background="#ffffff">
         <LinearLayout
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
@@ -31,16 +22,15 @@
             android:background="#e0e0e0"
             android:paddingTop="15dp"
             android:paddingBottom="15dp">
-
-            <com.imme.immeclient.MLRoundedImageView
-                android:layout_width="45dp"
-                android:layout_height="45dp"
-                android:layout_marginRight="10dp"
-                android:layout_marginTop="3dp"
-                android:gravity="center"
-                android:scaleType="center"
-                android:id="@+id/DetailImage"/>
-
+<!--
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@mipmap/main_payment_details_sevel_icon"
+                android:paddingRight="10dp"
+                android:paddingTop="3dp"
+                android:gravity="center"/>
+-->
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -48,16 +38,17 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:text="[MERCHANT_NAME]"
                     android:gravity="center"
                     android:textSize="18dp"
-                    android:id="@+id/DetailName"/>
+                    android:id="@+id/cpd_merchant_name"/>
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:text="30 Nov 2015 15:30 - Jakarta"
                     android:gravity="center"
-                    android:textSize="8dp"
-                    android:id="@+id/DetailDate"/>
+                    android:textSize="8dp"/>
 
             </LinearLayout>
 

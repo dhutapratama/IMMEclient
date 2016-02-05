@@ -60,8 +60,8 @@ public class MainMenuAdapter extends BaseAdapter {
             R.mipmap.main_button_receive_icon,
             R.mipmap.main_button_topup_icon,
             R.mipmap.main_button_near_me_icon,
-            //R.mipmap.icon_transjakarta,
-            //R.mipmap.icon_sevel
+            R.mipmap.icon_transjakarta,
+            R.mipmap.icon_sevel
     };
 
     private String[] MenuText = {
@@ -69,7 +69,7 @@ public class MainMenuAdapter extends BaseAdapter {
             "Receive",
             "Deposit",
             "Near Me",
-            //"Transjakarta",
-            //"Seven Eleven"
+            "Transjakarta",
+            "Seven Eleven"
     };
 }
