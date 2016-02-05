@@ -84,7 +84,7 @@
                     android:layout_gravity="right"/>
             </LinearLayout>
 
-            <TextView android:text="Loading Your Last Transaction"
+            <TextView android:text=""
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:paddingTop="@dimen/main_lastTransaction_padding"
@@ -92,6 +92,17 @@
                 android:textColor="@color/textWhite"
                 android:gravity="center"
                 android:id="@+id/cmlt1_no_trans"/>
+
+            <ProgressBar
+                android:id="@+id/LoadingAnimation2"
+                style="?android:attr/progressBarStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="20dp"
+                android:layout_marginBottom="20dp"
+                android:visibility="gone"
+                android:layout_centerInParent="true"/>
         </RelativeLayout>
 
         <RelativeLayout

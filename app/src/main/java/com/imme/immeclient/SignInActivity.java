@@ -1,8 +1,10 @@
 package com.imme.immeclient;
 
 import android.app.ProgressDialog;
+import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
+import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.AsyncTask;
@@ -44,19 +46,19 @@ public class SignInActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        // Better quiting apps
         if (getIntent().getBooleanExtra("EXIT", false)) {
             finish();
         }
 
-        StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
-        StrictMode.setThreadPolicy(policy);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign_in);
         SystemBarTintManager tintManager = new SystemBarTintManager(this);
         tintManager.setStatusBarTintEnabled(true);
         tintManager.setNavigationBarTintEnabled(true);
         tintManager.setTintColor(Color.parseColor("#ff0f99da"));
+
+        StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+        StrictMode.setThreadPolicy(policy);
 
         // Start Font
         Typeface hnLight = Typeface.createFromAsset(getAssets(),
@@ -96,16 +98,7 @@ public class SignInActivity extends AppCompatActivity {
             public void onClick(View v) {
             email = sign_in_edittext_email.getText().toString();
             password = sign_in_edittext_password.getText().toString();
-            loading = ProgressDialog.show(SignInActivity.this, "", "Sign in...", true);
-            new loginTask().execute();
-
-            /*if (GlobalVariable.APP_LOGIN_STATUS.equals("true")) {
-                Intent intent = new Intent(SignInActivity.this, MainActivity.class);
-                startActivity(intent);
-            } else {
-                //Toast.makeText(SignInActivity.this, message, Toast.LENGTH_LONG).show();
-            }*/
-
+            new login_check().execute();
             }
         });
     }
@@ -118,157 +111,58 @@ public class SignInActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
-    public void writeFile(String varname, String data) {
-        try {
-            OutputStreamWriter outputStreamWriter = new OutputStreamWriter(openFileOutput(varname, Context.MODE_PRIVATE));
-            outputStreamWriter.write(data);
-            outputStreamWriter.close();
-        }
-        catch (IOException e) {
-            Log.e("Exception", "File write failed: " + e.toString());
-        }
-    }
-
-    private String readFile(String varname) {
-        String ret = "";
-        try {
-            InputStream inputStream = openFileInput(varname);
-
-            if ( inputStream != null ) {
-                InputStreamReader inputStreamReader = new InputStreamReader(inputStream);
-                BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
-                String receiveString = "";
-                StringBuilder stringBuilder = new StringBuilder();
-
-                while ( (receiveString = bufferedReader.readLine()) != null ) {
-                    stringBuilder.append(receiveString);
-                }
-
-                inputStream.close();
-                ret = stringBuilder.toString();
-            }
-        }
-        catch (FileNotFoundException e) {
-            Log.e("SplashScreen", "File not found: " + e.toString());
-        } catch (IOException e) {
-            Log.e("SplashScreen", "Can not read file: " + e.toString());
-        }
-        return ret;
-    }
-
-    public void doLogin() throws JSONException, IOException {
-        String postData ="email=" + URLEncoder.encode(email, "UTF-8")
-                + "&password=" + URLEncoder.encode(password, "UTF-8");
-        JSONObject serviceResult = WebServiceClient.postRequest(GlobalVariable.DISTRIBUTOR_SERVER + "login", postData);
-
-        if (!serviceResult.getBoolean("error")){
-            // SECURITY GlobalVariable SET
-            // Security
-            GlobalVariable.SECURITY_IMME_ALGORITHM = serviceResult.getString("imme_algorithm");
-            GlobalVariable.SECURITY_TBA_ALGORITHM = serviceResult.getString("tba_algorithm");
-            GlobalVariable.SECURITY_CBA_ALGORITHM = serviceResult.getString("cba_algorithm");
-            GlobalVariable.SECURITY_CBA_COUNTER = serviceResult.getString("cba_counter");
-            GlobalVariable.SECURITY_SESSION_KEY = serviceResult.getString("session_key");
-
-            // Customer
-            JSONObject customerData = serviceResult.getJSONObject("account");
-            GlobalVariable.CUSTOMER_ACCOUNT_NUMBER  = customerData.getString("account_number");
-            GlobalVariable.CUSTOMER_FULL_NAME       = customerData.getString("full_name");
-            GlobalVariable.CUSTOMER_PICTURE_URL     = customerData.getString("picture_url");
-            GlobalVariable.CUSTOMER_EMAIL           = customerData.getString("email");
-            GlobalVariable.CUSTOMER_PHONE_NUMBER    = customerData.getString("phone_number");
-            GlobalVariable.CUSTOMER_IDCARD_NUMBER   = customerData.getString("idcard_number");
-            GlobalVariable.CUSTOMER_IDCARD_TYPE     = customerData.getString("idcard_type");
-            if (customerData.getString("is_verified_email").equals("1")){
-                GlobalVariable.CUSTOMER_IS_VERIFIED_EMAIL = "true";
-            } else {
-                GlobalVariable.CUSTOMER_IS_VERIFIED_EMAIL = "false";
-            }
-            if (customerData.getString("is_verified_phone").equals("1")){
-                GlobalVariable.CUSTOMER_IS_VERIFIED_PHONE = "true";
-            } else {
-                GlobalVariable.CUSTOMER_IS_VERIFIED_PHONE = "false";
-            }
-
-            // App
-            GlobalVariable.APP_FIRST_TIME_APP = "false";
-            GlobalVariable.APP_LOGIN_STATUS = "true";
-
-            // Money
-            GlobalVariable.MONEY_MAIN_BALANCE = Integer.parseInt(customerData.getString("balance"));
-
-            commit();
-            login_error = false;
-        } else {
-            login_error = true;
-            message = serviceResult.getString("message");
-        }
-    }
-
-    private void commit() throws JSONException {
-        String securityContent = readFile(GlobalVariable.FILE_SECURITY);
-        String customerContent = readFile(GlobalVariable.FILE_CUSTOMER);
-        String moneyContent = readFile(GlobalVariable.FILE_MONEY);
-        String appContent = readFile(GlobalVariable.FILE_APP);
-
-        JSONObject securityData = new JSONObject(securityContent);
-        JSONObject moneyData = new JSONObject(moneyContent);
-        JSONObject customerData = new JSONObject(customerContent);
-        JSONObject appData = new JSONObject(appContent);
-
-        // Security Data
-        securityData.put("imme_algorithm", GlobalVariable.SECURITY_IMME_ALGORITHM);
-        securityData.put("tba_algorithm", GlobalVariable.SECURITY_TBA_ALGORITHM);
-        securityData.put("cba_algorithm", GlobalVariable.SECURITY_CBA_ALGORITHM);
-        securityData.put("cba_counter", GlobalVariable.SECURITY_CBA_COUNTER);
-        securityData.put("session_key", GlobalVariable.SECURITY_SESSION_KEY);
-
-        // Customer Data
-        customerData.put("account_number", GlobalVariable.CUSTOMER_ACCOUNT_NUMBER);
-        customerData.put("full_name", GlobalVariable.CUSTOMER_FULL_NAME);
-        customerData.put("picture_url", GlobalVariable.CUSTOMER_PICTURE_URL);
-        customerData.put("email", GlobalVariable.CUSTOMER_EMAIL);
-        customerData.put("phone_number", GlobalVariable.CUSTOMER_PHONE_NUMBER);
-        customerData.put("idcard_number", GlobalVariable.CUSTOMER_IDCARD_NUMBER);
-        customerData.put("idcard_type", GlobalVariable.CUSTOMER_IDCARD_TYPE);
-        customerData.put("is_verified_email", GlobalVariable.CUSTOMER_IS_VERIFIED_EMAIL);
-        customerData.put("is_verified_phone", GlobalVariable.CUSTOMER_IS_VERIFIED_PHONE);
-
-        // Money Data
-        moneyData.put("main_balance", Integer.toString(GlobalVariable.MONEY_MAIN_BALANCE));
-
-        // App Data
-        appData.put("first_time_app", GlobalVariable.APP_FIRST_TIME_APP);
-        appData.put("login_status", GlobalVariable.APP_LOGIN_STATUS);
-        writeFile(GlobalVariable.FILE_SECURITY, securityData.toString());
-        writeFile(GlobalVariable.FILE_CUSTOMER, customerData.toString());
-        writeFile(GlobalVariable.FILE_MONEY, moneyData.toString());
-        writeFile(GlobalVariable.FILE_APP, appData.toString());
-    }
-
-    private class loginTask extends AsyncTask<String, Void, Object> {
-        protected Object doInBackground(String... args) {
-            Log.i("MyApp", "Background thread starting");
+    private class login_check extends AsyncTask<String, String, JSONObject> {
+        protected JSONObject doInBackground(String... args) {
+            JSONObject serviceResult = null;
             try {
-                doLogin();
-            } catch (JSONException e) {
-                e.printStackTrace();
+                String postData ="email=" + URLEncoder.encode(email, "UTF-8")
+                        + "&password=" + URLEncoder.encode(password, "UTF-8");
+                serviceResult = WebServiceClient.postRequest(GlobalVariable.DISTRIBUTOR_SERVER + "login", postData);
             } catch (IOException e) {
                 e.printStackTrace();
             }
-            return null;
+
+            return serviceResult;
         }
 
-        protected void onPostExecute(Object result) {
-            if (SignInActivity.this.loading != null) {
-                SignInActivity.this.loading.dismiss();
-            }
-            if (login_error) {
-                Toast.makeText(SignInActivity.this, message, Toast.LENGTH_LONG).show();
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            loading = ProgressDialog.show(SignInActivity.this, "", "Sign in...", true);
+        }
+
+        protected void onPostExecute(JSONObject feedback_data) {
+            loading.dismiss();
+
+            if (feedback_data.length() == 0) {
+                Toast.makeText(SignInActivity.this, "Server issue, please contact 081235404833", Toast.LENGTH_LONG).show();
             } else {
-                finish();
-                Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-                startActivity(intent);
+                try {
+                    if (feedback_data.getBoolean("error")) {
+                        Toast.makeText(SignInActivity.this, feedback_data.getString("message"), Toast.LENGTH_LONG).show();
+                    } else {
+                        JSONObject data = feedback_data.getJSONObject("data");
+
+                        // SQL Logging data
+                        SecurityData mDbHelper = new SecurityData(SignInActivity.this);
+                        SQLiteDatabase db = mDbHelper.getReadableDatabase();
+                        ContentValues values = new ContentValues();
+                        values.put(SecurityData.SESSION_KEY, data.getString("session_key"));
+                        values.put(SecurityData.FIRST_TIME, 0);
+                        db.update(SecurityData.TABLE_LOGIN_DATA, values, null, null);
+                        db.close();
+
+                        // Setting GlobalVariable
+                        GlobalVariable.SECURITY_SESSION_KEY = data.getString("session_key");
+
+                        Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                        startActivity(intent);
+                        SignInActivity.this.finish();
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
             }
         }
     }

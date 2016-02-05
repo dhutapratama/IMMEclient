@@ -3,9 +3,12 @@ package com.imme.immeclient;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.app.ProgressDialog;
+import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.media.RingtoneManager;
@@ -34,6 +37,7 @@ import android.widget.GridView;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.Switch;
 import android.widget.TextView;
@@ -65,11 +69,13 @@ public class MainActivity extends AppCompatActivity
     NavigationView navigationView;
     String intent_status = "";
     Integer error_code;
-    JSONArray transactions;
 
     ImageView cmlt1_image, cmlt2_image, cmlt3_image;
     TextView cmlt1_name, cmlt2_name, cmlt3_name, cmlt1_amount, cmlt2_amount, cmlt3_amount, cmlt1_date, cmlt2_date, cmlt3_date, cmlt1_no_trans, cmlt2_no_trans, cmlt3_no_trans;
     LinearLayout cmlt1_ll_amount, cmlt2_ll_amount, cmlt3_ll_amount;
+
+    TextView full_name, verified_status;
+    ImageView verified_icon;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -203,25 +209,16 @@ public class MainActivity extends AppCompatActivity
         drawer.setDrawerListener(toggle);
         toggle.syncState();
 
-        String formated_money = NumberFormat.getNumberInstance(Locale.GERMANY).format(GlobalVariable.MONEY_MAIN_BALANCE);
-        main_textview_balance_value.setText(formated_money);
+        //String formated_money = NumberFormat.getNumberInstance(Locale.GERMANY).format(GlobalVariable.MONEY_MAIN_BALANCE);
+        //main_textview_balance_value.setText(formated_money);
 
         // Set menu header so can edit text
         navigationView = (NavigationView) findViewById(R.id.nav_view);
         View header = LayoutInflater.from(this).inflate(R.layout.nav_header_main, null);
         navigationView.addHeaderView(header);
-        TextView full_name = (TextView) header.findViewById(R.id.full_name);
-        TextView verified_status = (TextView) header.findViewById(R.id.verified_status);
-        ImageView verified_icon = (ImageView) header.findViewById(R.id.verified_icon);
-
-        full_name.setText(GlobalVariable.CUSTOMER_FULL_NAME);
-        if (GlobalVariable.CUSTOMER_IS_VERIFIED_EMAIL.equals("true") && GlobalVariable.CUSTOMER_IS_VERIFIED_PHONE.equals("true")) {
-            verified_status.setText("Verified");
-            verified_icon.setVisibility(View.VISIBLE);
-        } else {
-            verified_status.setText("Not Verified");
-            verified_icon.setVisibility(View.GONE);
-        }
+        full_name = (TextView) header.findViewById(R.id.full_name);
+        verified_status = (TextView) header.findViewById(R.id.verified_status);
+        verified_icon = (ImageView) header.findViewById(R.id.verified_icon);
 
         RelativeLayout last_transaction_1 = (RelativeLayout) findViewById(R.id.last_transaction_1);
         last_transaction_1.setOnClickListener(new View.OnClickListener() {
@@ -279,8 +276,6 @@ public class MainActivity extends AppCompatActivity
         cmlt3_ll_amount = (LinearLayout) findViewById(R.id.cmlt3_ll_amount);
         cmlt3_no_trans = (TextView) findViewById(R.id.cmlt3_no_trans);
 
-        last_transaction();
-
         /*try {
             GetImage.productLookup();
         } catch (IOException e) {
@@ -294,8 +289,18 @@ public class MainActivity extends AppCompatActivity
 
         /* new check_notification().execute(); */
 
-    }
+        SecurityData mDbHelper = new SecurityData(this);
+        SQLiteDatabase db =  mDbHelper.getReadableDatabase();
+        String[] projection = { SecurityData.SESSION_KEY, SecurityData.FIRST_TIME };
+        Cursor collected_data = db.query( SecurityData.TABLE_LOGIN_DATA, projection, null, null, null, null, null );
 
+        collected_data.moveToFirst();
+        GlobalVariable.SECURITY_SESSION_KEY = collected_data.getString(collected_data.getColumnIndexOrThrow("session_key"));
+
+        db.close();
+
+        new get_main_data().execute();
+    }
 
     @Override
     public void onBackPressed() {
@@ -830,40 +835,54 @@ public class MainActivity extends AppCompatActivity
         }
     }
 
-    public void last_transaction() {
-        new get_transaction_history().execute();
-    }
+    private class get_main_data extends AsyncTask<String, String, JSONObject> {
+        LinearLayout LLUserBalance;
+        ProgressBar LoadingAnimation, LoadingAnimation2;
 
-    private class get_transaction_history extends AsyncTask<String, Void, Object> {
-        protected Object doInBackground(String... args) {
+        protected JSONObject doInBackground(String... args) {
+            JSONObject serviceResult = null;
             try {
-                getTransactionHistory();
-            } catch (JSONException e) {
-                e.printStackTrace();
+                String postData = "session_key=" + URLEncoder.encode(GlobalVariable.SECURITY_SESSION_KEY, "UTF-8");
+                serviceResult = WebServiceClient.postRequest(GlobalVariable.DISTRIBUTOR_SERVER + "info/get_main_data", postData);
             } catch (IOException e) {
                 e.printStackTrace();
             }
-            return null;
+
+            return serviceResult;
         }
 
-        protected void onPostExecute(Object result) {
-            if (MainActivity.this.loading != null) {
-                MainActivity.this.loading.dismiss();
-            }
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            LLUserBalance = (LinearLayout) findViewById(R.id.UserBalance);
+            LoadingAnimation = (ProgressBar) findViewById(R.id.LoadingAnimation);
+            LoadingAnimation2 = (ProgressBar) findViewById(R.id.LoadingAnimation2);
 
-            if (error_status != null) {
-                if (error_status) {
-                    finish();
-                    Intent intent = new Intent(MainActivity.this, MainActivity.class);
-                    intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                    startActivity(intent);
-                    Toast.makeText(MainActivity.this, error_message, Toast.LENGTH_LONG).show();
-                } else {
-                    if (transactions == null) {
-                        cmlt1_no_trans.setText("No Transaction");
+            LLUserBalance.setVisibility(View.GONE);
+            LoadingAnimation.setVisibility(View.VISIBLE);
+            LoadingAnimation2.setVisibility(View.VISIBLE);
+        }
+
+        protected void onPostExecute(JSONObject feedback_data) {
+            LLUserBalance.setVisibility(View.VISIBLE);
+            LoadingAnimation.setVisibility(View.GONE);
+            LoadingAnimation2.setVisibility(View.GONE);
+
+            if (feedback_data.length() == 0) {
+                Toast.makeText(MainActivity.this, "Server issue, please contact 081235404833", Toast.LENGTH_LONG).show();
+            } else {
+                try {
+                    if (feedback_data.getBoolean("error")) {
+                        Toast.makeText(MainActivity.this, feedback_data.getString("message"), Toast.LENGTH_LONG).show();
                     } else {
-                        JSONObject transaction = null;
-                        if (transactions.length() == 1) {
+                        JSONObject data = feedback_data.getJSONObject("data");
+                        JSONArray transaction = data.getJSONArray("last_transaction");
+
+                        // Setting GlobalVariable
+                        main_textview_balance_value.setText(data.getString("balance"));
+
+                        // Transaction List
+                        if (transaction.length() == 1) {
                             cmlt1_image.setVisibility(View.VISIBLE);
                             cmlt1_name.setVisibility(View.VISIBLE);
                             cmlt1_ll_amount.setVisibility(View.VISIBLE);
@@ -872,7 +891,7 @@ public class MainActivity extends AppCompatActivity
                             cmlt2_no_trans.setVisibility(View.VISIBLE);
                         }
 
-                        if (transactions.length() == 2) {
+                        if (transaction.length() == 2) {
                             cmlt1_image.setVisibility(View.VISIBLE);
                             cmlt1_name.setVisibility(View.VISIBLE);
                             cmlt1_ll_amount.setVisibility(View.VISIBLE);
@@ -885,7 +904,7 @@ public class MainActivity extends AppCompatActivity
                             cmlt3_no_trans.setVisibility(View.VISIBLE);
                         }
 
-                        if (transactions.length() >= 3) {
+                        if (transaction.length() >= 3) {
                             cmlt1_image.setVisibility(View.VISIBLE);
                             cmlt1_name.setVisibility(View.VISIBLE);
                             cmlt1_ll_amount.setVisibility(View.VISIBLE);
@@ -902,32 +921,28 @@ public class MainActivity extends AppCompatActivity
                         }
 
                         Integer loops;
-                        if (transactions.length() >= 3) {
+                        if (transaction.length() >= 3) {
                             loops = 3;
                         } else {
-                            loops = transactions.length();
+                            loops = transaction.length();
                         }
 
                         for (int i = 0; i < loops; i++) {
-                            try {
-                                transaction = transactions.getJSONObject(i);
-                            } catch (JSONException e) {
-                                e.printStackTrace();
-                            }
+                            JSONObject transaction_data = transaction.getJSONObject(i);
 
                             if (i == 0) {
                                 try {
-                                    if (transaction.getString("type").equals("1")) {
+                                    if (transaction_data.getString("type").equals("1")) {
                                         cmlt1_image.setImageResource(R.mipmap.main_last_transaction_receive_icon);
-                                    } else if (transaction.getString("type").equals("2")) {
+                                    } else if (transaction_data.getString("type").equals("2")) {
                                         cmlt1_image.setImageResource(R.mipmap.main_last_transaction_send_pay_icon);
-                                    } else if (transaction.getString("type").equals("5")) {
+                                    } else if (transaction_data.getString("type").equals("5")) {
                                         cmlt1_image.setImageResource(R.mipmap.main_last_transaction_topup_icon);
                                     }
 
-                                    cmlt1_name.setText(transaction.getString("name"));
-                                    cmlt1_date.setText(transaction.getString("date"));
-                                    cmlt1_amount.setText("Rp " + String.format(Locale.GERMANY, "%,d", Integer.parseInt(transaction.getString("amount"))).replace(",", "."));
+                                    cmlt1_name.setText(transaction_data.getString("name"));
+                                    cmlt1_date.setText(transaction_data.getString("date"));
+                                    cmlt1_amount.setText(transaction_data.getString("amount"));
 
                                 } catch (JSONException e) {
                                     e.printStackTrace();
@@ -936,17 +951,17 @@ public class MainActivity extends AppCompatActivity
 
                             if (i == 1) {
                                 try {
-                                    if (transaction.getString("type").equals("1")) {
+                                    if (transaction_data.getString("type").equals("1")) {
                                         cmlt2_image.setImageResource(R.mipmap.main_last_transaction_receive_icon);
-                                    } else if (transaction.getString("type").equals("2")) {
+                                    } else if (transaction_data.getString("type").equals("2")) {
                                         cmlt2_image.setImageResource(R.mipmap.main_last_transaction_send_pay_icon);
-                                    } else if (transaction.getString("type").equals("5")) {
+                                    } else if (transaction_data.getString("type").equals("5")) {
                                         cmlt2_image.setImageResource(R.mipmap.main_last_transaction_topup_icon);
                                     }
 
-                                    cmlt2_name.setText(transaction.getString("name"));
-                                    cmlt2_date.setText(transaction.getString("date"));
-                                    cmlt2_amount.setText("Rp " + String.format(Locale.GERMANY, "%,d", Integer.parseInt(transaction.getString("amount"))).replace(",", "."));
+                                    cmlt2_name.setText(transaction_data.getString("name"));
+                                    cmlt2_date.setText(transaction_data.getString("date"));
+                                    cmlt2_amount.setText(transaction_data.getString("amount"));
 
                                 } catch (JSONException e) {
                                     e.printStackTrace();
@@ -955,44 +970,40 @@ public class MainActivity extends AppCompatActivity
 
                             if (i == 2) {
                                 try {
-                                    if (transaction.getString("type").equals("1")) {
+                                    if (transaction_data.getString("type").equals("1")) {
                                         cmlt3_image.setImageResource(R.mipmap.main_last_transaction_receive_icon);
-                                    } else if (transaction.getString("type").equals("2")) {
+                                    } else if (transaction_data.getString("type").equals("2")) {
                                         cmlt3_image.setImageResource(R.mipmap.main_last_transaction_send_pay_icon);
-                                    } else if (transaction.getString("type").equals("5")) {
+                                    } else if (transaction_data.getString("type").equals("5")) {
                                         cmlt3_image.setImageResource(R.mipmap.main_last_transaction_topup_icon);
                                     }
 
-                                    cmlt3_name.setText(transaction.getString("name"));
-                                    cmlt3_date.setText(transaction.getString("date"));
-                                    cmlt3_amount.setText("Rp " + String.format(Locale.GERMANY, "%,d", Integer.parseInt(transaction.getString("amount"))).replace(",","."));
+                                    cmlt3_name.setText(transaction_data.getString("name"));
+                                    cmlt3_date.setText(transaction_data.getString("date"));
+                                    cmlt3_amount.setText(transaction_data.getString("amount"));
                                 } catch (JSONException e) {
                                     e.printStackTrace();
                                 }
                             }
 
                         }
+
+                        // Set name and account status
+                        full_name.setText(data.getString("full_name"));
+                        if (data.getBoolean("is_verified")) {
+                            verified_status.setText("Verified");
+                            verified_icon.setVisibility(View.VISIBLE);
+                        } else {
+                            verified_status.setText("Not Verified");
+                            verified_icon.setVisibility(View.GONE);
+                        }
+
+                        // Set Image
+                         
                     }
+                } catch (JSONException e) {
+                    e.printStackTrace();
                 }
-            }
-        }
-    }
-
-    public void getTransactionHistory() throws JSONException, IOException {
-        String postData = "session_key=" + URLEncoder.encode(GlobalVariable.SECURITY_SESSION_KEY, "UTF-8");
-
-        JSONObject serviceResult = WebServiceClient.postRequest(GlobalVariable.DISTRIBUTOR_SERVER + "history/transaction", postData);
-
-        if (serviceResult == null) {
-            Toast.makeText(MainActivity.this, "Network Error", Toast.LENGTH_LONG).show();
-        } else {
-            if (serviceResult.getBoolean("error")) {
-                error_status = true;
-                error_message = serviceResult.getString("message");
-                error_code = serviceResult.getInt("code");
-            } else {
-                error_status = false;
-                transactions = serviceResult.getJSONArray("transactions");
             }
         }
     }
