@@ -5,8 +5,8 @@ package com.imme.immeclient;
  */
 public class GlobalVariable {
     // SERVER
-    //public static final String DISTRIBUTOR_SERVER = "http://api3.imme.asia/";
-    public static final String DISTRIBUTOR_SERVER = "http://api1.imme.asia/";
+    public static final String DISTRIBUTOR_SERVER = "http://api3.imme.asia/";
+    //public static final String DISTRIBUTOR_SERVER = "http://api1.imme.asia/";
     //public static final String DISTRIBUTOR_SERVER = "http://api.imme.app/";
     //public static final String DISTRIBUTOR_SERVER = "http://imme.freevar.com/";
 

@@ -83,10 +83,10 @@
             android:layout_gravity="center" />
     </LinearLayout>
 
-    <com.imme.immeclient.ExpandableGridView
+    <GridView
         android:id="@+id/MainMenu"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="fill_parent"
         android:numColumns="auto_fit"
         android:columnWidth="100dp"
         android:horizontalSpacing="3dp"
