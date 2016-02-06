@@ -33,7 +33,6 @@
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:background="@mipmap/gift_bg_list1"
                 android:orientation="vertical">
 
                 <LinearLayout
@@ -84,7 +83,6 @@
                     <ImageView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:src="@mipmap/gift_lazada_icon"
                         android:paddingRight="10dp"/>
 
                     <TextView
@@ -125,7 +123,6 @@
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:background="@mipmap/gift_bg_list3"
                 android:layout_marginTop="20dp"
                 android:orientation="vertical"
                 >
@@ -178,7 +175,6 @@
                     <ImageView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:src="@mipmap/gift_traveloka_icon"
                         android:paddingRight="10dp"/>
 
                     <TextView
@@ -219,7 +215,6 @@
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:background="@mipmap/gift_bg_list4"
                 android:layout_marginTop="20dp"
                 android:orientation="vertical"
                 >
@@ -272,7 +267,6 @@
                     <ImageView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:src="@mipmap/gift_indomaret_icon"
                         android:paddingRight="10dp"/>
 
                     <TextView
@@ -313,7 +307,6 @@
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:background="@mipmap/gift_bg_list2"
                 android:layout_marginTop="20dp"
                 android:orientation="vertical"
                 >
@@ -366,7 +359,6 @@
                     <ImageView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:src="@mipmap/gift_sevel_icon"
                         android:paddingRight="10dp"/>
 
                     <TextView

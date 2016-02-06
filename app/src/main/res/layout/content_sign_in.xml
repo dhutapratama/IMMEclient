@@ -33,7 +33,7 @@
                 android:gravity="center"
                 android:foregroundGravity="center">
                 <ImageView
-                    android:src="@mipmap/sign_up_logo_text_imme3"
+                    android:src="@mipmap/logo_imme_splash_v2"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"/>
             </LinearLayout>
@@ -81,7 +81,7 @@
                     android:background="@drawable/button_ractangle_blue"
                     android:text="Sign in" />
 
-                <EditText
+                <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="No account yet? Create one"

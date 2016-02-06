@@ -1,9 +1,16 @@
 apply plugin: 'com.android.application'
 
 android {
+    signingConfigs {
+        config {
+            keyAlias 'imme indonesia'
+            keyPassword 'qwertyuiop'
+            storeFile file('D:/IMME-Development/keystoreSignedAPK/IMMEclient.jks')
+            storePassword 'qwertyuiop'
+        }
+    }
     compileSdkVersion 23
     buildToolsVersion "23.0.2"
-
     defaultConfig {
         applicationId "com.imme.immeclient"
         minSdkVersion 15
@@ -16,6 +23,11 @@ android {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.config
+        }
+        debug {
+            debuggable true
+            minifyEnabled true
         }
     }
 }
