@@ -41,8 +41,8 @@
             android:text="Add Account"
             android:gravity="center"
             android:padding="15dp"
-            android:background="@drawable/btn_green"
-            android:textColor="@drawable/btn_text_color_green"/>
+            android:background="@drawable/btn_green_square"
+            android:textColor="@drawable/btn_text_color_green_square"/>
 
     </LinearLayout>
 
