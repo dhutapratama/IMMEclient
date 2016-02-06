@@ -30,6 +30,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.AdapterView;
+import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
@@ -105,8 +106,8 @@ public class MainActivity extends AppCompatActivity
 
         //----------------------------- Start Activity Programing -----------------------------//
 
-        ExpandableGridView MainMenu = (ExpandableGridView) findViewById(R.id.MainMenu);
-        MainMenu.setExpanded(true);
+        GridView MainMenu = (GridView) findViewById(R.id.MainMenu);
+        //MainMenu.setExpanded(true);
         MainMenu.setAdapter(new MainMenuAdapter(this));
 
         MainMenu.setOnItemClickListener(new AdapterView.OnItemClickListener() {
