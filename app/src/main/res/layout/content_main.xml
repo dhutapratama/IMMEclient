@@ -16,7 +16,8 @@
         android:layout_width="fill_parent"
         android:background="@drawable/imme_home_balance_bg"
         android:layout_height="@dimen/main_balance_layout_height"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:id="@+id/LLBalance">
 
         <TextView
             android:text="@string/main_balance"
@@ -61,37 +62,43 @@
             android:layout_marginTop="30dp"
             android:visibility="gone"/>
 
+        <include layout="@layout/content_main_last_transaction" android:layout_width="fill_parent" android:layout_height="wrap_content"></include>
+
     </LinearLayout>
-
-    <include layout="@layout/content_main_last_transaction" android:layout_width="fill_parent" android:layout_height="wrap_content"></include>
-
     <LinearLayout
-        android:layout_width="fill_parent"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
-        <TextView android:text="Hello!"
-            android:id="@+id/main_textview_hello"
-            android:layout_width="wrap_content"
+        android:orientation="vertical"
+        android:id="@+id/actionContent">
+        <LinearLayout
+            android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:paddingTop="@dimen/main_balance_text_paddingTop"
-            android:textSize="30sp"
-            android:layout_gravity="center" />
-        <TextView android:text="What do you need?"
-            android:id="@+id/main_textview_what_do_you_need"
+            android:orientation="vertical"
+            android:id="@+id/HelloText">
+            <TextView android:text="Hello!"
+                android:id="@+id/main_textview_hello"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingTop="@dimen/main_balance_text_paddingTop"
+                android:textSize="30sp"
+                android:layout_gravity="center" />
+            <TextView android:text="What do you need?"
+                android:id="@+id/main_textview_what_do_you_need"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center" />
+        </LinearLayout>
+        <GridView
+            android:id="@+id/MainMenu"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center" />
+            android:layout_height="fill_parent"
+            android:numColumns="auto_fit"
+            android:columnWidth="100dp"
+            android:horizontalSpacing="3dp"
+            android:layout_marginTop="15dp"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dp"
+            android:layout_gravity="center"/>
     </LinearLayout>
 
-    <GridView
-        android:id="@+id/MainMenu"
-        android:layout_width="wrap_content"
-        android:layout_height="fill_parent"
-        android:numColumns="auto_fit"
-        android:columnWidth="100dp"
-        android:horizontalSpacing="3dp"
-        android:layout_marginTop="15dp"
-        android:layout_marginLeft="15dp"
-        android:layout_marginRight="15dp"
-        android:layout_gravity="center"/>
 </LinearLayout>

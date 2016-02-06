@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.imme.immeclient" >
 
     <!-- To auto-complete the email text field in the login form with the user's emails -->
@@ -547,7 +546,6 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
-
         <activity
             android:name=".RecipientListAddAccountActivity"
             android:label="@string/title_activity_recipient_list_add_account"
@@ -601,8 +599,8 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
-
-        <activity android:name=".SendToFriendActivity"
+        <activity
+            android:name=".SendToFriendActivity"
             android:label="@string/title_activity_send_pay"
             android:parentActivityName=".SendPayActivity"
             android:screenOrientation="portrait"
@@ -632,7 +630,6 @@
         <meta-data
             android:name="com.google.android.gms.version"
             android:value="@integer/google_play_services_version" />
-
     </application>
 
 </manifest>

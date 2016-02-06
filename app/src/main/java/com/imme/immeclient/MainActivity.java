@@ -1,5 +1,6 @@
 package com.imme.immeclient;
 
+import android.animation.Animator;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.app.ProgressDialog;
@@ -29,6 +30,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.AdapterView;
 import android.widget.GridView;
 import android.widget.ImageView;
@@ -65,13 +68,16 @@ public class MainActivity extends AppCompatActivity
     Integer error_code;
 
     ImageView cmlt1_image, cmlt2_image, cmlt3_image;
-    TextView cmlt1_name, cmlt2_name, cmlt3_name, cmlt1_amount, cmlt2_amount, cmlt3_amount, cmlt1_date, cmlt2_date, cmlt3_date, cmlt1_no_trans, cmlt2_no_trans, cmlt3_no_trans;
+    TextView cmlt1_name, cmlt2_name, cmlt3_name, cmlt1_amount, cmlt2_amount, cmlt3_amount,
+            cmlt1_date, cmlt2_date, cmlt3_date, cmlt1_no_trans, cmlt2_no_trans, cmlt3_no_trans;
     LinearLayout cmlt1_ll_amount, cmlt2_ll_amount, cmlt3_ll_amount;
 
     TextView full_name, verified_status;
     ImageView verified_icon, user_image;
 
-    ArrayList<String> reference = new ArrayList<String>();
+    LinearLayout HelloText, LLBalance, actionContent;
+
+    ArrayList<String> reference = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -105,7 +111,6 @@ public class MainActivity extends AppCompatActivity
         }
 
         //----------------------------- Start Activity Programing -----------------------------//
-
         GridView MainMenu = (GridView) findViewById(R.id.MainMenu);
         //MainMenu.setExpanded(true);
         MainMenu.setAdapter(new MainMenuAdapter(this));
@@ -143,6 +148,9 @@ public class MainActivity extends AppCompatActivity
             }
         });
 
+        HelloText = (LinearLayout)findViewById(R.id.HelloText);
+        LLBalance = (LinearLayout)findViewById(R.id.LLBalance);
+        actionContent = (LinearLayout)findViewById(R.id.actionContent);
 
         // Start Font
         Typeface hnLight = Typeface.createFromAsset(getAssets(),
@@ -152,48 +160,42 @@ public class MainActivity extends AppCompatActivity
                 "fonts/HelveticaBQ-Light.otf");
 
         TextView main_textview_balance = (TextView) findViewById(R.id.main_textview_balance);
-        main_textview_balance.setTypeface(hnLight);
-
         TextView main_textview_rp = (TextView) findViewById(R.id.main_textview_rp);
-        main_textview_rp.setTypeface(hnLight);
-
         main_textview_balance_value = (TextView) findViewById(R.id.main_textview_balance_value);
+        TextView main_textview_last_transaction = (TextView) findViewById(R.id.main_textview_last_transaction);
+        TextView main_textview_history_name2 = (TextView) findViewById(R.id.cmlt2_name);
+        TextView main_textview_history_name1 = (TextView) findViewById(R.id.cmlt1_name);
+        TextView main_textview_history_name3 = (TextView) findViewById(R.id.cmlt3_name);
+        TextView main_textview_history_total1 = (TextView) findViewById(R.id.cmlt1_amount);
+        TextView main_textview_history_total2 = (TextView) findViewById(R.id.cmlt2_amount);
+        TextView main_textview_history_total3 = (TextView) findViewById(R.id.cmlt3_amount);
+        TextView main_textview_history_date1 = (TextView) findViewById(R.id.cmlt1_date);
+        TextView main_textview_history_date2 = (TextView) findViewById(R.id.cmlt2_date);
+        TextView main_textview_history_date3 = (TextView) findViewById(R.id.cmlt3_date);
+
+        main_textview_balance.setTypeface(hnLight);
+        main_textview_rp.setTypeface(hnLight);
         main_textview_balance_value.setTypeface(hbqLight);
 
-        TextView main_textview_last_transaction = (TextView) findViewById(R.id.main_textview_last_transaction);
         main_textview_last_transaction.setTypeface(hnLight);
 
-        TextView main_textview_history_name1 = (TextView) findViewById(R.id.cmlt1_name);
         main_textview_history_name1.setTypeface(hnLight);
 
-        TextView main_textview_history_name2 = (TextView) findViewById(R.id.cmlt2_name);
         main_textview_history_name2.setTypeface(hnLight);
 
-        TextView main_textview_history_name3 = (TextView) findViewById(R.id.cmlt3_name);
         main_textview_history_name3.setTypeface(hnLight);
 
-        TextView main_textview_history_total1 = (TextView) findViewById(R.id.cmlt1_amount);
         main_textview_history_total1.setTypeface(hnLight);
 
-        TextView main_textview_history_total2 = (TextView) findViewById(R.id.cmlt2_amount);
-        main_textview_history_total2.setTypeface(hnLight);
-
-        TextView main_textview_history_total3 = (TextView) findViewById(R.id.cmlt3_amount);
-        main_textview_history_total3.setTypeface(hnLight);
-
-        TextView main_textview_history_date1 = (TextView) findViewById(R.id.cmlt1_date);
-        main_textview_history_date1.setTypeface(hnLight);
-
-        TextView main_textview_history_date2 = (TextView) findViewById(R.id.cmlt2_date);
-        main_textview_history_date2.setTypeface(hnLight);
-
-        TextView main_textview_history_date3 = (TextView) findViewById(R.id.cmlt3_date);
-        main_textview_history_date3.setTypeface(hnLight);
-
         TextView main_textview_hello = (TextView) findViewById(R.id.main_textview_hello);
-        main_textview_hello.setTypeface(hnLight);
-
         TextView main_textview_what_do_you_need = (TextView) findViewById(R.id.main_textview_what_do_you_need);
+
+        main_textview_history_total2.setTypeface(hnLight);
+        main_textview_history_total3.setTypeface(hnLight);
+        main_textview_history_date1.setTypeface(hnLight);
+        main_textview_history_date2.setTypeface(hnLight);
+        main_textview_history_date3.setTypeface(hnLight);
+        main_textview_hello.setTypeface(hnLight);
         main_textview_what_do_you_need.setTypeface(hnLight);
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -201,9 +203,6 @@ public class MainActivity extends AppCompatActivity
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.setDrawerListener(toggle);
         toggle.syncState();
-
-        //String formated_money = NumberFormat.getNumberInstance(Locale.GERMANY).format(GlobalVariable.MONEY_MAIN_BALANCE);
-        //main_textview_balance_value.setText(formated_money);
 
         // Set menu header so can edit text
         navigationView = (NavigationView) findViewById(R.id.nav_view);
@@ -843,6 +842,48 @@ public class MainActivity extends AppCompatActivity
 
                         // Set Image
                          ImageLoadPlease(MainActivity.this, data.getString("picture_url"), user_image);
+
+                        HelloText.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View arg0) {
+                                if (LLBalance.getVisibility() == View.INVISIBLE) {
+                                    LLBalance.setVisibility(View.VISIBLE);
+                                    LLBalance.setAlpha(0.0f);
+
+                                    LLBalance.animate().translationY(0).alpha(1.0f);
+
+                                    actionContent.animate().translationY(0);
+                                } else {
+                                    actionContent.animate().translationY(0 - LLBalance.getHeight());
+                                    LLBalance.animate().translationY(0 - LLBalance.getHeight()).alpha(0.0f)
+                                            .setListener(new Animator.AnimatorListener() {
+                                        @Override
+                                        public void onAnimationStart(Animator animation) {
+
+
+                                        }
+
+                                        @Override
+                                        public void onAnimationEnd(Animator animation) {
+                                            LLBalance.setVisibility(View.INVISIBLE);
+                                        }
+
+                                        @Override
+                                        public void onAnimationCancel(Animator animation) {
+
+                                        }
+
+                                        @Override
+                                        public void onAnimationRepeat(Animator animation) {
+
+                                        }
+                                    });
+                                    //LLBalance.startAnimation(slideUp);
+                                }
+
+
+                            }
+                        });
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -852,13 +893,16 @@ public class MainActivity extends AppCompatActivity
     }
 
     public ImageLoader ImageLoadPlease(Context context, String imageURI, ImageView target) {
+
         ImageLoaderConfiguration.Builder config = new ImageLoaderConfiguration.Builder(context);
         config.threadPriority(Thread.NORM_PRIORITY - 2);
         config.denyCacheImageMultipleSizesInMemory();
         config.diskCacheFileNameGenerator(new Md5FileNameGenerator());
         config.diskCacheSize(500 * 1024 * 1024);
 
-        ImageLoader.getInstance().init(config.build());
+        if (!ImageLoader.getInstance().isInited()) {
+            ImageLoader.getInstance().init(config.build());
+        }
 
         DisplayImageOptions options = new DisplayImageOptions.Builder()
                 .showImageOnLoading(R.mipmap.about_logo_imme)
