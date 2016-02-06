@@ -55,28 +55,22 @@ public class SignInActivity extends AppCompatActivity {
                 "fonts/HelveticaBQ-Light.otf");
 
         final EditText sign_in_edittext_email = (EditText) findViewById(R.id.sign_in_edittext_email);
-        sign_in_edittext_email.setTypeface(hnLight);
-
         final EditText sign_in_edittext_password = (EditText) findViewById(R.id.sign_in_edittext_password);
-        sign_in_edittext_password.setTypeface(hnLight);
-
         final Button sign_in_button_sign_in = (Button) findViewById(R.id.sign_in_button_sign_in);
-        sign_in_button_sign_in.setTypeface(hbqLight);
-
         final TextView sign_in_button_sign_up = (TextView) findViewById(R.id.sign_in_button_sign_up);
+        final TextView forgotPassword = (TextView) findViewById(R.id.forgotPassword);
+
+        sign_in_edittext_email.setTypeface(hnLight);
+        sign_in_edittext_password.setTypeface(hnLight);
+        sign_in_button_sign_in.setTypeface(hbqLight);
         sign_in_button_sign_up.setTypeface(hbqLight);
+        forgotPassword.setTypeface(hbqLight);
 
-        //final TextView dont_have_account = (TextView) findViewById(R.id.dont_have_account);
-        //dont_have_account.setTypeface(hbqLight);
-
-        // sign up destination
-        sign_in_button_sign_up.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+        sign_in_button_sign_up.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onFocusChange(View v, boolean hasFocus) {
-                if (hasFocus) {
-                    Intent intent = new Intent("com.imme.immeclient.SignUpActivity");
-                    startActivity(intent);
-                }
+            public void onClick(View v) {
+                Intent intent = new Intent("com.imme.immeclient.SignUpActivity");
+                startActivity(intent);
             }
         });
 
