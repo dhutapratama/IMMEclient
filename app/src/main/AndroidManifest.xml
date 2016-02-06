@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.imme.immeclient">
+    package="com.imme.immeclient" >
 
     <!-- To auto-complete the email text field in the login form with the user's emails -->
     <uses-permission android:name="android.permission.GET_ACCOUNTS" />
@@ -21,7 +21,7 @@
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme.NoActionBar">
+        android:theme="@style/AppTheme.NoActionBar" >
         <service
             android:name=".IMMEService"
             android:enabled="true" />
@@ -30,7 +30,7 @@
             android:name=".SplashScreen"
             android:label="@string/app_name"
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.NoActionBar">
+            android:theme="@style/AppTheme.NoActionBar" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -42,7 +42,7 @@
             android:label="@string/app_name"
             android:permission="android.permission.INTERNET"
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.NoActionBar">
+            android:theme="@style/AppTheme.NoActionBar" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN_ACTIVITY" />
 
@@ -54,7 +54,7 @@
             android:label="@string/title_activity_pin"
             android:parentActivityName=".MainActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/AppThemeBlue.NoActionBar">
+            android:theme="@style/AppThemeBlue.NoActionBar" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.imme.immeclient.MainActivity" />
@@ -70,7 +70,7 @@
             android:label="@string/title_activity_feedback"
             android:parentActivityName=".MainActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/AppThemeGreen.NoActionBar">
+            android:theme="@style/AppThemeGreen.NoActionBar" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.imme.immeclient.MainActivity" />
@@ -86,7 +86,7 @@
             android:label="@string/title_activity_help_and_support"
             android:parentActivityName=".MainActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/AppThemeGreen.NoActionBar">
+            android:theme="@style/AppThemeGreen.NoActionBar" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.imme.immeclient.MainActivity" />
@@ -102,7 +102,7 @@
             android:label="@string/title_activity_privacy_policy"
             android:parentActivityName=".MainActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/AppThemeGreen.NoActionBar">
+            android:theme="@style/AppThemeGreen.NoActionBar" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.imme.immeclient.MainActivity" />
@@ -118,7 +118,7 @@
             android:label="@string/title_activity_recipient_list"
             android:parentActivityName=".MainActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/AppThemeGreen.NoActionBar">
+            android:theme="@style/AppThemeGreen.NoActionBar" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.imme.immeclient.MainActivity" />
@@ -134,7 +134,7 @@
             android:label="@string/title_activity_send_pay"
             android:parentActivityName=".MainActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/AppThemeBlue.NoActionBar">
+            android:theme="@style/AppThemeBlue.NoActionBar" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.imme.immeclient.MainActivity" />
@@ -150,7 +150,7 @@
             android:label="@string/title_activity_security_setting"
             android:parentActivityName=".MainActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/AppThemeGreen.NoActionBar">
+            android:theme="@style/AppThemeGreen.NoActionBar" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.imme.immeclient.MainActivity" />
@@ -166,7 +166,7 @@
             android:label="@string/title_activity_user_agreement"
             android:parentActivityName=".MainActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/AppThemeGreen.NoActionBar">
+            android:theme="@style/AppThemeGreen.NoActionBar" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.imme.immeclient.MainActivity" />
@@ -182,7 +182,7 @@
             android:label="@string/title_activity_account"
             android:parentActivityName=".MainActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/AppThemeGreen.NoActionBar">
+            android:theme="@style/AppThemeGreen.NoActionBar" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.imme.immeclient.MainActivity" />
@@ -198,7 +198,7 @@
             android:label="@string/title_activity_receive"
             android:parentActivityName=".MainActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/AppThemeBlue.NoActionBar">
+            android:theme="@style/AppThemeBlue.NoActionBar" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.imme.immeclient.MainActivity" />
@@ -214,7 +214,7 @@
             android:label="@string/title_activity_send_pay_details"
             android:parentActivityName=".MainActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/AppThemeBlue.NoActionBar">
+            android:theme="@style/AppThemeBlue.NoActionBar" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.imme.immeclient.MainActivity" />
@@ -228,7 +228,7 @@
         <activity
             android:name=".WelcomeScreen"
             android:label="@string/app_name"
-            android:theme="@style/AppTheme.NoActionBar">
+            android:theme="@style/AppTheme.NoActionBar" >
             <intent-filter>
                 <action android:name="com.screen.lasedev.welcome_layout" />
 
@@ -240,7 +240,7 @@
             android:label="@string/title_activity_gift"
             android:parentActivityName=".MainActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/AppThemeBlue.NoActionBar">
+            android:theme="@style/AppThemeBlue.NoActionBar" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.imme.immeclient.MainActivity" />
@@ -256,7 +256,7 @@
             android:label="@string/title_activity_receive_qrcode"
             android:parentActivityName=".MainActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/AppThemeBlue.NoActionBar">
+            android:theme="@style/AppThemeBlue.NoActionBar" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.imme.immeclient.MainActivity" />
@@ -272,7 +272,7 @@
             android:label="@string/title_activity_about"
             android:parentActivityName=".MainActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/AppThemeGreen.NoActionBar">
+            android:theme="@style/AppThemeGreen.NoActionBar" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.imme.immeclient.MainActivity" />
@@ -288,7 +288,7 @@
             android:label="@string/title_activity_payment_details"
             android:parentActivityName=".MainActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/AppThemeBlue.NoActionBar">
+            android:theme="@style/AppThemeBlue.NoActionBar" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.imme.immeclient.MainActivity" />
@@ -304,7 +304,7 @@
             android:label="@string/title_activity_invite_get_money"
             android:parentActivityName=".MainActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/AppThemeGreen.NoActionBar">
+            android:theme="@style/AppThemeGreen.NoActionBar" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.imme.immeclient.MainActivity" />
@@ -320,7 +320,7 @@
             android:label="@string/title_activity_personal_send"
             android:parentActivityName=".MainActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/AppThemeBlue.NoActionBar">
+            android:theme="@style/AppThemeBlue.NoActionBar" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.imme.immeclient.MainActivity" />
@@ -336,7 +336,7 @@
             android:label="@string/title_activity_sign_up"
             android:parentActivityName=".MainActivity"
             android:screenOrientation="sensorPortrait"
-            android:theme="@style/AppTheme.NoActionBar">
+            android:theme="@style/AppTheme.NoActionBar" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.imme.immeclient.MainActivity" />
@@ -352,7 +352,7 @@
             android:label="@string/title_activity_sign_in"
             android:parentActivityName=".MainActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.NoActionBar">
+            android:theme="@style/AppTheme.NoActionBar" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.imme.immeclient.MainActivity" />
@@ -368,7 +368,7 @@
             android:label="@string/title_activity_account_verify_phone_number_step1"
             android:parentActivityName=".MainActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/AppThemeBlue.NoActionBar">
+            android:theme="@style/AppThemeBlue.NoActionBar" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.imme.immeclient.MainActivity" />
@@ -384,7 +384,7 @@
             android:label="@string/title_activity_transaction_history"
             android:parentActivityName=".MainActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/AppThemeGreen.NoActionBar">
+            android:theme="@style/AppThemeGreen.NoActionBar" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.imme.immeclient.MainActivity" />
@@ -400,7 +400,7 @@
             android:label="@string/title_activity_send_pay_personal_detail"
             android:parentActivityName=".MainActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/AppThemeBlue.NoActionBar">
+            android:theme="@style/AppThemeBlue.NoActionBar" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.imme.immeclient.MainActivity" />
@@ -416,7 +416,7 @@
             android:label="@string/title_activity_deposit"
             android:parentActivityName=".MainActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/AppThemeBlue.NoActionBar">
+            android:theme="@style/AppThemeBlue.NoActionBar" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.imme.immeclient.MainActivity" />
@@ -439,7 +439,7 @@
             android:label="@string/title_activity_promotion"
             android:parentActivityName=".MainActivity"
             android:screenOrientation="sensorPortrait"
-            android:theme="@style/AppThemeRed.NoActionBar">
+            android:theme="@style/AppThemeRed.NoActionBar" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.imme.immeclient.MainActivity" />
@@ -455,7 +455,7 @@
             android:label="@string/title_activity_change_pin1_process1"
             android:parentActivityName=".MainActivity"
             android:screenOrientation="sensorPortrait"
-            android:theme="@style/AppThemeBlue.NoActionBar">
+            android:theme="@style/AppThemeBlue.NoActionBar" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.imme.immeclient.SecuritySettingsActivity" />
@@ -471,7 +471,7 @@
             android:label="@string/title_activity_change_pin1_process2"
             android:parentActivityName=".MainActivity"
             android:screenOrientation="sensorPortrait"
-            android:theme="@style/AppThemeBlue.NoActionBar">
+            android:theme="@style/AppThemeBlue.NoActionBar" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.imme.immeclient.SecuritySettingsActivity" />
@@ -487,7 +487,7 @@
             android:label="@string/title_activity_change_pin1_process3"
             android:parentActivityName=".MainActivity"
             android:screenOrientation="sensorPortrait"
-            android:theme="@style/AppThemeBlue.NoActionBar">
+            android:theme="@style/AppThemeBlue.NoActionBar" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.imme.immeclient.SecuritySettingsActivity" />
@@ -503,7 +503,7 @@
             android:label="@string/title_activity_change_pin2_process1"
             android:parentActivityName=".MainActivity"
             android:screenOrientation="sensorPortrait"
-            android:theme="@style/AppThemeBlue.NoActionBar">
+            android:theme="@style/AppThemeBlue.NoActionBar" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.imme.immeclient.SecuritySettingsActivity" />
@@ -519,7 +519,7 @@
             android:label="@string/title_activity_change_pin2_process2"
             android:parentActivityName=".MainActivity"
             android:screenOrientation="sensorPortrait"
-            android:theme="@style/AppThemeBlue.NoActionBar">
+            android:theme="@style/AppThemeBlue.NoActionBar" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.imme.immeclient.SecuritySettingsActivity" />
@@ -535,7 +535,7 @@
             android:label="@string/title_activity_change_pin2_process3"
             android:parentActivityName=".MainActivity"
             android:screenOrientation="sensorPortrait"
-            android:theme="@style/AppThemeBlue.NoActionBar">
+            android:theme="@style/AppThemeBlue.NoActionBar" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.imme.immeclient.SecuritySettingsActivity" />
@@ -559,7 +559,7 @@
             android:label="@string/title_activity_recipient_list_add_account"
             android:parentActivityName=".RecipientListActivity"
             android:screenOrientation="sensorPortrait"
-            android:theme="@style/AppThemeBlue.NoActionBar">
+            android:theme="@style/AppThemeBlue.NoActionBar" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.imme.immeclient.SecuritySettingsActivity" />
@@ -575,7 +575,7 @@
             android:label="@string/title_activity_recipient_list_profile_account"
             android:parentActivityName=".RecipientListActivity"
             android:screenOrientation="sensorPortrait"
-            android:theme="@style/AppThemeBlue.NoActionBar">
+            android:theme="@style/AppThemeBlue.NoActionBar" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.imme.immeclient.SecuritySettingsActivity" />
@@ -590,13 +590,13 @@
             android:name=".FastPaymentActivity"
             android:label="@string/title_activity_fast_payment"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".NearMeActivity"></activity>
+        <activity android:name=".NearMeActivity" />
         <activity
             android:name=".Pin2Activity"
             android:label="PIN 2"
             android:parentActivityName=".MainActivity"
             android:screenOrientation="sensorPortrait"
-            android:theme="@style/AppThemeBlue.NoActionBar">
+            android:theme="@style/AppThemeBlue.NoActionBar" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.imme.immeclient.SecuritySettingsActivity" />
@@ -607,6 +607,22 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
+
+        <activity android:name=".SendToFriendActivity"
+            android:label="@string/title_activity_send_pay"
+            android:parentActivityName=".SendPayActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppThemeBlue.NoActionBar" >
+        <meta-data
+            android:name="android.support.PARENT_ACTIVITY"
+            android:value="com.imme.immeclient.SendPayActivity" />
+
+        <intent-filter>
+            <action android:name="com.imme.immeclient.SendToFriendActivity" />
+
+            <category android:name="android.intent.category.DEFAULT" />
+        </intent-filter>
+
         <!--
              The API key for Google Maps-based APIs is defined as a string resource.
              (See the file "res/values/google_maps_api.xml").
@@ -618,5 +634,7 @@
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="@string/google_maps_key" />
+        </activity>
     </application>
+
 </manifest>

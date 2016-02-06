@@ -710,7 +710,8 @@ public class MainActivity extends AppCompatActivity
             LoadingAnimation2.setVisibility(View.GONE);
 
             if (feedback_data.length() == 0) {
-                Toast.makeText(MainActivity.this, "Server issue, please contact 081235404833", Toast.LENGTH_LONG).show();
+                Toast.makeText(MainActivity.this, "Please check your internet connection", Toast.LENGTH_LONG).show();
+                finish();
             } else {
                 try {
                     if (feedback_data.getBoolean("error")) {
@@ -859,9 +860,9 @@ public class MainActivity extends AppCompatActivity
         ImageLoader.getInstance().init(config.build());
 
         DisplayImageOptions options = new DisplayImageOptions.Builder()
-                .showImageOnLoading(R.mipmap.ic_launcher)
-                .showImageForEmptyUri(R.mipmap.ic_launcher)
-                .showImageOnFail(R.mipmap.ic_launcher)
+                .showImageOnLoading(R.mipmap.about_logo_imme)
+                .showImageForEmptyUri(R.mipmap.about_logo_imme)
+                .showImageOnFail(R.mipmap.about_logo_imme)
                 .resetViewBeforeLoading(false)
                 .delayBeforeLoading(100)
                 .cacheInMemory(true)

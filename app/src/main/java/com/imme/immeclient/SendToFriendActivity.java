@@ -4,12 +4,15 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
-import android.os.Bundle;
+import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
+import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
-import android.view.MenuItem;
+import android.view.View;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.nostra13.universalimageloader.cache.disc.naming.Md5FileNameGenerator;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
@@ -17,18 +20,22 @@ import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 import com.readystatesoftware.systembartint.SystemBarTintManager;
 
-import java.text.NumberFormat;
-import java.util.Locale;
+import org.json.JSONException;
+import org.json.JSONObject;
 
-public class PersonalSend extends AppCompatActivity {
+import java.io.IOException;
+import java.net.URLEncoder;
+
+public class SendToFriendActivity extends AppCompatActivity {
+
+    String transfer_amount, transfer_message;
+    EditText TransferMoney, TransferDescription;
     ProgressDialog loading;
-    Boolean error_status = false;
-    String error_message = null, message;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_personal_send);
+        setContentView(R.layout.activity_send_to_friend);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -37,46 +44,31 @@ public class PersonalSend extends AppCompatActivity {
         tintManager.setNavigationBarTintEnabled(true);
         tintManager.setTintColor(Color.parseColor("#FF03B0FF"));
 
-        TextView personal_name = (TextView) findViewById(R.id.personal_name);
-        TextView personal_balance = (TextView) findViewById(R.id.personal_balance);
-        TextView main_balance = (TextView) findViewById(R.id.send_main_balance);
-
-        personal_name.setText(GlobalVariable.PAY_RECIPIENT_NAME);
-        String formated_money = NumberFormat.getNumberInstance(Locale.GERMANY).format(Integer.parseInt(GlobalVariable.PAY_AMOUNT));
-        personal_balance.setText("Rp " + formated_money);
-        formated_money = NumberFormat.getNumberInstance(Locale.GERMANY).format(GlobalVariable.MONEY_MAIN_BALANCE);
-        main_balance.setText(formated_money);
-
+        TextView RecipientName = (TextView) findViewById(R.id.RecipientName);
         MLRoundedImageView UserPicture = (MLRoundedImageView) findViewById(R.id.UserPicture);
-        if (getIntent().getStringExtra("picture_url") != null) {
-            ImageLoadPlease(this, getIntent().getStringExtra("picture_url"),  UserPicture);
-        } else {
-            ImageLoadPlease(this, "",  UserPicture);
-        }
-    }
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case android.R.id.home:
-                // app icon in action bar clicked; goto parent activity.
-                Intent intent = new Intent(PersonalSend.this, MainActivity.class);
-                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        TransferMoney = (EditText) findViewById(R.id.TransferMoney);
+        TransferDescription = (EditText) findViewById(R.id.TransferDescription);
+
+        ImageLoadPlease(this, getIntent().getStringExtra("picure_url"), UserPicture);
+        RecipientName.setText(getIntent().getStringExtra("name"));
+
+        TextView Btn_Transfer = (TextView) findViewById(R.id.Btn_Transfer);
+        Btn_Transfer.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                transfer_amount = TransferMoney.getText().toString();
+                transfer_message = TransferDescription.getText().toString();
+
+                Intent intent = new Intent(SendToFriendActivity.this, PinActivity.class);
+                intent.putExtra("search_id", getIntent().getStringExtra("search_id"));
+                intent.putExtra("picture_url", getIntent().getStringExtra("picture_url"));
+                intent.putExtra("name", getIntent().getStringExtra("name"));
+                intent.putExtra("amount", transfer_amount);
+                intent.putExtra("message", transfer_message);
                 startActivity(intent);
-                this.finish();
-                return true;
-            default:
-                return super.onOptionsItemSelected(item);
-        }
-    }
-
-    @Override
-    public void onBackPressed() {
-        // API Running
-        Intent intent = new Intent(PersonalSend.this, MainActivity.class);
-        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        startActivity(intent);
-        this.finish();
+            }
+        });
     }
 
     public ImageLoader ImageLoadPlease(Context context, String imageURI, ImageView target) {

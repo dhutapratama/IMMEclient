@@ -87,7 +87,7 @@
     <string name="pref_ringtone_silent">Silent</string>
 
     <string name="pref_title_vibrate">Vibrate</string>
-    <string name="title_activity_send_pay">Send/Pay</string>
+    <string name="title_activity_send_pay">Transfer</string>
     <string name="title_activity_login">Sign in</string>
 
     <!-- Strings related to login -->
@@ -203,4 +203,5 @@ distribution media, documentation, registration cards, and insertions.</string>
     <string name="title_activity_recipient_list_add_account">Add Account</string>
     <string name="title_activity_recipient_list_profile_account">Profile Account</string>
     <string name="title_activity_fast_payment">FastPaymentActivity</string>
+    <string name="transfer_description">This transfer is for ...</string>
 </resources>

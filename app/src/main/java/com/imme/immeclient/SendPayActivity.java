@@ -1,6 +1,7 @@
 package com.imme.immeclient;
 
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
@@ -13,12 +14,18 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 import android.widget.SimpleAdapter;
 import android.widget.Toast;
 
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
+import com.nostra13.universalimageloader.cache.disc.naming.Md5FileNameGenerator;
+import com.nostra13.universalimageloader.core.DisplayImageOptions;
+import com.nostra13.universalimageloader.core.ImageLoader;
+import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 import com.readystatesoftware.systembartint.SystemBarTintManager;
 
 import org.json.JSONArray;
@@ -39,6 +46,8 @@ public class SendPayActivity extends AppCompatActivity {
     Boolean error_status = false;
     String error_message = null;
     private ProgressDialog loading = null;
+
+    ProgressBar LoadingAnimation;
 
     ListView RecipientList;
     JSONArray recipient_list;
@@ -75,21 +84,29 @@ public class SendPayActivity extends AppCompatActivity {
         RecipientList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                String search_id = null;
+                String search_id = null,
+                        picture_url = null,
+                        name = null;
                 if (recipient_list.length() > 0) {
                     try {
                         JSONObject recipient = recipient_list.getJSONObject(position);
                         search_id = recipient.getString("search_id");
+                        picture_url = recipient.getString("picture_url");
+                        name = recipient.getString("name");
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
 
-                    Intent intent = new Intent(getApplicationContext(), RecipientListProfileAccountActivity.class);
+                    Intent intent = new Intent(getApplicationContext(), SendToFriendActivity.class);
                     intent.putExtra("search_id", search_id);
+                    intent.putExtra("picture_url", picture_url);
+                    intent.putExtra("name", name);
                     startActivity(intent);
                 }
             }
         });
+
+        LoadingAnimation = (ProgressBar) findViewById(R.id.LoadingAnimation);
 
         new get_account().execute();
     }
@@ -131,6 +148,11 @@ public class SendPayActivity extends AppCompatActivity {
                 e.printStackTrace();
             }
             return null;
+        }
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
         }
 
         protected void onPostExecute(Object result) {
@@ -182,6 +204,7 @@ public class SendPayActivity extends AppCompatActivity {
         }
 
         protected void onPostExecute(JSONObject feedback_data) {
+            LoadingAnimation.setVisibility(View.GONE);
             if (feedback_data.length() == 0) {
                 Toast.makeText(SendPayActivity.this, "Server issue, please contact 081235404833", Toast.LENGTH_LONG).show();
                 finish();
@@ -210,10 +233,47 @@ public class SendPayActivity extends AppCompatActivity {
                             hm.put("recipientName", recipient.getString("name"));
                             aList.add(hm);
                         }
-                        adapter = new SimpleAdapter(getBaseContext(), aList, R.layout.list_recipient, from, to){
+
+                        final Context context = getBaseContext();
+                        adapter = new SimpleAdapter(context, aList, R.layout.list_recipient, from, to){
                             @Override
                             public View getView(int position, View convertView, ViewGroup parent) {
-                                return super.getView(position, convertView, parent);
+                                View v = super.getView(position, convertView, parent);
+
+                                ImageView recipientPicture = (ImageView) v.findViewById(R.id.recipientPicture);
+                                String PictureURL = "";
+                                try {
+                                    PictureURL = recipient_list.getJSONObject(position).getString("picture_url");
+
+                                } catch (JSONException e) {
+                                    e.printStackTrace();
+                                }
+                                ImageLoadPlease(context, PictureURL, recipientPicture);
+                                return v;
+                            }
+
+                            public ImageLoader ImageLoadPlease(Context context, String imageURI, ImageView target) {
+                                ImageLoaderConfiguration.Builder config = new ImageLoaderConfiguration.Builder(context);
+                                config.threadPriority(Thread.NORM_PRIORITY - 2);
+                                config.denyCacheImageMultipleSizesInMemory();
+                                config.diskCacheFileNameGenerator(new Md5FileNameGenerator());
+                                config.diskCacheSize(500 * 1024 * 1024);
+
+                                ImageLoader.getInstance().init(config.build());
+
+                                DisplayImageOptions options = new DisplayImageOptions.Builder()
+                                        .showImageOnLoading(R.mipmap.about_logo_imme)
+                                        .showImageForEmptyUri(R.mipmap.about_logo_imme)
+                                        .showImageOnFail(R.mipmap.about_logo_imme)
+                                        .resetViewBeforeLoading(false)
+                                        .delayBeforeLoading(100)
+                                        .cacheInMemory(true)
+                                        .cacheOnDisk(true)
+                                        .build();
+
+                                ImageLoader imageLoader = ImageLoader.getInstance();
+                                imageLoader.displayImage(imageURI, target, options);
+                                return imageLoader;
                             }
                         };
                     }

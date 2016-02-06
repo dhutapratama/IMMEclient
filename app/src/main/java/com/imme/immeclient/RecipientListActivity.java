@@ -1,6 +1,7 @@
 package com.imme.immeclient;
 
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.AsyncTask;
@@ -9,12 +10,19 @@ import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 import android.widget.SimpleAdapter;
 import android.widget.Toast;
 import android.widget.TextView;
 
+import com.nostra13.universalimageloader.cache.disc.naming.Md5FileNameGenerator;
+import com.nostra13.universalimageloader.core.DisplayImageOptions;
+import com.nostra13.universalimageloader.core.ImageLoader;
+import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 import com.readystatesoftware.systembartint.SystemBarTintManager;
 
 import org.json.JSONArray;
@@ -28,13 +36,12 @@ import java.util.HashMap;
 import java.util.List;
 
 public class RecipientListActivity extends AppCompatActivity {
-
-    ProgressDialog loading;
     Boolean error_status = false, data_available;
     String error_message, message;
     Integer error_code = 0;
     JSONArray recipient_list;
     String search_id;
+    ProgressBar LoadingAnimation;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -81,6 +88,8 @@ public class RecipientListActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
+        LoadingAnimation = (ProgressBar) findViewById(R.id.LoadingAnimation);
     }
 
     @Override
@@ -107,11 +116,13 @@ public class RecipientListActivity extends AppCompatActivity {
             return null;
         }
 
-        protected void onPostExecute(Object result) {
-            if (RecipientListActivity.this.loading != null) {
-                RecipientListActivity.this.loading.dismiss();
-            }
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+        }
 
+        protected void onPostExecute(Object result) {
+            LoadingAnimation.setVisibility(View.GONE);
             if (error_status) {
                 finish();
                 Intent intent = new Intent(RecipientListActivity.this, MainActivity.class);
@@ -166,8 +177,49 @@ public class RecipientListActivity extends AppCompatActivity {
         String[] from = {"recipientName"};
         int[] to = {R.id.recipientName};
         SimpleAdapter adapter;
+        final Context context = getBaseContext();
         if (data_available) {
-            adapter = new SimpleAdapter(getBaseContext(), aList, R.layout.list_recipient, from, to);
+            adapter = new SimpleAdapter(context, aList, R.layout.list_recipient, from, to) {
+                @Override
+                public View getView(int position, View convertView, ViewGroup parent) {
+                    View v = super.getView(position, convertView, parent);
+
+                    ImageView recipientPicture = (ImageView) v.findViewById(R.id.recipientPicture);
+                    String PictureURL = "";
+                    try {
+                        PictureURL = recipient_list.getJSONObject(position).getString("picture_url");
+
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                    ImageLoadPlease(context, PictureURL, recipientPicture);
+                    return v;
+                }
+
+                public ImageLoader ImageLoadPlease(Context context, String imageURI, ImageView target) {
+                    ImageLoaderConfiguration.Builder config = new ImageLoaderConfiguration.Builder(context);
+                    config.threadPriority(Thread.NORM_PRIORITY - 2);
+                    config.denyCacheImageMultipleSizesInMemory();
+                    config.diskCacheFileNameGenerator(new Md5FileNameGenerator());
+                    config.diskCacheSize(500 * 1024 * 1024);
+
+                    ImageLoader.getInstance().init(config.build());
+
+                    DisplayImageOptions options = new DisplayImageOptions.Builder()
+                            .showImageOnLoading(R.mipmap.about_logo_imme)
+                            .showImageForEmptyUri(R.mipmap.about_logo_imme)
+                            .showImageOnFail(R.mipmap.about_logo_imme)
+                            .resetViewBeforeLoading(false)
+                            .delayBeforeLoading(100)
+                            .cacheInMemory(true)
+                            .cacheOnDisk(true)
+                            .build();
+
+                    ImageLoader imageLoader = ImageLoader.getInstance();
+                    imageLoader.displayImage(imageURI, target, options);
+                    return imageLoader;
+                }
+            };
         } else {
             adapter = new SimpleAdapter(getBaseContext(), aList, R.layout.list_recipient_empty, from, to);
         }
