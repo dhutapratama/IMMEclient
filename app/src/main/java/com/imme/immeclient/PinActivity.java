@@ -1,21 +1,16 @@
 package com.imme.immeclient;
 
 import android.app.ProgressDialog;
-import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
-import android.widget.TableRow;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.readystatesoftware.systembartint.SystemBarTintManager;
@@ -23,15 +18,8 @@ import com.readystatesoftware.systembartint.SystemBarTintManager;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.BufferedReader;
-import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.OutputStreamWriter;
 import java.net.URLEncoder;
-import java.text.NumberFormat;
-import java.util.Locale;
 
 public class PinActivity extends AppCompatActivity {
 
@@ -44,6 +32,8 @@ public class PinActivity extends AppCompatActivity {
     String error_message = null;
     Integer error_code = 0;
 
+    String amount, name;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -55,6 +45,9 @@ public class PinActivity extends AppCompatActivity {
         tintManager.setStatusBarTintEnabled(true);
         tintManager.setNavigationBarTintEnabled(true);
         tintManager.setTintColor(Color.parseColor("#FF03B0FF"));
+
+        name = getIntent().getStringExtra("name");
+        amount = getIntent().getStringExtra("amount");
 
         // Button Action
         button_0 = (Button) findViewById(R.id.button_0);
@@ -191,7 +184,7 @@ public class PinActivity extends AppCompatActivity {
             if (getIntent().getStringExtra("search_id") != null){
                 new transfer().execute();
             } else {
-                loading = ProgressDialog.show(PinActivity.this, "", "Validating transfer", false, true);
+                loading = ProgressDialog.show(PinActivity.this, "", "Validating transfer", false);
                 new pin_check().execute();
             }
         }
@@ -282,10 +275,10 @@ public class PinActivity extends AppCompatActivity {
             JSONObject serviceResult = null;
             try {
                 String postData = "session_key=" + URLEncoder.encode(GlobalVariable.SECURITY_SESSION_KEY, "UTF-8")
-                        + "search_id=" + URLEncoder.encode(getIntent().getStringExtra("search_id"), "UTF-8")
-                        + "amount=" + URLEncoder.encode(getIntent().getStringExtra("amount"), "UTF-8")
-                        + "message=" + URLEncoder.encode(getIntent().getStringExtra("message"), "UTF-8")
-                        + "pin_1=" + URLEncoder.encode(pin, "UTF-8");
+                        + "&search_id=" + URLEncoder.encode(getIntent().getStringExtra("search_id"), "UTF-8")
+                        + "&amount=" + URLEncoder.encode(getIntent().getStringExtra("amount"), "UTF-8")
+                        + "&message=" + URLEncoder.encode(getIntent().getStringExtra("message"), "UTF-8")
+                        + "&pin_1=" + URLEncoder.encode(pin, "UTF-8");
                 serviceResult = WebServiceClient.postRequest(GlobalVariable.DISTRIBUTOR_SERVER + "pay/transfer", postData);
             } catch (IOException e) {
                 e.printStackTrace();
@@ -296,7 +289,7 @@ public class PinActivity extends AppCompatActivity {
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-            loading = ProgressDialog.show(PinActivity.this, "", "Validating transfer", false, true);
+            loading = ProgressDialog.show(PinActivity.this, "", "Validating transfer", false);
         }
 
         protected void onPostExecute(JSONObject feedback_data) {
@@ -309,15 +302,13 @@ public class PinActivity extends AppCompatActivity {
 
             try {
                 if (feedback_data.getBoolean("error")) {
-                    //feedback_data.getInt("code")
-
                     Toast.makeText(PinActivity.this, feedback_data.getString("message"), Toast.LENGTH_LONG).show();
                     finish();
                 } else {
                     JSONObject data = feedback_data.getJSONObject("data");
 
-                    GlobalVariable.PAY_RECIPIENT_NAME = getIntent().getStringExtra("name");
-                    GlobalVariable.PAY_AMOUNT = getIntent().getStringExtra("amount");
+                    GlobalVariable.PAY_RECIPIENT_NAME = name;
+                    GlobalVariable.PAY_AMOUNT = amount;
                     GlobalVariable.MONEY_MAIN_BALANCE = data.getInt("balance");
 
                     Intent intentView = new Intent(getApplicationContext(), PersonalSend.class);

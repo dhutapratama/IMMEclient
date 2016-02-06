@@ -4,7 +4,6 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
-import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
@@ -12,19 +11,12 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.nostra13.universalimageloader.cache.disc.naming.Md5FileNameGenerator;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 import com.readystatesoftware.systembartint.SystemBarTintManager;
-
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.io.IOException;
-import java.net.URLEncoder;
 
 public class SendToFriendActivity extends AppCompatActivity {
 
@@ -45,12 +37,13 @@ public class SendToFriendActivity extends AppCompatActivity {
         tintManager.setTintColor(Color.parseColor("#FF03B0FF"));
 
         TextView RecipientName = (TextView) findViewById(R.id.RecipientName);
-        MLRoundedImageView UserPicture = (MLRoundedImageView) findViewById(R.id.UserPicture);
+        ImageView UserPicture = (ImageView) findViewById(R.id.UserPicture);
 
         TransferMoney = (EditText) findViewById(R.id.TransferMoney);
         TransferDescription = (EditText) findViewById(R.id.TransferDescription);
 
-        ImageLoadPlease(this, getIntent().getStringExtra("picure_url"), UserPicture);
+        String picture_url = getIntent().getStringExtra("picture_url");
+        ImageLoadPlease(getBaseContext(), picture_url, UserPicture);
         RecipientName.setText(getIntent().getStringExtra("name"));
 
         TextView Btn_Transfer = (TextView) findViewById(R.id.Btn_Transfer);
@@ -72,13 +65,15 @@ public class SendToFriendActivity extends AppCompatActivity {
     }
 
     public ImageLoader ImageLoadPlease(Context context, String imageURI, ImageView target) {
-        ImageLoaderConfiguration.Builder config = new ImageLoaderConfiguration.Builder(context);
-        config.threadPriority(Thread.NORM_PRIORITY - 2);
-        config.denyCacheImageMultipleSizesInMemory();
-        config.diskCacheFileNameGenerator(new Md5FileNameGenerator());
-        config.diskCacheSize(500 * 1024 * 1024);
+        if (!ImageLoader.getInstance().isInited()) {
+            ImageLoaderConfiguration.Builder config = new ImageLoaderConfiguration.Builder(context);
+            config.threadPriority(Thread.NORM_PRIORITY - 2);
+            config.denyCacheImageMultipleSizesInMemory();
+            config.diskCacheFileNameGenerator(new Md5FileNameGenerator());
+            config.diskCacheSize(500 * 1024 * 1024);
 
-        ImageLoader.getInstance().init(config.build());
+            ImageLoader.getInstance().init(config.build());
+        }
 
         DisplayImageOptions options = new DisplayImageOptions.Builder()
                 .showImageOnLoading(R.mipmap.about_logo_imme)
@@ -92,6 +87,7 @@ public class SendToFriendActivity extends AppCompatActivity {
 
         ImageLoader imageLoader = ImageLoader.getInstance();
         imageLoader.displayImage(imageURI, target, options);
+        imageLoader.destroy();
         return imageLoader;
     }
 }

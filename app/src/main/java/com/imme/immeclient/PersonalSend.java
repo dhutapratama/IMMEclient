@@ -47,7 +47,7 @@ public class PersonalSend extends AppCompatActivity {
         formated_money = NumberFormat.getNumberInstance(Locale.GERMANY).format(GlobalVariable.MONEY_MAIN_BALANCE);
         main_balance.setText(formated_money);
 
-        MLRoundedImageView UserPicture = (MLRoundedImageView) findViewById(R.id.UserPicture);
+        ImageView UserPicture = (ImageView) findViewById(R.id.UserPicture);
         if (getIntent().getStringExtra("picture_url") != null) {
             ImageLoadPlease(this, getIntent().getStringExtra("picture_url"),  UserPicture);
         } else {

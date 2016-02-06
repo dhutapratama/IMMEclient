@@ -6,11 +6,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AbsListView;
 import android.widget.BaseAdapter;
-import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.TextView;
-
-import com.journeyapps.barcodescanner.ViewfinderView;
 
 /**
  * Created by sysadm@ilccourse.com on 2/5/2016.

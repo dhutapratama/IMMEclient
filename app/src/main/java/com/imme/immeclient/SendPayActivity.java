@@ -2,7 +2,6 @@ package com.imme.immeclient;
 
 import android.app.ProgressDialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.AsyncTask;
@@ -34,11 +33,9 @@ import org.json.JSONObject;
 
 import java.io.IOException;
 import java.net.URLEncoder;
-import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Locale;
 
 public class SendPayActivity extends AppCompatActivity {
     private Button mButton;
@@ -253,13 +250,15 @@ public class SendPayActivity extends AppCompatActivity {
                             }
 
                             public ImageLoader ImageLoadPlease(Context context, String imageURI, ImageView target) {
-                                ImageLoaderConfiguration.Builder config = new ImageLoaderConfiguration.Builder(context);
-                                config.threadPriority(Thread.NORM_PRIORITY - 2);
-                                config.denyCacheImageMultipleSizesInMemory();
-                                config.diskCacheFileNameGenerator(new Md5FileNameGenerator());
-                                config.diskCacheSize(500 * 1024 * 1024);
+                                if (!ImageLoader.getInstance().isInited()) {
+                                    ImageLoaderConfiguration.Builder config = new ImageLoaderConfiguration.Builder(context);
+                                    config.threadPriority(Thread.NORM_PRIORITY - 2);
+                                    config.denyCacheImageMultipleSizesInMemory();
+                                    config.diskCacheFileNameGenerator(new Md5FileNameGenerator());
+                                    config.diskCacheSize(500 * 1024 * 1024);
 
-                                ImageLoader.getInstance().init(config.build());
+                                    ImageLoader.getInstance().init(config.build());
+                                }
 
                                 DisplayImageOptions options = new DisplayImageOptions.Builder()
                                         .showImageOnLoading(R.mipmap.about_logo_imme)

@@ -9,7 +9,6 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.google.android.gms.maps.MapFragment;
-import com.imme.immeclient.MapWrapperLayout;
 
 public class CustomMapFragment extends MapFragment {
 

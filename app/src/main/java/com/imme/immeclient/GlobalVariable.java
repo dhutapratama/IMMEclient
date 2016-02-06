@@ -1,11 +1,5 @@
 package com.imme.immeclient;
 
-import android.util.Log;
-
-import java.net.InetAddress;
-import java.net.NetworkInterface;
-import java.util.Enumeration;
-
 /**
  * Created by santo on 24-Oct-15.
  */
