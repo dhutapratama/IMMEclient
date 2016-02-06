@@ -1,21 +1,16 @@
 package com.imme.immeclient;
 
 import android.app.ProgressDialog;
-import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
-import android.widget.TableRow;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.readystatesoftware.systembartint.SystemBarTintManager;
@@ -23,15 +18,8 @@ import com.readystatesoftware.systembartint.SystemBarTintManager;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.BufferedReader;
-import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.OutputStreamWriter;
 import java.net.URLEncoder;
-import java.text.NumberFormat;
-import java.util.Locale;
 
 public class PinActivity extends AppCompatActivity {
 
@@ -44,6 +32,8 @@ public class PinActivity extends AppCompatActivity {
     String error_message = null;
     Integer error_code = 0;
 
+    String amount, name;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -55,6 +45,9 @@ public class PinActivity extends AppCompatActivity {
         tintManager.setStatusBarTintEnabled(true);
         tintManager.setNavigationBarTintEnabled(true);
         tintManager.setTintColor(Color.parseColor("#FF03B0FF"));
+
+        name = getIntent().getStringExtra("name");
+        amount = getIntent().getStringExtra("amount");
 
         // Button Action
         button_0 = (Button) findViewById(R.id.button_0);
@@ -168,7 +161,6 @@ public class PinActivity extends AppCompatActivity {
                     default:
                         break;
                 }
-                //balance.setText(money);
             }
         });
     }
@@ -189,9 +181,12 @@ public class PinActivity extends AppCompatActivity {
     private void text(String string) {
         pin = pin + string;
         if (pin.length() == 4) {
-            // API Running
-            loading = ProgressDialog.show(PinActivity.this, "", "Validating transfer", false, true);
-            new pin_check().execute();
+            if (getIntent().getStringExtra("search_id") != null){
+                new transfer().execute();
+            } else {
+                loading = ProgressDialog.show(PinActivity.this, "", "Validating transfer", false);
+                new pin_check().execute();
+            }
         }
 
         switch (pin.length()) {
@@ -210,45 +205,6 @@ public class PinActivity extends AppCompatActivity {
             default:
                 break;
         }
-        //balance.setText(money);
-    }
-
-    public void writeFile(String varname, String data) {
-        try {
-            OutputStreamWriter outputStreamWriter = new OutputStreamWriter(openFileOutput(varname, Context.MODE_PRIVATE));
-            outputStreamWriter.write(data);
-            outputStreamWriter.close();
-        }
-        catch (IOException e) {
-            Log.e("Exception", "File write failed: " + e.toString());
-        }
-    }
-
-    private String readFile(String varname) {
-        String ret = "";
-        try {
-            InputStream inputStream = openFileInput(varname);
-
-            if ( inputStream != null ) {
-                InputStreamReader inputStreamReader = new InputStreamReader(inputStream);
-                BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
-                String receiveString = "";
-                StringBuilder stringBuilder = new StringBuilder();
-
-                while ( (receiveString = bufferedReader.readLine()) != null ) {
-                    stringBuilder.append(receiveString);
-                }
-
-                inputStream.close();
-                ret = stringBuilder.toString();
-            }
-        }
-        catch (FileNotFoundException e) {
-            Log.e("SplashScreen", "File not found: " + e.toString());
-        } catch (IOException e) {
-            Log.e("SplashScreen", "Can not read file: " + e.toString());
-        }
-        return ret;
     }
 
     private class pin_check extends AsyncTask<String, Void, Object> {
@@ -311,20 +267,57 @@ public class PinActivity extends AppCompatActivity {
             error_code = serviceResult.getInt("code");
         } else {
             error_status = false;
-            // Money
-            GlobalVariable.MONEY_MAIN_BALANCE = Integer.parseInt(serviceResult.getString("balance"));
-            commit();
         }
     }
 
-    private void commit() throws JSONException {
-        String moneyContent = readFile(GlobalVariable.FILE_MONEY);
-        JSONObject moneyData = new JSONObject(moneyContent);
+    private class transfer extends AsyncTask<String, String, JSONObject> {
+        protected JSONObject doInBackground(String... args) {
+            JSONObject serviceResult = null;
+            try {
+                String postData = "session_key=" + URLEncoder.encode(GlobalVariable.SECURITY_SESSION_KEY, "UTF-8")
+                        + "&search_id=" + URLEncoder.encode(getIntent().getStringExtra("search_id"), "UTF-8")
+                        + "&amount=" + URLEncoder.encode(getIntent().getStringExtra("amount"), "UTF-8")
+                        + "&message=" + URLEncoder.encode(getIntent().getStringExtra("message"), "UTF-8")
+                        + "&pin_1=" + URLEncoder.encode(pin, "UTF-8");
+                serviceResult = WebServiceClient.postRequest(GlobalVariable.DISTRIBUTOR_SERVER + "pay/transfer", postData);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            return serviceResult;
+        }
 
-        // Money Data
-        moneyData.put("main_balance", Integer.toString(GlobalVariable.MONEY_MAIN_BALANCE));
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            loading = ProgressDialog.show(PinActivity.this, "", "Validating transfer", false);
+        }
 
-        writeFile(GlobalVariable.FILE_MONEY, moneyData.toString());
+        protected void onPostExecute(JSONObject feedback_data) {
+            loading.dismiss();
+            if (feedback_data.length() == 0) {
+                Toast.makeText(PinActivity.this, "Server issue, please contact 081235404833", Toast.LENGTH_LONG).show();
+                finish();
+                return;
+            }
+
+            try {
+                if (feedback_data.getBoolean("error")) {
+                    Toast.makeText(PinActivity.this, feedback_data.getString("message"), Toast.LENGTH_LONG).show();
+                    finish();
+                } else {
+                    JSONObject data = feedback_data.getJSONObject("data");
+
+                    GlobalVariable.PAY_RECIPIENT_NAME = name;
+                    GlobalVariable.PAY_AMOUNT = amount;
+                    GlobalVariable.MONEY_MAIN_BALANCE = data.getInt("balance");
+
+                    Intent intentView = new Intent(getApplicationContext(), PersonalSend.class);
+                    intentView.putExtra("picture_url", getIntent().getStringExtra("picture_url"));
+                    startActivity(intentView);
+                }
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
     }
-
 }

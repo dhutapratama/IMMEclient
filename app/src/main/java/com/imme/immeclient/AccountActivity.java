@@ -1,8 +1,8 @@
 package com.imme.immeclient;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Color;
-import android.graphics.Typeface;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -29,7 +29,8 @@ public class AccountActivity extends AppCompatActivity {
 
     ScrollView AccountSettings;
     ProgressBar LoadingAnimation;
-    TextView AccountNumber, IDNumber, IDType;
+    ProgressDialog LoadingDialog;
+    TextView AccountNumber, IDNumber, IDType, BTN_Save;
     EditText FullName, Email, PhoneNumber;
     ImageView AccountPicture;
     LinearLayout EmailVerification, PhoneVerification;
@@ -57,88 +58,7 @@ public class AccountActivity extends AppCompatActivity {
         IDType = (TextView) findViewById(R.id.account_textview_id_type_value);
         EmailVerification = (LinearLayout) findViewById(R.id.EmailVerification);
         PhoneVerification = (LinearLayout) findViewById(R.id.PhoneVerification);
-
-        // Start Font
-        Typeface hnLight = Typeface.createFromAsset(getAssets(),
-                "fonts/HelveticaNeue-Light.otf");
-
-        Typeface hbqLight = Typeface.createFromAsset(getAssets(),
-                "fonts/HelveticaBQ-Light.otf");
-
-        //TextView account_textview_balance = (TextView) findViewById(R.id.account_textview_balance);
-        //account_textview_balance.setTypeface(hnLight);
-
-        //TextView account_textview_balance_rp = (TextView) findViewById(R.id.account_textview_balance_rp);
-        //account_textview_balance_rp.setTypeface(hnLight);
-
-        //TextView account_textview_balance_value = (TextView) findViewById(R.id.account_textview_balance_value);
-        //account_textview_balance_value.setTypeface(hbqLight);
-
-        //TextView account_textview_balance_gift = (TextView) findViewById(R.id.account_textview_balance_gift);
-        //account_textview_balance_gift.setTypeface(hnLight);
-
-        //TextView account_textview_balance_gift_rp = (TextView) findViewById(R.id.account_textview_balance_gift_rp);
-        //account_textview_balance_gift_rp.setTypeface(hnLight);
-
-        //TextView account_textview_balance_gift_value = (TextView) findViewById(R.id.account_textview_balance_gift_value);
-        //account_textview_balance_gift_value.setTypeface(hbqLight);
-
-        //TextView account_textview_account_number = (TextView) findViewById(R.id.account_textview_account_number);
-        //account_textview_account_number.setTypeface(hnLight);
-
-        //account_textview_account_number_value.setTypeface(hnLight);
-
-        //TextView account_textview_account_setting = (TextView) findViewById(R.id.account_textview_account_setting);
-        //account_textview_account_setting.setTypeface(hbqLight);
-
-        //TextView account_textview_full_name = (TextView) findViewById(R.id.account_textview_full_name);
-        //account_textview_full_name.setTypeface(hnLight);
-
-        //account_edittext_full_name_value.setTypeface(hnLight);
-
-        //TextView account_textview_profil_image = (TextView) findViewById(R.id.account_textview_profil_image);
-        //account_textview_profil_image.setTypeface(hnLight);
-
-        //TextView account_textview_upload_image = (TextView) findViewById(R.id.account_textview_upload_image);
-        //account_textview_upload_image.setTypeface(hnLight);
-
-        //TextView account_textview_max_size = (TextView) findViewById(R.id.account_textview_max_size);
-        //account_textview_max_size.setTypeface(hnLight);
-
-        //TextView account_textview_email = (TextView) findViewById(R.id.account_textview_email);
-        //account_textview_email.setTypeface(hnLight);
-
-        //account_edittext_email_value.setTypeface(hnLight);
-
-        //TextView account_textview_phone_number = (TextView) findViewById(R.id.account_textview_phone_number);
-        //account_textview_phone_number.setTypeface(hnLight);
-
-        //account_edittext_phone_number_value.setTypeface(hnLight);
-
-        //TextView account_button_save = (TextView) findViewById(R.id.account_button_save);
-        //account_button_save.setTypeface(hbqLight);
-
-        //TextView account_textview_account_details = (TextView) findViewById(R.id.account_textview_account_details);
-        //account_textview_account_details.setTypeface(hbqLight);
-
-        //TextView account_textview_id_number = (TextView) findViewById(R.id.account_textview_id_number);
-        //account_textview_id_number.setTypeface(hnLight);
-
-        //account_textview_id_number_value.setTypeface(hnLight);
-
-        //TextView account_textview_id_type = (TextView) findViewById(R.id.account_textview_id_type);
-        //account_textview_id_type.setTypeface(hnLight);
-
-        //account_textview_id_type_value.setTypeface(hnLight);
-
-        //TextView account_textview_resend_verification_email = (TextView) findViewById(R.id.account_textview_resend_verification_email);
-        //account_textview_resend_verification_email.setTypeface(hnLight);
-
-        //TextView account_textview_verification_email = (TextView) findViewById(R.id.account_textview_verification_email);
-        //account_textview_verification_email.setTypeface(hbqLight);
-
-        //TextView account_textview_verification_phone_number = (TextView) findViewById(R.id.account_textview_verification_phone_number);
-        //account_textview_verification_phone_number.setTypeface(hbqLight);
+        BTN_Save = (TextView) findViewById(R.id.account_button_save);
 
         TextView account_textview_verify_phone_number = (TextView) findViewById(R.id.account_textview_verify_phone_number);
         account_textview_verify_phone_number.setOnClickListener(new View.OnClickListener() {
@@ -150,6 +70,17 @@ public class AccountActivity extends AppCompatActivity {
         });
 
         new get_account().execute();
+
+        BTN_Save.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(AccountActivity.this, Pin2Activity.class);
+                intent.putExtra("full_name", FullName.getText().toString());
+                intent.putExtra("email", Email.getText().toString());
+                intent.putExtra("phone_number", PhoneNumber.getText().toString());
+                startActivity(intent);
+            }
+        });
 
     }
 

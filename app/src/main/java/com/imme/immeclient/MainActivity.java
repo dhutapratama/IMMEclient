@@ -3,9 +3,11 @@ package com.imme.immeclient;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.app.ProgressDialog;
+import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
-import android.content.pm.ActivityInfo;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.media.RingtoneManager;
@@ -17,7 +19,6 @@ import android.os.Handler;
 import android.os.StrictMode;
 import android.support.v4.app.NotificationCompat;
 import android.support.v7.app.ActionBar;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.support.design.widget.NavigationView;
@@ -28,26 +29,26 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.ImageButton;
+import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
+import com.nostra13.universalimageloader.cache.disc.naming.Md5FileNameGenerator;
+import com.nostra13.universalimageloader.core.DisplayImageOptions;
+import com.nostra13.universalimageloader.core.ImageLoader;
+import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 import com.readystatesoftware.systembartint.SystemBarTintManager;
 
-import java.io.BufferedReader;
-import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.OutputStreamWriter;
 import java.net.URLEncoder;
 import java.text.NumberFormat;
-import java.util.HashMap;
+import java.util.ArrayList;
 import java.util.Locale;
 
 import org.json.JSONArray;
@@ -61,11 +62,15 @@ public class MainActivity extends AppCompatActivity
     NavigationView navigationView;
     String intent_status = "";
     Integer error_code;
-    JSONArray transactions;
 
     ImageView cmlt1_image, cmlt2_image, cmlt3_image;
     TextView cmlt1_name, cmlt2_name, cmlt3_name, cmlt1_amount, cmlt2_amount, cmlt3_amount, cmlt1_date, cmlt2_date, cmlt3_date, cmlt1_no_trans, cmlt2_no_trans, cmlt3_no_trans;
     LinearLayout cmlt1_ll_amount, cmlt2_ll_amount, cmlt3_ll_amount;
+
+    TextView full_name, verified_status;
+    ImageView verified_icon, user_image;
+
+    ArrayList<String> reference = new ArrayList<String>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -74,12 +79,6 @@ public class MainActivity extends AppCompatActivity
 
         if (getIntent().getBooleanExtra("EXIT", false)) {
             finish();
-        } else {
-            try {
-                initVariable();
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
         }
 
         super.onCreate(savedInstanceState);
@@ -87,10 +86,63 @@ public class MainActivity extends AppCompatActivity
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+        ActionBar actionBar = getSupportActionBar();
+        assert actionBar != null;
+        actionBar.setTitle("");
+        actionBar.setDisplayUseLogoEnabled(true);
+        actionBar.setLogo(R.mipmap.imme_logo);
+
+        // Status Bar Coloring
+        SystemBarTintManager tintManager = new SystemBarTintManager(this);
+        tintManager.setStatusBarTintEnabled(true);
+        tintManager.setNavigationBarTintEnabled(true);
+        tintManager.setTintColor(Color.parseColor("#FF03B0FF"));
+
         if (Build.VERSION.SDK_INT == Build.VERSION_CODES.KITKAT) {
             toolbar.setPadding(0, getStatusBarHeight(), 0, 0);
             toolbar.getLayoutParams().height = toolbar.getLayoutParams().height + getStatusBarHeight();
         }
+
+        //----------------------------- Start Activity Programing -----------------------------//
+
+        ExpandableGridView MainMenu = (ExpandableGridView) findViewById(R.id.MainMenu);
+        MainMenu.setExpanded(true);
+        MainMenu.setAdapter(new MainMenuAdapter(this));
+
+        MainMenu.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            public void onItemClick(AdapterView<?> parent, View v,
+                                    int position, long id) {
+                if (position == 0) {
+                    intent_status = "send";
+                    IntentIntegrator integrator = new IntentIntegrator(MainActivity.this);
+                    integrator.setDesiredBarcodeFormats(IntentIntegrator.QR_CODE_TYPES);
+                    integrator.setPrompt("PRESS BACK TO OPEN RECIPIENT");
+                    integrator.setCameraId(0);  // Use a specific camera of the device
+                    integrator.setBeepEnabled(false);
+                    integrator.setBarcodeImageEnabled(true);
+                    integrator.setCaptureActivity(CustomLayout.class);
+                    integrator.initiateScan();
+                } else if (position == 1) {
+                    Intent intent = new Intent(MainActivity.this, ReceiveActivity.class);
+                    startActivity(intent);
+                } else if (position == 2) {
+                    intent_status = "deposit";
+                    IntentIntegrator integrator = new IntentIntegrator(MainActivity.this);
+                    integrator.setDesiredBarcodeFormats(IntentIntegrator.QR_CODE_TYPES);
+                    integrator.setPrompt("SCAN VOUCHER BARCODE");
+                    integrator.setCameraId(0);  // Use a specific camera of the device
+                    integrator.setBeepEnabled(false);
+                    integrator.setBarcodeImageEnabled(true);
+                    integrator.setCaptureActivity(CustomLayout.class);
+                    integrator.initiateScan();
+                } else if (position == 3) {
+                    Intent intent = new Intent(MainActivity.this, NearMeActivity.class);
+                    startActivity(intent);
+                }
+            }
+        });
+
+
         // Start Font
         Typeface hnLight = Typeface.createFromAsset(getAssets(),
                 "fonts/HelveticaNeue-Light.otf");
@@ -149,90 +201,27 @@ public class MainActivity extends AppCompatActivity
         drawer.setDrawerListener(toggle);
         toggle.syncState();
 
-        ActionBar actionBar = getSupportActionBar();
-        assert actionBar != null;
-        actionBar.setTitle("");
-        actionBar.setDisplayUseLogoEnabled(true);
-        actionBar.setLogo(R.mipmap.imme_logo);
-
-        // Status Bar Coloring
-        SystemBarTintManager tintManager = new SystemBarTintManager(this);
-        tintManager.setStatusBarTintEnabled(true);
-        tintManager.setNavigationBarTintEnabled(true);
-        tintManager.setTintColor(Color.parseColor("#FF03B0FF"));
-
-        String formated_money = NumberFormat.getNumberInstance(Locale.GERMANY).format(GlobalVariable.MONEY_MAIN_BALANCE);
-        main_textview_balance_value.setText(formated_money);
+        //String formated_money = NumberFormat.getNumberInstance(Locale.GERMANY).format(GlobalVariable.MONEY_MAIN_BALANCE);
+        //main_textview_balance_value.setText(formated_money);
 
         // Set menu header so can edit text
         navigationView = (NavigationView) findViewById(R.id.nav_view);
         View header = LayoutInflater.from(this).inflate(R.layout.nav_header_main, null);
         navigationView.addHeaderView(header);
-        TextView full_name = (TextView) header.findViewById(R.id.full_name);
-        TextView verified_status = (TextView) header.findViewById(R.id.verified_status);
-        ImageView verified_icon = (ImageView) header.findViewById(R.id.verified_icon);
-
-        full_name.setText(GlobalVariable.CUSTOMER_FULL_NAME);
-        if (GlobalVariable.CUSTOMER_IS_VERIFIED_EMAIL.equals("true") && GlobalVariable.CUSTOMER_IS_VERIFIED_PHONE.equals("true")) {
-            verified_status.setText("Verified");
-            verified_icon.setVisibility(View.VISIBLE);
-        } else {
-            verified_status.setText("Not Verified");
-            verified_icon.setVisibility(View.GONE);
-        }
-
-        // Button Action
-        ImageButton main_button_send_pay = (ImageButton) findViewById(R.id.main_button_send_pay);
-        main_button_send_pay.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                intent_status = "send";
-                IntentIntegrator integrator = new IntentIntegrator(MainActivity.this);
-                integrator.setDesiredBarcodeFormats(IntentIntegrator.QR_CODE_TYPES);
-                integrator.setPrompt("PRESS BACK TO OPEN RECIPIENT");
-                integrator.setCameraId(0);  // Use a specific camera of the device
-                integrator.setBeepEnabled(false);
-                integrator.setBarcodeImageEnabled(true);
-                integrator.setCaptureActivity(CustomLayout.class);
-                integrator.initiateScan();
-            }
-        });
-
-        ImageButton main_button_receive = (ImageButton) findViewById(R.id.main_button_receive);
-        main_button_receive.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(MainActivity.this, ReceiveActivity.class);
-                startActivity(intent);
-            }
-        });
-
-        ImageButton main_button_topup = (ImageButton) findViewById(R.id.main_button_topup);
-        main_button_topup.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                intent_status = "deposit";
-                IntentIntegrator integrator = new IntentIntegrator(MainActivity.this);
-                integrator.setDesiredBarcodeFormats(IntentIntegrator.QR_CODE_TYPES);
-                integrator.setPrompt("SCAN VOUCHER BARCODE");
-                integrator.setCameraId(0);  // Use a specific camera of the device
-                integrator.setBeepEnabled(false);
-                integrator.setBarcodeImageEnabled(true);
-                integrator.setCaptureActivity(CustomLayout.class);
-                integrator.initiateScan();
-            }
-        });
+        full_name = (TextView) header.findViewById(R.id.full_name);
+        verified_status = (TextView) header.findViewById(R.id.verified_status);
+        verified_icon = (ImageView) header.findViewById(R.id.verified_icon);
+        user_image = (ImageView) header.findViewById(R.id.profile_image);
 
         RelativeLayout last_transaction_1 = (RelativeLayout) findViewById(R.id.last_transaction_1);
         last_transaction_1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                /*
-                Snackbar.make(view, "PT. Lazada E-Commerce (-Rp300.000)", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-                       */
-                Intent intent = new Intent("com.imme.immeclient.PaymentDetails");
-                startActivity(intent);
+                if (reference.get(0) != null) {
+                    Intent intent = new Intent("com.imme.immeclient.PaymentDetails");
+                    intent.putExtra("reference", reference.get(0));
+                    startActivity(intent);
+                }
             }
         });
 
@@ -240,8 +229,11 @@ public class MainActivity extends AppCompatActivity
         last_transaction_2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent("com.imme.immeclient.PaymentDetails");
-                startActivity(intent);
+                if (reference.get(1) != null) {
+                    Intent intent = new Intent("com.imme.immeclient.PaymentDetails");
+                    intent.putExtra("reference", reference.get(1));
+                    startActivity(intent);
+                }
             }
         });
 
@@ -249,8 +241,11 @@ public class MainActivity extends AppCompatActivity
         last_transaction_3.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent("com.imme.immeclient.PaymentDetails");
-                startActivity(intent);
+                if (reference.get(2) != null) {
+                    Intent intent = new Intent("com.imme.immeclient.PaymentDetails");
+                    intent.putExtra("reference", reference.get(2));
+                    startActivity(intent);
+                }
             }
         });
 
@@ -279,23 +274,18 @@ public class MainActivity extends AppCompatActivity
         cmlt3_ll_amount = (LinearLayout) findViewById(R.id.cmlt3_ll_amount);
         cmlt3_no_trans = (TextView) findViewById(R.id.cmlt3_no_trans);
 
-        last_transaction();
+        SecurityData mDbHelper = new SecurityData(this);
+        SQLiteDatabase db =  mDbHelper.getReadableDatabase();
+        String[] projection = { SecurityData.SESSION_KEY, SecurityData.FIRST_TIME };
+        Cursor collected_data = db.query( SecurityData.TABLE_LOGIN_DATA, projection, null, null, null, null, null );
 
-        /*try {
-            GetImage.productLookup();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }*/
+        collected_data.moveToFirst();
+        GlobalVariable.SECURITY_SESSION_KEY = collected_data.getString(collected_data.getColumnIndexOrThrow("session_key"));
 
-        /*
-        Intent intent = new Intent(this, IMMEService.class);
-        startService(intent);
-        */
+        db.close();
 
-        /* new check_notification().execute(); */
-
+        new get_main_data().execute();
     }
-
 
     @Override
     public void onBackPressed() {
@@ -357,15 +347,18 @@ public class MainActivity extends AppCompatActivity
             return true;
         }
         else if (id == R.id.nav_sign_out) {
-            try {
-                signOut();
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
-            finish();
+            SecurityData mDbHelper = new SecurityData(MainActivity.this);
+            SQLiteDatabase db = mDbHelper.getReadableDatabase();
+            ContentValues values = new ContentValues();
+            values.put(SecurityData.SESSION_KEY, "");
+            values.put(SecurityData.FIRST_TIME, 0);
+            db.update(SecurityData.TABLE_LOGIN_DATA, values, null, null);
+            db.close();
+
             Intent intent = new Intent(MainActivity.this, SignInActivity.class);
             intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
             startActivity(intent);
+            finish();
             return true;
         }
         // Gift page hide
@@ -575,156 +568,9 @@ public class MainActivity extends AppCompatActivity
             error_status = false;
             GlobalVariable.DEPOSIT_AMOUNT = Integer.parseInt(serviceResult.getString("deposit_amount"));
             GlobalVariable.MONEY_MAIN_BALANCE = Integer.parseInt(serviceResult.getString("balance"));
-            commit();
         }
         return serviceResult.getBoolean("error");
     }
-
-    public void writeFile(String varname, String data) {
-        try {
-            OutputStreamWriter outputStreamWriter = new OutputStreamWriter(openFileOutput(varname, Context.MODE_PRIVATE));
-            outputStreamWriter.write(data);
-            outputStreamWriter.close();
-        }
-        catch (IOException e) {
-            Log.e("Exception", "File write failed: " + e.toString());
-        }
-    }
-
-    private String readFile(String varname) {
-        String ret = "";
-        try {
-            InputStream inputStream = openFileInput(varname);
-
-            if ( inputStream != null ) {
-                InputStreamReader inputStreamReader = new InputStreamReader(inputStream);
-                BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
-                String receiveString = "";
-                StringBuilder stringBuilder = new StringBuilder();
-
-                while ( (receiveString = bufferedReader.readLine()) != null ) {
-                    stringBuilder.append(receiveString);
-                }
-
-                inputStream.close();
-                ret = stringBuilder.toString();
-            }
-        }
-        catch (FileNotFoundException e) {
-            Log.e("SplashScreen", "File not found: " + e.toString());
-        } catch (IOException e) {
-            Log.e("SplashScreen", "Can not read file: " + e.toString());
-        }
-        return ret;
-    }
-
-    private void signOut() throws JSONException {
-        JSONObject serverData = new JSONObject();
-        JSONObject securityData = new JSONObject();
-        JSONObject moneyData = new JSONObject();
-        JSONObject customerData = new JSONObject();
-        JSONObject appData = new JSONObject();
-
-        // Server Data
-        serverData.put("distributor_server", "http://api.studiwidie.com/");
-        serverData.put("ack_code", "5GwcTzO0ODM6eSV3s66PJjeedlEvxWc9");
-        serverData.put("otp_key", "OTP_KEY");
-
-        // Security Data
-        securityData.put("imme_algorithm", "IMME_ALGORITHM");
-        securityData.put("tba_algorithm", "TBA_ALGORITHM");
-        securityData.put("cba_algorithm", "CBA_ALGORITHM");
-        securityData.put("cba_counter", "CBA_COUNTER");
-        securityData.put("session_key", "SESSION_KEY");
-        securityData.put("csrf_token", "CSRF_TOKEN");
-        securityData.put("user_agent","USER_AGENT");
-
-        // Customer Data
-        customerData.put("account_number", "ACCOUNT_NUMBER");
-        customerData.put("full_name", "FULL_NAME");
-        customerData.put("picture_url", "PICTURE_URL");
-        customerData.put("email", "EMAIL");
-        customerData.put("phone_number", "PHONE_NUMBER");
-        customerData.put("idcard_number", "IDCARD_NUMBER");
-        customerData.put("idcard_type", "IDCARD_TYPE");
-        customerData.put("is_verified_email", "false");
-        customerData.put("is_verified_phone", "false");
-
-        // Money Data
-        moneyData.put("main_balance", "0");
-        moneyData.put("send_ammount", "0");
-        moneyData.put("request_amount", "0");
-        moneyData.put("transaction_code", "0");
-
-        // App Data
-
-        appData.put("first_time_app", "false");
-        appData.put("login_status", "false");
-        appData.put("client_version","1.0.0");
-
-        writeFile(GlobalVariable.FILE_SERVER, serverData.toString());
-        writeFile(GlobalVariable.FILE_SECURITY, securityData.toString());
-        writeFile(GlobalVariable.FILE_CUSTOMER, customerData.toString());
-        writeFile(GlobalVariable.FILE_MONEY, moneyData.toString());
-        writeFile(GlobalVariable.FILE_APP, appData.toString());
-        initVariable();
-    }
-
-    private void initVariable() throws JSONException {
-        String securityContent = readFile(GlobalVariable.FILE_SECURITY);
-        JSONObject securityData = new JSONObject(securityContent);
-
-        String customerContent = readFile(GlobalVariable.FILE_CUSTOMER);
-        JSONObject customerData = new JSONObject(customerContent);
-
-        String moneyContent = readFile(GlobalVariable.FILE_MONEY);
-        JSONObject moneyData = new JSONObject(moneyContent);
-
-        String appContent = readFile(GlobalVariable.FILE_APP);
-        JSONObject appData = new JSONObject(appContent);
-
-        // Security Data
-        GlobalVariable.SECURITY_IMME_ALGORITHM = securityData.getString("imme_algorithm");
-        GlobalVariable.SECURITY_TBA_ALGORITHM = securityData.getString("tba_algorithm");
-        GlobalVariable.SECURITY_CBA_ALGORITHM = securityData.getString("cba_algorithm");
-        GlobalVariable.SECURITY_CBA_COUNTER = securityData.getString("cba_counter");
-        GlobalVariable.SECURITY_SESSION_KEY = securityData.getString("session_key");
-        GlobalVariable.SECURITY_CSRF_TOKEN = securityData.getString("csrf_token");
-        GlobalVariable.SECURITY_USER_AGENT = securityData.getString("user_agent");
-
-        // Customer Data
-        GlobalVariable.CUSTOMER_ACCOUNT_NUMBER = customerData.getString("account_number");
-        GlobalVariable.CUSTOMER_FULL_NAME = customerData.getString("full_name");
-        GlobalVariable.CUSTOMER_PICTURE_URL = customerData.getString("picture_url");
-        GlobalVariable.CUSTOMER_EMAIL = customerData.getString("email");
-        GlobalVariable.CUSTOMER_PHONE_NUMBER = customerData.getString("phone_number");
-        GlobalVariable.CUSTOMER_IDCARD_NUMBER = customerData.getString("idcard_number");
-        GlobalVariable.CUSTOMER_IDCARD_TYPE = customerData.getString("idcard_type");
-        GlobalVariable.CUSTOMER_IS_VERIFIED_EMAIL = customerData.getString("is_verified_email");
-        GlobalVariable.CUSTOMER_IS_VERIFIED_PHONE = customerData.getString("is_verified_phone");
-
-        // Money Data
-        GlobalVariable.MONEY_MAIN_BALANCE = Integer.parseInt(moneyData.getString("main_balance"));
-        GlobalVariable.MONEY_SEND_AMOUNT = Integer.parseInt(moneyData.getString("send_ammount"));
-        GlobalVariable.MONEY_REQUEST_AMOUNT = Integer.parseInt(moneyData.getString("request_amount"));
-        GlobalVariable.MONEY_TRANSACTION_CODE = moneyData.getString("transaction_code");
-
-        // Money Data
-        GlobalVariable.APP_FIRST_TIME_APP = appData.getString("first_time_app");
-        GlobalVariable.APP_LOGIN_STATUS = appData.getString("login_status");
-        GlobalVariable.APP_CLIENT_VERSION = appData.getString("client_version");
-    }
-
-    private void commit() throws JSONException {
-        String moneyContent = readFile(GlobalVariable.FILE_MONEY);
-        JSONObject moneyData = new JSONObject(moneyContent);
-
-        // Money Data
-        moneyData.put("main_balance", Integer.toString(GlobalVariable.MONEY_MAIN_BALANCE));
-
-        writeFile(GlobalVariable.FILE_MONEY, moneyData.toString());
-    }
-
 
     private class check_notification extends AsyncTask<String, Void, Object> {
         protected Object doInBackground(String... args) {
@@ -830,40 +676,55 @@ public class MainActivity extends AppCompatActivity
         }
     }
 
-    public void last_transaction() {
-        new get_transaction_history().execute();
-    }
+    private class get_main_data extends AsyncTask<String, String, JSONObject> {
+        LinearLayout LLUserBalance;
+        ProgressBar LoadingAnimation, LoadingAnimation2;
 
-    private class get_transaction_history extends AsyncTask<String, Void, Object> {
-        protected Object doInBackground(String... args) {
+        protected JSONObject doInBackground(String... args) {
+            JSONObject serviceResult = null;
             try {
-                getTransactionHistory();
-            } catch (JSONException e) {
-                e.printStackTrace();
+                String postData = "session_key=" + URLEncoder.encode(GlobalVariable.SECURITY_SESSION_KEY, "UTF-8");
+                serviceResult = WebServiceClient.postRequest(GlobalVariable.DISTRIBUTOR_SERVER + "info/get_main_data", postData);
             } catch (IOException e) {
                 e.printStackTrace();
             }
-            return null;
+
+            return serviceResult;
         }
 
-        protected void onPostExecute(Object result) {
-            if (MainActivity.this.loading != null) {
-                MainActivity.this.loading.dismiss();
-            }
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            LLUserBalance = (LinearLayout) findViewById(R.id.UserBalance);
+            LoadingAnimation = (ProgressBar) findViewById(R.id.LoadingAnimation);
+            LoadingAnimation2 = (ProgressBar) findViewById(R.id.LoadingAnimation2);
 
-            if (error_status != null) {
-                if (error_status) {
-                    finish();
-                    Intent intent = new Intent(MainActivity.this, MainActivity.class);
-                    intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                    startActivity(intent);
-                    Toast.makeText(MainActivity.this, error_message, Toast.LENGTH_LONG).show();
-                } else {
-                    if (transactions == null) {
-                        cmlt1_no_trans.setText("No Transaction");
+            LLUserBalance.setVisibility(View.GONE);
+            LoadingAnimation.setVisibility(View.VISIBLE);
+            LoadingAnimation2.setVisibility(View.VISIBLE);
+        }
+
+        protected void onPostExecute(JSONObject feedback_data) {
+            LLUserBalance.setVisibility(View.VISIBLE);
+            LoadingAnimation.setVisibility(View.GONE);
+            LoadingAnimation2.setVisibility(View.GONE);
+
+            if (feedback_data.length() == 0) {
+                Toast.makeText(MainActivity.this, "Please check your internet connection", Toast.LENGTH_LONG).show();
+                finish();
+            } else {
+                try {
+                    if (feedback_data.getBoolean("error")) {
+                        Toast.makeText(MainActivity.this, feedback_data.getString("message"), Toast.LENGTH_LONG).show();
                     } else {
-                        JSONObject transaction = null;
-                        if (transactions.length() == 1) {
+                        JSONObject data = feedback_data.getJSONObject("data");
+                        JSONArray transaction = data.getJSONArray("last_transaction");
+
+                        // Setting GlobalVariable
+                        main_textview_balance_value.setText(data.getString("balance"));
+
+                        // Transaction List
+                        if (transaction.length() == 1) {
                             cmlt1_image.setVisibility(View.VISIBLE);
                             cmlt1_name.setVisibility(View.VISIBLE);
                             cmlt1_ll_amount.setVisibility(View.VISIBLE);
@@ -872,7 +733,7 @@ public class MainActivity extends AppCompatActivity
                             cmlt2_no_trans.setVisibility(View.VISIBLE);
                         }
 
-                        if (transactions.length() == 2) {
+                        if (transaction.length() == 2) {
                             cmlt1_image.setVisibility(View.VISIBLE);
                             cmlt1_name.setVisibility(View.VISIBLE);
                             cmlt1_ll_amount.setVisibility(View.VISIBLE);
@@ -885,7 +746,7 @@ public class MainActivity extends AppCompatActivity
                             cmlt3_no_trans.setVisibility(View.VISIBLE);
                         }
 
-                        if (transactions.length() >= 3) {
+                        if (transaction.length() >= 3) {
                             cmlt1_image.setVisibility(View.VISIBLE);
                             cmlt1_name.setVisibility(View.VISIBLE);
                             cmlt1_ll_amount.setVisibility(View.VISIBLE);
@@ -902,32 +763,28 @@ public class MainActivity extends AppCompatActivity
                         }
 
                         Integer loops;
-                        if (transactions.length() >= 3) {
+                        if (transaction.length() >= 3) {
                             loops = 3;
                         } else {
-                            loops = transactions.length();
+                            loops = transaction.length();
                         }
 
                         for (int i = 0; i < loops; i++) {
-                            try {
-                                transaction = transactions.getJSONObject(i);
-                            } catch (JSONException e) {
-                                e.printStackTrace();
-                            }
-
+                            JSONObject transaction_data = transaction.getJSONObject(i);
+                            reference.add(transaction_data.getString("reference"));
                             if (i == 0) {
                                 try {
-                                    if (transaction.getString("type").equals("1")) {
+                                    if (transaction_data.getString("type").equals("1")) {
                                         cmlt1_image.setImageResource(R.mipmap.main_last_transaction_receive_icon);
-                                    } else if (transaction.getString("type").equals("2")) {
+                                    } else if (transaction_data.getString("type").equals("2")) {
                                         cmlt1_image.setImageResource(R.mipmap.main_last_transaction_send_pay_icon);
-                                    } else if (transaction.getString("type").equals("5")) {
+                                    } else if (transaction_data.getString("type").equals("5")) {
                                         cmlt1_image.setImageResource(R.mipmap.main_last_transaction_topup_icon);
                                     }
 
-                                    cmlt1_name.setText(transaction.getString("name"));
-                                    cmlt1_date.setText(transaction.getString("date"));
-                                    cmlt1_amount.setText("Rp " + String.format(Locale.GERMANY, "%,d", Integer.parseInt(transaction.getString("amount"))).replace(",", "."));
+                                    cmlt1_name.setText(transaction_data.getString("name"));
+                                    cmlt1_date.setText(transaction_data.getString("date"));
+                                    cmlt1_amount.setText(transaction_data.getString("amount"));
 
                                 } catch (JSONException e) {
                                     e.printStackTrace();
@@ -936,17 +793,17 @@ public class MainActivity extends AppCompatActivity
 
                             if (i == 1) {
                                 try {
-                                    if (transaction.getString("type").equals("1")) {
+                                    if (transaction_data.getString("type").equals("1")) {
                                         cmlt2_image.setImageResource(R.mipmap.main_last_transaction_receive_icon);
-                                    } else if (transaction.getString("type").equals("2")) {
+                                    } else if (transaction_data.getString("type").equals("2")) {
                                         cmlt2_image.setImageResource(R.mipmap.main_last_transaction_send_pay_icon);
-                                    } else if (transaction.getString("type").equals("5")) {
+                                    } else if (transaction_data.getString("type").equals("5")) {
                                         cmlt2_image.setImageResource(R.mipmap.main_last_transaction_topup_icon);
                                     }
 
-                                    cmlt2_name.setText(transaction.getString("name"));
-                                    cmlt2_date.setText(transaction.getString("date"));
-                                    cmlt2_amount.setText("Rp " + String.format(Locale.GERMANY, "%,d", Integer.parseInt(transaction.getString("amount"))).replace(",", "."));
+                                    cmlt2_name.setText(transaction_data.getString("name"));
+                                    cmlt2_date.setText(transaction_data.getString("date"));
+                                    cmlt2_amount.setText(transaction_data.getString("amount"));
 
                                 } catch (JSONException e) {
                                     e.printStackTrace();
@@ -955,45 +812,65 @@ public class MainActivity extends AppCompatActivity
 
                             if (i == 2) {
                                 try {
-                                    if (transaction.getString("type").equals("1")) {
+                                    if (transaction_data.getString("type").equals("1")) {
                                         cmlt3_image.setImageResource(R.mipmap.main_last_transaction_receive_icon);
-                                    } else if (transaction.getString("type").equals("2")) {
+                                    } else if (transaction_data.getString("type").equals("2")) {
                                         cmlt3_image.setImageResource(R.mipmap.main_last_transaction_send_pay_icon);
-                                    } else if (transaction.getString("type").equals("5")) {
+                                    } else if (transaction_data.getString("type").equals("5")) {
                                         cmlt3_image.setImageResource(R.mipmap.main_last_transaction_topup_icon);
                                     }
 
-                                    cmlt3_name.setText(transaction.getString("name"));
-                                    cmlt3_date.setText(transaction.getString("date"));
-                                    cmlt3_amount.setText("Rp " + String.format(Locale.GERMANY, "%,d", Integer.parseInt(transaction.getString("amount"))).replace(",","."));
+                                    cmlt3_name.setText(transaction_data.getString("name"));
+                                    cmlt3_date.setText(transaction_data.getString("date"));
+                                    cmlt3_amount.setText(transaction_data.getString("amount"));
                                 } catch (JSONException e) {
                                     e.printStackTrace();
                                 }
                             }
 
                         }
+
+                        // Set name and account status
+                        full_name.setText(data.getString("full_name"));
+                        if (data.getBoolean("is_verified")) {
+                            verified_status.setText("Verified");
+                            verified_icon.setVisibility(View.VISIBLE);
+                        } else {
+                            verified_status.setText("Not Verified");
+                            verified_icon.setVisibility(View.GONE);
+                        }
+
+                        // Set Image
+                         ImageLoadPlease(MainActivity.this, data.getString("picture_url"), user_image);
                     }
+                } catch (JSONException e) {
+                    e.printStackTrace();
                 }
             }
         }
     }
 
-    public void getTransactionHistory() throws JSONException, IOException {
-        String postData = "session_key=" + URLEncoder.encode(GlobalVariable.SECURITY_SESSION_KEY, "UTF-8");
+    public ImageLoader ImageLoadPlease(Context context, String imageURI, ImageView target) {
+        ImageLoaderConfiguration.Builder config = new ImageLoaderConfiguration.Builder(context);
+        config.threadPriority(Thread.NORM_PRIORITY - 2);
+        config.denyCacheImageMultipleSizesInMemory();
+        config.diskCacheFileNameGenerator(new Md5FileNameGenerator());
+        config.diskCacheSize(500 * 1024 * 1024);
 
-        JSONObject serviceResult = WebServiceClient.postRequest(GlobalVariable.DISTRIBUTOR_SERVER + "history/transaction", postData);
+        ImageLoader.getInstance().init(config.build());
 
-        if (serviceResult == null) {
-            Toast.makeText(MainActivity.this, "Network Error", Toast.LENGTH_LONG).show();
-        } else {
-            if (serviceResult.getBoolean("error")) {
-                error_status = true;
-                error_message = serviceResult.getString("message");
-                error_code = serviceResult.getInt("code");
-            } else {
-                error_status = false;
-                transactions = serviceResult.getJSONArray("transactions");
-            }
-        }
+        DisplayImageOptions options = new DisplayImageOptions.Builder()
+                .showImageOnLoading(R.mipmap.about_logo_imme)
+                .showImageForEmptyUri(R.mipmap.about_logo_imme)
+                .showImageOnFail(R.mipmap.about_logo_imme)
+                .resetViewBeforeLoading(false)
+                .delayBeforeLoading(100)
+                .cacheInMemory(true)
+                .cacheOnDisk(true)
+                .build();
+
+        ImageLoader imageLoader = ImageLoader.getInstance();
+        imageLoader.displayImage(imageURI, target, options);
+        return imageLoader;
     }
 }

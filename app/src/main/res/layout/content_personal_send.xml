@@ -72,17 +72,15 @@ android:id="@+id/sppd_layout">
             android:layout_height="wrap_content"
             android:text="success transfer money to :"
             android:id="@+id/send_anouncement"
-            android:layout_below="@+id/personal_name"
             android:gravity="center"
             android:textColor="@color/textWhite"
             android:textSize="20dp"
             android:paddingBottom="30dp"/>
 
         <com.imme.immeclient.MLRoundedImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@mipmap/ic_launcher"
-            android:id="@+id/sender_pic"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:id="@+id/UserPicture"
             />
 
         <TextView

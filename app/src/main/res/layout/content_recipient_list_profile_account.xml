@@ -26,17 +26,16 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"/>
 
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@mipmap/ic_launcher"
+        <com.imme.immeclient.MLRoundedImageView
+            android:layout_width="120dp"
+            android:layout_height="120dp"
             android:id="@+id/RecipientPicture"
-            android:visibility="gone"/>
+            android:scaleType="centerCrop"
+            android:visibility="gone" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="[FULL_NAME]"
             android:paddingTop="10dp"
             android:textSize="18dp"
             android:paddingBottom="10dp"

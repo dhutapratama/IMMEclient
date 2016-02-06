@@ -1,6 +1,5 @@
 package com.imme.immeclient;
 
-import android.content.Context;
 import android.os.Build;
 import android.util.Log;
 

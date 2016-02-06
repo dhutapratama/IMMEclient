@@ -1,22 +1,24 @@
 package com.imme.immeclient;
 
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.nostra13.universalimageloader.cache.disc.naming.Md5FileNameGenerator;
+import com.nostra13.universalimageloader.core.DisplayImageOptions;
+import com.nostra13.universalimageloader.core.ImageLoader;
+import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 import com.readystatesoftware.systembartint.SystemBarTintManager;
 
 import org.json.JSONException;
@@ -29,9 +31,8 @@ public class RecipientListProfileAccountActivity extends AppCompatActivity {
 
     ProgressDialog loading;
     Boolean error_status = false;
-    String error_message, message, feedback_name, search_id;
+    String error_message, message, feedback_name, search_id, feedback_picture;
     Integer error_code = 0;
-    EditText add_account_text;
     TextView button_remove, recipient_name;
     ImageView recipient_picture;
     ProgressBar loading_bar;
@@ -140,7 +141,32 @@ public class RecipientListProfileAccountActivity extends AppCompatActivity {
                 recipient_name.setVisibility(View.VISIBLE);
                 button_remove.setVisibility(View.VISIBLE);
                 recipient_name.setText(feedback_name);
+                ImageLoadPlease(getApplicationContext(), feedback_picture, recipient_picture);
             }
+        }
+
+        public ImageLoader ImageLoadPlease(Context context, String imageURI, ImageView target) {
+            ImageLoaderConfiguration.Builder config = new ImageLoaderConfiguration.Builder(context);
+            config.threadPriority(Thread.NORM_PRIORITY - 2);
+            config.denyCacheImageMultipleSizesInMemory();
+            config.diskCacheFileNameGenerator(new Md5FileNameGenerator());
+            config.diskCacheSize(500 * 1024 * 1024);
+
+            ImageLoader.getInstance().init(config.build());
+
+            DisplayImageOptions options = new DisplayImageOptions.Builder()
+                    .showImageOnLoading(R.mipmap.about_logo_imme)
+                    .showImageForEmptyUri(R.mipmap.about_logo_imme)
+                    .showImageOnFail(R.mipmap.about_logo_imme)
+                    .resetViewBeforeLoading(false)
+                    .delayBeforeLoading(100)
+                    .cacheInMemory(true)
+                    .cacheOnDisk(true)
+                    .build();
+
+            ImageLoader imageLoader = ImageLoader.getInstance();
+            imageLoader.displayImage(imageURI, target, options);
+            return imageLoader;
         }
     }
 
@@ -157,6 +183,7 @@ public class RecipientListProfileAccountActivity extends AppCompatActivity {
         } else {
             error_status = false;
             feedback_name = serviceResult.getString("name");
+            feedback_picture = serviceResult.getString("picture_url");
         }
     }
 }

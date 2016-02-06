@@ -1,6 +1,9 @@
 <resources>
     <string name="app_name">imme</string>
 
+    <string name="server_client_id">215647738795-iee0dqi77m1e5cmvj7pb07ltbd65fk3a.apps.googleusercontent.com</string>
+    <string name="google_app_id">1:215647738795:android:57f48aa20a250b0b</string>
+
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
 
@@ -84,7 +87,7 @@
     <string name="pref_ringtone_silent">Silent</string>
 
     <string name="pref_title_vibrate">Vibrate</string>
-    <string name="title_activity_send_pay">Send/Pay</string>
+    <string name="title_activity_send_pay">Transfer</string>
     <string name="title_activity_login">Sign in</string>
 
     <!-- Strings related to login -->
@@ -199,4 +202,6 @@ distribution media, documentation, registration cards, and insertions.</string>
     <string name="title_activity_change_pin2_process3">Change Pin 2</string>
     <string name="title_activity_recipient_list_add_account">Add Account</string>
     <string name="title_activity_recipient_list_profile_account">Profile Account</string>
+    <string name="title_activity_fast_payment">FastPaymentActivity</string>
+    <string name="transfer_description">This transfer is for ...</string>
 </resources>

@@ -373,7 +373,7 @@
                             android:orientation="horizontal"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="ID number"
+                            android:text="ID Card Type"
                             android:paddingLeft="8dp"
                             android:paddingRight="66dp"
                             android:paddingTop="10dp"
@@ -396,7 +396,6 @@
                             android:orientation="horizontal"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:textSize="12sp"
                             android:text="ID Card Number"
                             android:paddingLeft="8dp"
                             android:paddingRight="48dp"
@@ -433,7 +432,6 @@
                         android:paddingTop="5dp"
                         android:paddingRight="40dp"
                         android:paddingLeft="40dp"/>
-                </LinearLayout>
 
                     <TextView
                         android:id="@+id/account_textview_verification_email"
@@ -469,7 +467,6 @@
                         android:paddingTop="5dp"
                         android:paddingRight="40dp"
                         android:paddingLeft="40dp"/>
-                </LinearLayout>
 
                     <TextView
                         android:id="@+id/account_textview_verification_phone_number"
@@ -484,9 +481,7 @@
                         android:textSize="10sp"
                         android:textColor="#000000"/>
                 </LinearLayout>
-
             </LinearLayout>
-
     </ScrollView>
 
 </RelativeLayout>

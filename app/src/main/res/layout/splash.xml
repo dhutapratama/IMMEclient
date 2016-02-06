@@ -1,14 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-android:layout_width="match_parent"
-android:layout_height="match_parent"
-android:background="#0e99da"
-android:orientation="vertical">
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#ffffff"
+    android:gravity="center"
+    android:orientation="vertical">
 
     <ImageView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/imageView4"
+        android:id="@+id/SplashImage"
         android:layout_gravity="center_horizontal"
-        android:src="@drawable/splash_image" />
+        android:src="@mipmap/logo_imme_splash_v2"
+        android:layout_centerHorizontal="true"/>
+
+    <ProgressBar
+        android:id="@+id/LoadingAnimation"
+        style="?android:attr/progressBarStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/SplashImage"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="30dp"/>
 </LinearLayout>

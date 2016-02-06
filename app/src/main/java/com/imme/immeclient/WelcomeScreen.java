@@ -151,7 +151,6 @@ public class WelcomeScreen extends AppCompatActivity {
     }
 
     private void endTutorial() {
-        finish();
         Intent intent = new Intent(getApplicationContext(), SignInActivity.class);
         startActivity(intent);
         //overridePendingTransition(R.anim.abc_fade_in, R.anim.abc_fade_out);
@@ -160,12 +159,18 @@ public class WelcomeScreen extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         if (pager.getCurrentItem() == 0) {
-            finish();
             Intent intent = new Intent(getApplicationContext(), SignInActivity.class);
             startActivity(intent);
         } else {
             pager.setCurrentItem(pager.getCurrentItem() - 1);
         }
+    }
+
+    @Override
+    protected void onPause() {
+        // TODO Auto-generated method stub
+        super.onPause();
+        finish();
     }
 
     private class ScreenSlideAdapter extends FragmentStatePagerAdapter {

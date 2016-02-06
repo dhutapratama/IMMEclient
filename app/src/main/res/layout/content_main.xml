@@ -12,238 +12,84 @@
     tools:context=".MainActivity"
     android:orientation="vertical">
 
-    <ScrollView
-        android:layout_width="match_parent"
-        android:layout_height="fill_parent">
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:background="@drawable/imme_home_balance_bg"
+        android:layout_height="@dimen/main_balance_layout_height"
+        android:orientation="vertical">
+
+        <TextView
+            android:text="@string/main_balance"
+            android:id="@+id/main_textview_balance"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingTop="@dimen/main_balance_text_paddingTop"
+            android:paddingLeft="@dimen/main_balance_text_paddingLeft"
+            android:textColor="@color/textWhite"
+            android:textSize="20sp"/>
 
         <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="fill_parent"
-            android:orientation="vertical">
-
-            <LinearLayout
-                android:layout_width="fill_parent"
-                android:background="@drawable/imme_home_balance_bg"
-                android:layout_height="@dimen/main_balance_layout_height"
-                android:orientation="vertical">
-                <TextView
-                    android:text="@string/main_balance"
-                    android:id="@+id/main_textview_balance"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:paddingTop="@dimen/main_balance_text_paddingTop"
-                    android:paddingLeft="@dimen/main_balance_text_paddingLeft"
-                    android:textColor="@color/textWhite"
-                    android:textSize="20sp"/>
-
-                <LinearLayout
-                    android:orientation="horizontal"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_horizontal"
-                    android:paddingTop="@dimen/main_balance_paddingTop">
-                    <TextView android:text="@string/main_rupiah"
-                        android:id="@+id/main_textview_rp"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textColor="@color/textWhite"
-                        android:textSize="25sp"
-                        android:paddingTop="@dimen/main_balance_rp_paddingTop"
-                        android:paddingRight="@dimen/main_balance_rp_paddingRight" />
-                    <TextView android:text="@string/main_balance_value"
-                        android:layout_width="fill_parent"
-                        android:layout_height="wrap_content"
-                        android:textColor="@color/textWhite"
-                        android:textSize="50sp"
-                        android:id="@+id/main_textview_balance_value"
-                        android:layout_gravity="center_horizontal" />
-                </LinearLayout>
-
-            </LinearLayout>
-
-            <include layout="@layout/content_main_last_transaction" android:layout_width="fill_parent" android:layout_height="wrap_content"></include>
-
-            <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:paddingTop="@dimen/main_balance_paddingTop"
+            android:id="@+id/UserBalance">
+            <TextView android:text="@string/main_rupiah"
+                android:id="@+id/main_textview_rp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/textWhite"
+                android:textSize="25sp"
+                android:paddingTop="@dimen/main_balance_rp_paddingTop"
+                android:paddingRight="@dimen/main_balance_rp_paddingRight" />
+            <TextView android:text="@string/main_balance_value"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical">
-                <TextView android:text="Hello!"
-                    android:id="@+id/main_textview_hello"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:paddingTop="@dimen/main_balance_text_paddingTop"
-                    android:textSize="30sp"
-                    android:layout_gravity="center" />
-                <TextView android:text="What do you need?"
-                    android:id="@+id/main_textview_what_do_you_need"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center" />
-            </LinearLayout>
-
-            <HorizontalScrollView
-                android:layout_width="match_parent"
-                android:layout_height="fill_parent"
-                android:paddingRight="@dimen/hscroll_main_feature_padding"
-                android:paddingLeft="@dimen/hscroll_main_feature_padding">
-
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content">
-
-                    <LinearLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:orientation="vertical">
-                        <ImageButton
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:id="@+id/main_button_send_pay"
-                            android:src="@mipmap/main_button_send_icon"
-                            android:background="@null"
-                            android:layout_marginTop="20dp"
-                            android:layout_marginLeft="12dp"
-                            android:layout_marginRight="12dp" />
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:textAppearance="?android:attr/textAppearanceSmall"
-                            android:text="Transfer"
-                            android:id="@+id/main_textview_sendpay"
-                            android:layout_gravity="center_horizontal"
-                            android:layout_marginTop="10dp"
-                            android:layout_marginBottom="20dp" />
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:orientation="vertical">
-                        <ImageButton
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:id="@+id/main_button_receive"
-                            android:src="@mipmap/main_button_receive_icon"
-                            android:background="@null"
-                            android:layout_marginTop="20dp"
-                            android:layout_marginLeft="12dp"
-                            android:layout_marginRight="12dp" />
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:textAppearance="?android:attr/textAppearanceSmall"
-                            android:text="Receive"
-                            android:id="@+id/main_receive1"
-                            android:layout_gravity="center_horizontal"
-                            android:layout_marginTop="10dp"
-                            android:layout_marginBottom="20dp" />
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:orientation="vertical">
-                        <ImageButton
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:id="@+id/main_button_topup"
-                            android:src="@mipmap/main_button_topup_icon"
-                            android:background="@null"
-                            android:layout_marginTop="20dp"
-                            android:layout_marginLeft="12dp"
-                            android:layout_marginRight="12dp" />
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:textAppearance="?android:attr/textAppearanceSmall"
-                            android:text="Deposit"
-                            android:id="@+id/main_textview_topup"
-                            android:layout_gravity="center_horizontal"
-                            android:layout_marginTop="10dp"
-                            android:layout_marginBottom="20dp" />
-                    </LinearLayout>
-<!--
-                    <LinearLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:orientation="vertical">
-                        <ImageButton
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:id="@+id/main_button_busway"
-                            android:src="@mipmap/icon_transjakarta"
-                            android:background="@null"
-                            android:layout_marginTop="20dp"
-                            android:layout_marginLeft="12dp"
-                            android:layout_marginRight="12dp"
-                            android:nestedScrollingEnabled="false" />
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:textAppearance="?android:attr/textAppearanceSmall"
-                            android:text="Busway"
-                            android:id="@+id/main_textview_busway"
-                            android:layout_gravity="center_horizontal"
-                            android:layout_marginTop="10dp"
-                            android:layout_marginBottom="20dp" />
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:orientation="vertical">
-                        <ImageButton
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:id="@+id/main_button_near_me"
-                            android:src="@mipmap/main_button_near_me_icon"
-                            android:background="@null"
-                            android:layout_marginTop="20dp"
-                            android:layout_marginLeft="12dp"
-                            android:layout_marginRight="12dp"
-                            android:nestedScrollingEnabled="false" />
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:textAppearance="?android:attr/textAppearanceSmall"
-                            android:text="Near me?"
-                            android:id="@+id/main_textview_near_me"
-                            android:layout_gravity="center_horizontal"
-                            android:layout_marginTop="10dp"
-                            android:layout_marginBottom="20dp" />
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:orientation="vertical">
-                        <ImageButton
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:id="@+id/main_button_market"
-                            android:src="@mipmap/icon_sevel"
-                            android:background="@null"
-                            android:layout_marginTop="20dp"
-                            android:layout_marginLeft="12dp"
-                            android:layout_marginRight="12dp"
-                            android:nestedScrollingEnabled="false" />
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:textAppearance="?android:attr/textAppearanceSmall"
-                            android:text="Market"
-                            android:id="@+id/main_textview_market"
-                            android:layout_gravity="center_horizontal"
-                            android:layout_marginTop="10dp"
-                            android:layout_marginBottom="20dp" />
-                    </LinearLayout>
--->
-                </LinearLayout>
-
-            </HorizontalScrollView>
-
+                android:textColor="@color/textWhite"
+                android:textSize="50sp"
+                android:id="@+id/main_textview_balance_value"
+                android:layout_gravity="center_horizontal" />
         </LinearLayout>
 
-    </ScrollView>
+        <ProgressBar
+            android:id="@+id/LoadingAnimation"
+            style="?android:attr/progressBarStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="30dp"
+            android:visibility="gone"/>
 
+    </LinearLayout>
+
+    <include layout="@layout/content_main_last_transaction" android:layout_width="fill_parent" android:layout_height="wrap_content"></include>
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+        <TextView android:text="Hello!"
+            android:id="@+id/main_textview_hello"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingTop="@dimen/main_balance_text_paddingTop"
+            android:textSize="30sp"
+            android:layout_gravity="center" />
+        <TextView android:text="What do you need?"
+            android:id="@+id/main_textview_what_do_you_need"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center" />
+    </LinearLayout>
+
+    <com.imme.immeclient.ExpandableGridView
+        android:id="@+id/MainMenu"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:numColumns="auto_fit"
+        android:columnWidth="100dp"
+        android:horizontalSpacing="3dp"
+        android:layout_margin="15dp"
+        android:layout_gravity="center"/>
 </LinearLayout>

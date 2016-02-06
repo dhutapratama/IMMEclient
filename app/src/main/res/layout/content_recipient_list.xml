@@ -12,6 +12,13 @@
     tools:context="com.imme.immeclient.RecipientListActivity"
     android:background="#ffffff">
 
+    <ProgressBar
+        android:id="@+id/LoadingAnimation"
+        style="?android:attr/progressBarStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"/>
+
     <ListView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -34,8 +41,8 @@
             android:text="Add Account"
             android:gravity="center"
             android:padding="15dp"
-            android:background="@drawable/btn_green"
-            android:textColor="@drawable/btn_text_color_green"/>
+            android:background="@drawable/btn_green_square"
+            android:textColor="@drawable/btn_text_color_green_square"/>
 
     </LinearLayout>
 
