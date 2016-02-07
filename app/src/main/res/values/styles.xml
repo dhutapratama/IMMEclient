@@ -108,19 +108,28 @@
         <!-- Customize your theme here. -->
         <item name="colorPrimary">#0f99da</item>
         <item name="colorPrimaryDark">#00aeff</item>
-        <item name="colorAccent">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
     </style>
 
-    <style name="AppThemeBlue.NoActionBar">
+    <style name="AppThemeBlue.NoActionBar" parent="Theme.AppCompat.Light.NoActionBar">
         <!-- Customize your theme here. -->
-        <item name="windowActionBar">true</item>
+        <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
         <item name="android:textColorPrimary">@color/textWhite</item>
         <item name="android:textColorSecondary">@color/textWhite</item>
+        <item name="android:windowBackground">@color/textWhite</item>
+        <item name="colorAccent">@color/colorAccent</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorPrimary">@color/colorPrimaryDark</item>
+        <item name="android:colorForeground">@color/colorPrimaryDark</item>
+        <item name="android:textColorSecondaryInverse">@color/text_selected</item>
+        <item name="colorControlNormal">#c5c5c5</item>
+        <item name="colorControlActivated">@color/colorPrimaryDark</item>
+        <item name="colorControlHighlight">@color/colorPrimaryDark</item>
     </style>
 
-    <style name="AppThemeBlue.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar"></style>
+
+    <style name="AppThemeBlue.AppBarOverlay" parent="ThemeOverlay.AppCompat.ActionBar"></style>
 
     <style name="AppThemeBlue.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
-
 </resources>

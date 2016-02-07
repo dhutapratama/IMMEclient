@@ -37,43 +37,40 @@ public class SendToFriendActivity extends AppCompatActivity {
         tintManager.setTintColor(Color.parseColor("#FF03B0FF"));
 
         TextView RecipientName = (TextView) findViewById(R.id.RecipientName);
-        ImageView UserPicture = (ImageView) findViewById(R.id.UserPicture);
+        MLRoundedImageView UserPicture = (MLRoundedImageView) findViewById(R.id.UserPicture);
 
         TransferMoney = (EditText) findViewById(R.id.TransferMoney);
         TransferDescription = (EditText) findViewById(R.id.TransferDescription);
 
-        String picture_url = getIntent().getStringExtra("picture_url");
-        ImageLoadPlease(getBaseContext(), picture_url, UserPicture);
+        ImageLoadPlease(this, getIntent().getStringExtra("picture_url"), UserPicture);
         RecipientName.setText(getIntent().getStringExtra("name"));
 
         TextView Btn_Transfer = (TextView) findViewById(R.id.Btn_Transfer);
         Btn_Transfer.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                transfer_amount = TransferMoney.getText().toString();
-                transfer_message = TransferDescription.getText().toString();
+            transfer_amount = TransferMoney.getText().toString();
+            transfer_message = TransferDescription.getText().toString();
 
-                Intent intent = new Intent(SendToFriendActivity.this, PinActivity.class);
-                intent.putExtra("search_id", getIntent().getStringExtra("search_id"));
-                intent.putExtra("picture_url", getIntent().getStringExtra("picture_url"));
-                intent.putExtra("name", getIntent().getStringExtra("name"));
-                intent.putExtra("amount", transfer_amount);
-                intent.putExtra("message", transfer_message);
-                startActivity(intent);
+            Intent intent = new Intent(SendToFriendActivity.this, PinActivity.class);
+            intent.putExtra("search_id", getIntent().getStringExtra("search_id"));
+            intent.putExtra("picture_url", getIntent().getStringExtra("picture_url"));
+            intent.putExtra("name", getIntent().getStringExtra("name"));
+            intent.putExtra("amount", transfer_amount);
+            intent.putExtra("message", transfer_message);
+            startActivity(intent);
             }
         });
     }
 
     public ImageLoader ImageLoadPlease(Context context, String imageURI, ImageView target) {
-        if (!ImageLoader.getInstance().isInited()) {
-            ImageLoaderConfiguration.Builder config = new ImageLoaderConfiguration.Builder(context);
-            config.threadPriority(Thread.NORM_PRIORITY - 2);
-            config.denyCacheImageMultipleSizesInMemory();
-            config.diskCacheFileNameGenerator(new Md5FileNameGenerator());
-            config.diskCacheSize(500 * 1024 * 1024);
+        ImageLoaderConfiguration.Builder config = new ImageLoaderConfiguration.Builder(context);
+        config.threadPriority(Thread.NORM_PRIORITY - 2);
+        config.denyCacheImageMultipleSizesInMemory();
+        config.diskCacheFileNameGenerator(new Md5FileNameGenerator());
+        config.diskCacheSize(500 * 1024 * 1024);
 
-            ImageLoader.getInstance().init(config.build());
-        }
+        ImageLoader.getInstance().init(config.build());
 
         DisplayImageOptions options = new DisplayImageOptions.Builder()
                 .showImageOnLoading(R.mipmap.about_logo_imme)
@@ -87,7 +84,6 @@ public class SendToFriendActivity extends AppCompatActivity {
 
         ImageLoader imageLoader = ImageLoader.getInstance();
         imageLoader.displayImage(imageURI, target, options);
-        imageLoader.destroy();
         return imageLoader;
     }
 }

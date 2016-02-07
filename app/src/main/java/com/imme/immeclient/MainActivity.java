@@ -30,10 +30,10 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.ViewGroup;
 import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
+import android.view.animation.Transformation;
 import android.widget.AdapterView;
-import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
@@ -79,6 +79,8 @@ public class MainActivity extends AppCompatActivity
 
     ArrayList<String> reference = new ArrayList<>();
 
+    int BalanceHeight = 0;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
@@ -111,8 +113,8 @@ public class MainActivity extends AppCompatActivity
         }
 
         //----------------------------- Start Activity Programing -----------------------------//
-        GridView MainMenu = (GridView) findViewById(R.id.MainMenu);
-        //MainMenu.setExpanded(true);
+        ExpandableGridView MainMenu = (ExpandableGridView) findViewById(R.id.MainMenu);
+        MainMenu.setExpanded(true);
         MainMenu.setAdapter(new MainMenuAdapter(this));
 
         MainMenu.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -446,8 +448,8 @@ public class MainActivity extends AppCompatActivity
         return result;
     }
 
-    String voucher_code = new String();
-    String transaction_code = new String();
+    String voucher_code;
+    String transaction_code;
     Boolean error_status = false;
     String error_message = null;
     private ProgressDialog loading = null;
@@ -829,7 +831,6 @@ public class MainActivity extends AppCompatActivity
                             }
 
                         }
-
                         // Set name and account status
                         full_name.setText(data.getString("full_name"));
                         if (data.getBoolean("is_verified")) {
@@ -841,46 +842,23 @@ public class MainActivity extends AppCompatActivity
                         }
 
                         // Set Image
-                         ImageLoadPlease(MainActivity.this, data.getString("picture_url"), user_image);
+                        ImageLoadPlease(MainActivity.this, data.getString("picture_url"), user_image);
 
                         HelloText.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View arg0) {
-                                if (LLBalance.getVisibility() == View.INVISIBLE) {
-                                    LLBalance.setVisibility(View.VISIBLE);
-                                    LLBalance.setAlpha(0.0f);
+                                /*
+                                if (LLBalance.getAlpha() == 0.0f) {
+                                    LLBalance.animate().alpha(1.0f);
+                                    actionContent.animate().translationY(0).setDuration(500);
 
-                                    LLBalance.animate().translationY(0).alpha(1.0f);
-
-                                    actionContent.animate().translationY(0);
                                 } else {
-                                    actionContent.animate().translationY(0 - LLBalance.getHeight());
-                                    LLBalance.animate().translationY(0 - LLBalance.getHeight()).alpha(0.0f)
-                                            .setListener(new Animator.AnimatorListener() {
-                                        @Override
-                                        public void onAnimationStart(Animator animation) {
-
-
-                                        }
-
-                                        @Override
-                                        public void onAnimationEnd(Animator animation) {
-                                            LLBalance.setVisibility(View.INVISIBLE);
-                                        }
-
-                                        @Override
-                                        public void onAnimationCancel(Animator animation) {
-
-                                        }
-
-                                        @Override
-                                        public void onAnimationRepeat(Animator animation) {
-
-                                        }
-                                    });
+                                    actionContent.animate().translationY(0 - LLBalance.getHeight()).setDuration(500);
+                                    LLBalance.animate().alpha(0.0f);
                                     //LLBalance.startAnimation(slideUp);
                                 }
-
+                                */
+                                    expand(LLBalance);
 
                             }
                         });
@@ -917,5 +895,58 @@ public class MainActivity extends AppCompatActivity
         ImageLoader imageLoader = ImageLoader.getInstance();
         imageLoader.displayImage(imageURI, target, options);
         return imageLoader;
+    }
+
+    public void expand(final View v) {
+        //v.measure(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        final int targtetHeight = BalanceHeight; //v.getMeasuredHeight() - 170;
+        if (v.isShown()) {
+            BalanceHeight = v.getMeasuredHeight();
+            collapse(v);
+        } else {
+            v.getLayoutParams().height = 0;
+            v.setVisibility(View.VISIBLE);
+            Animation a = new Animation() {
+                @Override
+                protected void applyTransformation(float interpolatedTime, Transformation t) {
+                    v.getLayoutParams().height = interpolatedTime == 1 ? targtetHeight
+                            : (int) (targtetHeight * interpolatedTime);
+                    v.requestLayout();
+                }
+
+                @Override
+                public boolean willChangeBounds() {
+                    return true;
+                }
+            };
+            a.setDuration((int) (targtetHeight + 500));
+            v.startAnimation(a);
+        }
+
+    }
+
+    public void collapse(final View v) {
+        final int initialHeight = v.getMeasuredHeight();
+        Animation a = new Animation() {
+            @Override
+            protected void applyTransformation(float interpolatedTime,
+                                               Transformation t) {
+                if (interpolatedTime == 1) {
+                    v.setVisibility(View.GONE);
+                } else {
+                    v.getLayoutParams().height = initialHeight
+                            - (int) (initialHeight * interpolatedTime);
+                    v.requestLayout();
+                }
+            }
+
+            @Override
+            public boolean willChangeBounds() {
+                return true;
+            }
+        };
+
+        a.setDuration((int) (v.getLayoutParams().height + 500));
+        v.startAnimation(a);
     }
 }
